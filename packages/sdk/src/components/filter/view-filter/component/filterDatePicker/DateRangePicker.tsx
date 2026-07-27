@@ -22,12 +22,12 @@ import {
   type Locale,
 } from 'date-fns';
 import { enUS, fr, ja, ru, zhCN } from 'date-fns/locale';
-import { formatInTimeZone, fromZonedTime, toZonedTime } from 'date-fns-tz';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { memo, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import type { Matcher } from 'react-day-picker';
 import { AppContext } from '../../../../../context';
 import { useTranslation } from '../../../../../context/app/i18n';
+import { formatInTimeZone, fromZonedTime, toZonedTime } from '../../../../../utils';
 
 const MIN_YEAR = 100;
 const MAX_YEAR = 3000;
@@ -438,8 +438,11 @@ export function DateRangePicker({
   const displayValue = useMemo(() => {
     if (!value?.exactDate) return '';
     const tz = value.timeZone || timeZone;
-    const timeFormat = timeFormatting === TimeFormatting.Hour12 ? 'hh:mm a' : 'HH:mm';
-    const dateFormatStr = hasTimeFormat ? `yyyy-MM-dd ${timeFormat}` : 'yyyy-MM-dd';
+    // dayjs format tokens (formatInTimeZone now runs on dayjs, not date-fns): 'A' = uppercase AM/PM,
+    // matching the previous date-fns 'hh:mm a' output (date-fns's lowercase 'a' token renders "AM"/"PM"),
+    // and 'YYYY'/'DD' replace date-fns's 'yyyy'/'dd' for 4-digit year / day-of-month.
+    const timeFormat = timeFormatting === TimeFormatting.Hour12 ? 'hh:mm A' : 'HH:mm';
+    const dateFormatStr = hasTimeFormat ? `YYYY-MM-DD ${timeFormat}` : 'YYYY-MM-DD';
     const fromStr = formatInTimeZone(value.exactDate, tz, dateFormatStr);
     if (!value.exactDateEnd) return fromStr;
     return `${fromStr} ~ ${formatInTimeZone(value.exactDateEnd, tz, dateFormatStr)}`;

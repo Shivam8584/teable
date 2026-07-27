@@ -341,10 +341,7 @@ export const IntegrityV2Dialog = ({
       <Button size="xs" variant="outline" onClick={() => setOpen(true)}>
         {t('table:table.integrity.check')}
       </Button>
-      <DialogContent
-        className="flex max-w-6xl flex-col gap-0 p-0"
-        style={{ width: 'calc(100% - 40px)', height: 'calc(100% - 80px)' }}
-      >
+      <DialogContent className="flex h-[calc(100%_-_80px)] w-[calc(100%_-_40px)] max-w-6xl flex-col gap-0 p-0">
         <DialogHeader className="border-b px-6 py-4">
           <DialogTitle>{t('table:table.integrity.v2.dialogTitle')}</DialogTitle>
           <DialogDescription>

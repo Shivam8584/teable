@@ -24,7 +24,7 @@ export const CustomMarkers = ({ baseId }: { baseId: string }) => {
   // same color as reactflow default marker
   const color = 'rgb(177, 177, 183)';
   return (
-    <svg style={{ position: 'absolute', top: 0, left: 0 }}>
+    <svg className="absolute left-0 top-0">
       <defs>
         <marker
           id={buildMarkerId(baseId).one}

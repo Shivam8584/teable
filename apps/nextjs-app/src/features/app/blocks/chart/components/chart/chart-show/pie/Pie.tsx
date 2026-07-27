@@ -64,15 +64,8 @@ export const ChartPie = (props: { config: IPieConfig }) => {
   return (
     <div className="chart-pie flex size-full items-center justify-center">
       {/* calculate total width */}
-      <svg className="pointer-events-none absolute -z-10" style={{ visibility: 'hidden' }}>
-        <text
-          fontSize="20"
-          style={{
-            visibility: 'hidden',
-          }}
-          textAnchor="middle"
-          dominantBaseline="middle"
-        >
+      <svg className="pointer-events-none invisible absolute -z-10">
+        <text fontSize="20" className="invisible" textAnchor="middle" dominantBaseline="middle">
           <tspan ref={totalRef} className="fill-foreground text-3xl font-bold">
             {total}
           </tspan>

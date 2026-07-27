@@ -1,4 +1,4 @@
-import { CalendarIcon } from '@radix-ui/react-icons';
+import { Calendar as CalendarIcon } from '@teable/icons';
 import { Button, Calendar, Popover, PopoverContent, PopoverTrigger, cn } from '@teable/ui-lib';
 
 import * as React from 'react';

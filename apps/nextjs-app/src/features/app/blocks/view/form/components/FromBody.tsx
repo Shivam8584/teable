@@ -157,10 +157,9 @@ export const FormBody = (props: IFormBodyProps) => {
 
       <div
         className={cn(
-          'mb-6 w-full px-6 text-center text-3xl leading-9 sm:px-12',
+          'mb-6 w-full break-words px-6 text-center text-3xl leading-9 sm:px-12',
           logoUrl ? 'mt-16' : 'mt-8'
         )}
-        style={{ overflowWrap: 'break-word' }}
       >
         {name ?? t('untitled')}
       </div>

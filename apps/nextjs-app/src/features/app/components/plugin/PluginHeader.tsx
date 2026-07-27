@@ -1,5 +1,4 @@
-import { DragHandleDots2Icon } from '@radix-ui/react-icons';
-import { Copy, Edit, Maximize2, MoreHorizontal, X } from '@teable/icons';
+import { Copy, DraggableHandle, Edit, Maximize2, MoreHorizontal, X } from '@teable/icons';
 import {
   Button,
   cn,
@@ -56,7 +55,7 @@ export const PluginHeader = (props: {
 
   return (
     <div className="flex h-8 shrink-0 items-center gap-1 px-1">
-      <DragHandleDots2Icon
+      <DraggableHandle
         className={cn(
           'size-4 text-gray-500 cursor-pointer opacity-0 group-hover:opacity-100',
           {
@@ -72,8 +71,7 @@ export const PluginHeader = (props: {
         <span className="truncate text-sm">{name}</span>
         <Input
           ref={renameRef}
-          style={{ width: 'calc(100% - 0.25rem)' }}
-          className={cn('absolute h-6 hidden', {
+          className={cn('absolute hidden h-6 w-[calc(100%_-_0.25rem)]', {
             block: rename !== null,
           })}
           value={rename || ''}

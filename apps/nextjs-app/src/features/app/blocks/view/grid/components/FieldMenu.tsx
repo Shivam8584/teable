@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import { useMutation } from '@tanstack/react-query';
 import type { IFilter, IGroup, ISort } from '@teable/core';
 import { FieldType, getValidFilterOperators } from '@teable/core';
@@ -554,6 +553,8 @@ export const FieldMenu = () => {
                     'opacity-50': disabled,
                   })}
                   key={type}
+                  role="button"
+                  tabIndex={0}
                   onClick={async () => {
                     if (disabled) return;
 
@@ -561,6 +562,17 @@ export const FieldMenu = () => {
                     // Don't auto-close for actions that own their own follow-up
                     // dialog; those handle closing the menu after the dialog
                     // resolves.
+                    if (type !== MenuItemType.Delete && type !== MenuItemType.Duplicate) {
+                      onSelectionClear?.();
+                      closeHeaderMenu();
+                    }
+                  }}
+                  onKeyDown={async (e) => {
+                    if (e.key !== 'Enter' && e.key !== ' ') return;
+                    e.preventDefault();
+                    if (disabled) return;
+
+                    await onClick();
                     if (type !== MenuItemType.Delete && type !== MenuItemType.Duplicate) {
                       onSelectionClear?.();
                       closeHeaderMenu();

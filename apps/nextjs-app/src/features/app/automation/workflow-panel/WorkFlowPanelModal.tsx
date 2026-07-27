@@ -98,8 +98,7 @@ export const WorkFlowPanelModal = () => {
     <Dialog open={open}>
       <DialogContent
         closeable={false}
-        className="flex max-w-7xl p-2"
-        style={{ width: 'calc(100% - 40px)', height: 'calc(100% - 100px)' }}
+        className="flex h-[calc(100%_-_100px)] w-[calc(100%_-_40px)] max-w-7xl p-2"
       >
         <div className="flex-1">
           <Suspense

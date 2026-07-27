@@ -255,3 +255,7 @@ export { default as InIcon } from './components/InIcon';
 export { default as Discord } from './components/Discord';
 export { default as Twitter } from './components/Twitter';
 export { default as BadgeStar } from './components/BadgeStar';
+export { default as Laptop } from './components/Laptop';
+export { default as Exit } from './components/Exit';
+export { default as Dash } from './components/Dash';
+export { default as DotFilled } from './components/DotFilled';

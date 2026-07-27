@@ -95,7 +95,17 @@ export const PluginItem = (props: {
         'fixed top-0 left-0 right-0 bottom-0 bg-black/20 flex items-center justify-center z-50':
           isExpanded,
       })}
+      role={isExpanded ? 'button' : undefined}
+      tabIndex={isExpanded ? 0 : undefined}
+      aria-label={isExpanded ? 'Close' : undefined}
       onClick={onClose}
+      onKeyDown={(e) => {
+        if (!isExpanded) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClose();
+        }
+      }}
     >
       <div
         className={cn(
@@ -106,6 +116,7 @@ export const PluginItem = (props: {
           }
         )}
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
       >
         <PluginHeader
           dragging={dragging}

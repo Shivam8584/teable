@@ -1,6 +1,6 @@
 'use client';
 
-import { DashIcon } from '@radix-ui/react-icons';
+import { Dash } from '@teable/icons';
 import { OTPInput, OTPInputContext } from 'input-otp';
 import * as React from 'react';
 
@@ -78,7 +78,7 @@ const InputOTPSeparator: ForwardRefComponent<
   InputOTPSeparatorProps
 > = React.forwardRef<React.ElementRef<'div'>, InputOTPSeparatorProps>(({ ...props }, ref) => (
   <div ref={ref} role="separator" {...props}>
-    <DashIcon />
+    <Dash />
   </div>
 ));
 InputOTPSeparator.displayName = 'InputOTPSeparator';

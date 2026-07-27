@@ -96,7 +96,16 @@ export const BaseItem: FC<IBaseItemProps> = (props) => {
         'relative group flex h-12 items-center cursor-pointer hover:bg-accent dark:hover:bg-popover',
         className
       )}
+      role="button"
+      tabIndex={0}
+      aria-expanded={isExpanded}
       onClick={() => onToggleExpand?.()}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onToggleExpand?.();
+        }
+      }}
     >
       {showDragHandle && (
         <div

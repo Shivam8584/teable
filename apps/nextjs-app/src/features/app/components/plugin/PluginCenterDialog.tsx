@@ -57,10 +57,7 @@ export const PluginCenterDialog = forwardRef<IPluginCenterDialogRef, IPluginCent
         }}
       >
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent
-          className="max-w-4xl"
-          style={{ width: 'calc(100% - 40px)', height: 'calc(100% - 100px)' }}
-        >
+        <DialogContent className="h-[calc(100%_-_100px)] w-[calc(100%_-_40px)] max-w-4xl">
           <div
             className={cn(
               'md:h-fit mt-4 w-full space-y-3 md:grid md:grid-cols-2 md:gap-4 md:space-y-0',

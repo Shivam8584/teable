@@ -13,8 +13,9 @@ export const SheetWrapper = (props: SheetWrapperProps) => {
     <Sheet modal={true}>
       <SheetTrigger asChild>
         <Button
-          className={cn('fixed left-0 z-50 p-1 transition-all rounded-r-full rounded-l-none')}
-          style={{ top: 'calc(var(--teable-top-banner-height) + 1.75rem)' }}
+          className={cn(
+            'fixed left-0 top-[calc(var(--teable-top-banner-height)_+_1.75rem)] z-50 rounded-l-none rounded-r-full p-1 transition-all'
+          )}
           size="icon-xs"
           variant={'outline'}
         >

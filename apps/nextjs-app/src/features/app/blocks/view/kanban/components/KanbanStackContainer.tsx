@@ -74,10 +74,7 @@ export const KanbanStackContainer = (props: IKanbanStackContainerProps) => {
                   {...dragHandleProps}
                   onClick={onStackExpand}
                 >
-                  <div
-                    style={{ transform: 'rotate(-90deg) translateX(-100%)' }}
-                    className="flex h-14 w-64 origin-top-left items-center px-4"
-                  >
+                  <div className="flex h-14 w-64 origin-top-left items-center px-4 [transform:rotate(-90deg)_translateX(-100%)]">
                     <KanbanStackTitle stack={stack} isUncategorized={isUncategorized} />
                   </div>
                 </div>

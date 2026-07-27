@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus } from '@teable/icons';
 import { uploadLogo } from '@teable/openapi';
@@ -53,8 +51,16 @@ export const BrandingLogo = (props: { value?: string }) => {
           onChange={handleLogoChange}
         />
         <div
+          role="button"
+          tabIndex={0}
           className="group relative flex h-fit items-center justify-center"
           onClick={() => fileInput.current?.click()}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              fileInput.current?.click();
+            }
+          }}
         >
           {logoUrl ? (
             <div className="relative size-14 overflow-hidden rounded-md border border-border">

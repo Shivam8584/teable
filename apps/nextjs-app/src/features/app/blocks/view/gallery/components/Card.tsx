@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events */
 import type { IAttachmentCellValue } from '@teable/core';
 import { FieldKeyType } from '@teable/core';
 import { ArrowDown, ArrowUp, History, Image, Link, Maximize2, MessageSquare } from '@teable/icons';
@@ -110,7 +109,15 @@ export const Card = (props: IKanbanCardProps) => {
       <ContextMenuTrigger>
         <div
           className="size-full cursor-pointer overflow-hidden rounded-md border border-input bg-card hover:border-primary/15"
+          role="button"
+          tabIndex={0}
           onClick={onExpand}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onExpand();
+            }
+          }}
         >
           {coverFieldId && (
             <Fragment>

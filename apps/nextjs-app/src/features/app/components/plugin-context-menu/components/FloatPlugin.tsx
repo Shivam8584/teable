@@ -1,5 +1,4 @@
-import { DragHandleDots2Icon } from '@radix-ui/react-icons';
-import { X } from '@teable/icons';
+import { DraggableHandle, X } from '@teable/icons';
 import { PluginPosition } from '@teable/openapi';
 import { Button, cn } from '@teable/ui-lib/shadcn';
 import { useRouter } from 'next/router';
@@ -137,7 +136,7 @@ export const FloatPlugin = (props: {
         <div className="flex items-center justify-between gap-2 border-b px-1">
           <div className="flex items-center gap-2 overflow-hidden">
             {!frozenDrag && (
-              <DragHandleDots2Icon className="float-plugin-drag-handle inline-block size-4 shrink-0 cursor-move" />
+              <DraggableHandle className="float-plugin-drag-handle inline-block size-4 shrink-0 cursor-move" />
             )}
             <div className={cn('truncate', { 'ml-2': frozenDrag })}>{name}</div>
           </div>

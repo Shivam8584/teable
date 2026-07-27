@@ -45,6 +45,23 @@ describe('formatDateToString', () => {
     expect(formatted).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 
+  it('should return empty string for an invalid/malformed cellValue instead of throwing', () => {
+    const formatting: IDatetimeFormatting = {
+      time: TimeFormatting.None,
+      date: DateFormattingPreset.ISO,
+      timeZone: timeZone,
+    };
+
+    expect(() => formatDateToString('', formatting)).not.toThrow();
+    expect(formatDateToString('', formatting)).toBe('');
+
+    expect(() => formatDateToString('not-a-real-date', formatting)).not.toThrow();
+    expect(formatDateToString('not-a-real-date', formatting)).toBe('');
+
+    expect(() => formatDateToString(undefined as unknown as string, formatting)).not.toThrow();
+    expect(formatDateToString(undefined as unknown as string, formatting)).toBe('');
+  });
+
   it('should validate time zone', () => {
     expect(
       datetimeFormattingSchema.safeParse({

@@ -1,10 +1,9 @@
 import type { IColorConfig } from '@teable/core';
 import { ColorConfigType, TimeFormatting } from '@teable/core';
-import { getDisplayChoiceMap } from '@teable/sdk';
+import { formatInTimeZone, fromZonedTime, getDisplayChoiceMap, toZonedTime } from '@teable/sdk';
 import { getColorPairs, isMarkdownShowAs, stripMarkdown } from '@teable/sdk/components';
 import type { DateField, IFieldInstance, Record, SingleSelectField } from '@teable/sdk/model';
 import { set } from 'date-fns';
-import { formatInTimeZone, toZonedTime, fromZonedTime } from 'date-fns-tz';
 import { DEFAULT_COLOR } from './components/CalendarConfig';
 
 export const getColorByConfig = (
@@ -37,7 +36,9 @@ export const getPlainCellText = (field: IFieldInstance, cellValue: unknown): str
 export const getEventTitle = (title: string, startDate: string | null, dateField: DateField) => {
   const { time, timeZone } = dateField.options.formatting;
   const includeTime = time !== TimeFormatting.None;
-  const timeStr = time === TimeFormatting.Hour24 ? time : 'hh:mm a';
+  // dayjs format tokens (formatInTimeZone now runs on dayjs, not date-fns): 'A' = uppercase AM/PM,
+  // matching the previous date-fns 'hh:mm a' output (date-fns's lowercase 'a' token renders "AM"/"PM").
+  const timeStr = time === TimeFormatting.Hour24 ? time : 'hh:mm A';
   const prefixStr =
     includeTime && startDate
       ? `${formatInTimeZone(new Date(startDate as string), timeZone, timeStr)} `

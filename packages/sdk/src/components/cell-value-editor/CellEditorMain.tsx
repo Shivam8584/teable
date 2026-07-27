@@ -183,7 +183,7 @@ export const CellEditorMain = (props: Omit<ICellValueEditor, 'wrapClassName' | '
     case FieldType.Checkbox: {
       return (
         // Setting the checkbox size is affected by the font-size causing the height to change.
-        <div style={{ fontSize: 0 }}>
+        <div className="text-[0px]">
           <CheckboxEditor
             className={className}
             value={cellValue as ICheckboxCellValue}

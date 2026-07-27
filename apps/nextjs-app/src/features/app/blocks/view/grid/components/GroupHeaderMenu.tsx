@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import { Expand, ExpandAll } from '@teable/icons';
 import type { GridView } from '@teable/sdk';
 import {
@@ -141,7 +140,16 @@ export const GroupHeaderMenu = () => {
                     'opacity-50': disabled,
                   })}
                   key={type}
+                  role="button"
+                  tabIndex={0}
                   onClick={async () => {
+                    if (disabled) return;
+                    await onClick();
+                    closeGroupHeaderMenu();
+                  }}
+                  onKeyDown={async (e) => {
+                    if (e.key !== 'Enter' && e.key !== ' ') return;
+                    e.preventDefault();
                     if (disabled) return;
                     await onClick();
                     closeGroupHeaderMenu();

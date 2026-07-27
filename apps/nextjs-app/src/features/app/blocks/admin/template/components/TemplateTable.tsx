@@ -178,10 +178,7 @@ export const TemplateTable = () => {
   const renderTableRow = (row: (typeof innerTemplates)[number]) => {
     return (
       <>
-        <TableCell
-          className="sticky left-16 w-[140px] min-w-[140px] bg-background"
-          style={{ zIndex: 2 }}
-        >
+        <TableCell className="sticky left-16 z-[2] w-[140px] min-w-[140px] bg-background">
           <TemplateCover
             cover={row.cover}
             onChange={(res) => {
@@ -189,10 +186,7 @@ export const TemplateTable = () => {
             }}
           />
         </TableCell>
-        <TableCell
-          className="sticky left-[204px] min-w-48 bg-background after:pointer-events-none after:absolute after:right-0 after:top-0 after:h-full after:w-px after:bg-border after:content-['']"
-          style={{ zIndex: 2 }}
-        >
+        <TableCell className="sticky left-[204px] z-[2] min-w-48 bg-background after:pointer-events-none after:absolute after:right-0 after:top-0 after:h-full after:w-px after:bg-border after:content-['']">
           <TextEditor
             value={row.name}
             onChange={(value) => {
@@ -298,16 +292,10 @@ export const TemplateTable = () => {
             </span>
           )}
         </TableCell>
-        <TableCell
-          className="sticky bg-background text-center before:pointer-events-none before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-border before:content-['']"
-          style={{ zIndex: 2, right: 144, width: 100, minWidth: 100, maxWidth: 100 }}
-        >
+        <TableCell className="sticky right-[144px] z-[2] w-[100px] min-w-[100px] max-w-[100px] bg-background text-center before:pointer-events-none before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-border before:content-['']">
           {row.usageCount ?? 0}/{row.visitCount ?? 0}
         </TableCell>
-        <TableCell
-          className="sticky bg-background text-center"
-          style={{ zIndex: 2, right: 72, width: 72, minWidth: 72, maxWidth: 72 }}
-        >
+        <TableCell className="sticky right-[72px] z-[2] w-[72px] min-w-[72px] max-w-[72px] bg-background text-center">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -335,10 +323,7 @@ export const TemplateTable = () => {
             </Tooltip>
           </TooltipProvider>
         </TableCell>
-        <TableCell
-          className="sticky bg-background"
-          style={{ zIndex: 2, right: 0, width: 72, minWidth: 72, maxWidth: 72 }}
-        >
+        <TableCell className="sticky right-0 z-[2] w-[72px] min-w-[72px] max-w-[72px] bg-background">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size={'icon-xs'}>
@@ -377,21 +362,12 @@ export const TemplateTable = () => {
     <div className="h-full overflow-auto">
       <Table className="relative w-max min-w-full scroll-smooth rounded-sm">
         <TableHeader className="sticky top-0 z-20 bg-background after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-border after:content-['']">
-          <TableRow className="h-16 bg-background" style={{ zIndex: 2 }}>
-            <TableHead
-              className="sticky left-0 w-16 min-w-16 bg-background"
-              style={{ zIndex: 3 }}
-            ></TableHead>
-            <TableHead
-              className="sticky left-16 w-[140px] min-w-[140px] bg-background"
-              style={{ zIndex: 3 }}
-            >
+          <TableRow className="z-[2] h-16 bg-background">
+            <TableHead className="sticky left-0 z-[3] w-16 min-w-16 bg-background"></TableHead>
+            <TableHead className="sticky left-16 z-[3] w-[140px] min-w-[140px] bg-background">
               {t('settings.templateAdmin.header.cover')}
             </TableHead>
-            <TableHead
-              className="sticky left-[204px] min-w-48 shrink-0 bg-background after:pointer-events-none after:absolute after:right-0 after:top-0 after:h-full after:w-px after:bg-border after:content-['']"
-              style={{ zIndex: 3 }}
-            >
+            <TableHead className="sticky left-[204px] z-[3] min-w-48 shrink-0 bg-background after:pointer-events-none after:absolute after:right-0 after:top-0 after:h-full after:w-px after:bg-border after:content-['']">
               {t('settings.templateAdmin.header.name')}
             </TableHead>
             <TableHead className="min-w-48 shrink-0">
@@ -418,22 +394,13 @@ export const TemplateTable = () => {
             <TableHead className="min-w-32">
               {t('settings.templateAdmin.header.createdBy')}
             </TableHead>
-            <TableHead
-              className="sticky bg-background text-center before:pointer-events-none before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-border before:content-['']"
-              style={{ zIndex: 3, right: 144, width: 100, minWidth: 100, maxWidth: 100 }}
-            >
+            <TableHead className="sticky right-[144px] z-[3] w-[100px] min-w-[100px] max-w-[100px] bg-background text-center before:pointer-events-none before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-border before:content-['']">
               {t('settings.templateAdmin.header.usage')}/{t('settings.templateAdmin.header.visit')}
             </TableHead>
-            <TableHead
-              className="sticky bg-background text-center"
-              style={{ zIndex: 3, right: 72, width: 72, minWidth: 72, maxWidth: 72 }}
-            >
+            <TableHead className="sticky right-[72px] z-[3] w-[72px] min-w-[72px] max-w-[72px] bg-background text-center">
               {t('settings.templateAdmin.header.preview')}
             </TableHead>
-            <TableHead
-              className="sticky bg-background"
-              style={{ zIndex: 3, right: 0, width: 72, minWidth: 72, maxWidth: 72 }}
-            >
+            <TableHead className="sticky right-0 z-[3] w-[72px] min-w-[72px] max-w-[72px] bg-background">
               {t('settings.templateAdmin.header.actions')}
             </TableHead>
           </TableRow>
@@ -455,8 +422,7 @@ export const TemplateTable = () => {
                           })}
                         >
                           <TableCell
-                            className="sticky left-0 w-16 min-w-16 cursor-grab bg-background active:cursor-grabbing"
-                            style={{ zIndex: 2 }}
+                            className="sticky left-0 z-[2] w-16 min-w-16 cursor-grab bg-background active:cursor-grabbing"
                             {...draggableProvided.dragHandleProps}
                           >
                             <DraggableHandle className="size-4 text-gray-400" />
@@ -482,10 +448,7 @@ export const TemplateTable = () => {
           <TableBody>
             {innerTemplates?.map((row) => (
               <TableRow key={row.id} className="max-h-24">
-                <TableCell
-                  className="sticky left-0 w-16 min-w-16 bg-background"
-                  style={{ zIndex: 2 }}
-                ></TableCell>
+                <TableCell className="sticky left-0 z-[2] w-16 min-w-16 bg-background"></TableCell>
                 {renderTableRow(row)}
               </TableRow>
             ))}

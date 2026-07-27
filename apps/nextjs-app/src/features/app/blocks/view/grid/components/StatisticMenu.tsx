@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
 import { getValidStatisticFunc, NoneFunc } from '@teable/core';
 import type { StatisticsFunc } from '@teable/core';
 import { useGridViewStore, useStatisticFunc2NameMap } from '@teable/sdk/components';
@@ -74,7 +73,15 @@ export const StatisticMenu = () => {
               <div
                 key={type}
                 className="flex w-full items-center border-b py-3"
+                role="button"
+                tabIndex={0}
                 onClick={() => onSelect(type)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onSelect(type);
+                  }
+                }}
               >
                 {statisticFunc2NameMap[type]}
               </div>

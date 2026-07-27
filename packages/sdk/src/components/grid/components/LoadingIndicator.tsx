@@ -59,7 +59,15 @@ export const LoadingIndicator = (props: ILoadingIndicatorProps) => {
           >
             <div
               className="pointer-events-auto absolute right-1 top-1 cursor-pointer rounded-full bg-background"
+              role="button"
+              tabIndex={0}
               onClick={onCancel}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onCancel?.();
+                }
+              }}
             >
               <div
                 className="absolute right-0 top-0 flex size-6 items-center justify-center rounded-full"

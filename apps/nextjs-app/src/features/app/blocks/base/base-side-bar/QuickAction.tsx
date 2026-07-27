@@ -1,5 +1,4 @@
-import { LaptopIcon } from '@radix-ui/react-icons';
-import { Moon, Search, Settings, Sun } from '@teable/icons';
+import { Laptop, Moon, Search, Settings, Sun } from '@teable/icons';
 import { useTheme } from '@teable/next-themes';
 import { BaseNodeResourceType } from '@teable/openapi';
 import { useBaseId, useIsAnonymous, useIsReadOnlyPreview } from '@teable/sdk/hooks';
@@ -186,7 +185,7 @@ export const QuickAction = () => {
               keywords={[t('common:settings.setting.system')]}
             >
               <div className="flex size-4 shrink-0 items-center justify-center text-muted-foreground">
-                <LaptopIcon className="size-full" />
+                <Laptop className="size-full" />
               </div>
               <span>{t('common:settings.setting.system')}</span>
             </CommandItem>

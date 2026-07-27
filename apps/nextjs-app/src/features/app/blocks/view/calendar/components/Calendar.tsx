@@ -13,6 +13,7 @@ import { FieldKeyType } from '@teable/core';
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Loader2 } from '@teable/icons';
 import { useTheme } from '@teable/next-themes';
 import { updateRecord } from '@teable/openapi';
+import { fromZonedTime, toZonedTime } from '@teable/sdk';
 import { AppContext, CalendarDailyCollectionContext } from '@teable/sdk/context';
 import { useTableId, useRecordOperations } from '@teable/sdk/hooks';
 import type { Record } from '@teable/sdk/model';
@@ -30,7 +31,6 @@ import {
 } from '@teable/ui-lib/shadcn';
 import { addDays, subDays, format, set } from 'date-fns';
 import { enUS, zhCN, ja, ru, fr } from 'date-fns/locale';
-import { toZonedTime, fromZonedTime } from 'date-fns-tz';
 import { useTranslation } from 'next-i18next';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { tableConfig } from '@/features/i18n/table.config';

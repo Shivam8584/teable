@@ -4,8 +4,10 @@ import { json, jsonParseLinter } from '@codemirror/lang-json';
 import { syntaxHighlighting, defaultHighlightStyle } from '@codemirror/language';
 import { linter } from '@codemirror/lint';
 import { EditorView, keymap } from '@codemirror/view';
-import { isObject } from 'lodash';
 import { useEffect, useRef } from 'react';
+
+const isObject = (value: unknown): value is object =>
+  (typeof value === 'object' && value !== null) || typeof value === 'function';
 
 export const JsonEditor = (props: {
   value?: Record<string, any>;

@@ -254,11 +254,7 @@ export const ViewListItem: React.FC<IProps> = ({ view, removable, isActive, onEd
             >
               {commonPart}
             </Button>
-            <iframe
-              ref={iframeRef}
-              title="This for export csv download"
-              style={{ display: 'none' }}
-            />
+            <iframe ref={iframeRef} title="This for export csv download" className="hidden" />
           </div>
         </ContextMenuTrigger>
         <ContextMenuContent>

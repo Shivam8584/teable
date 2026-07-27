@@ -211,8 +211,7 @@ export const CreateRecordModal = (props: ICreateRecordModalProps) => {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent
         closeable={false}
-        className="flex h-full max-w-3xl flex-col p-0 pt-6"
-        style={{ width: 'calc(100% - 40px)', height: 'calc(100% - 100px)' }}
+        className="flex h-[calc(100%_-_100px)] w-[calc(100%_-_40px)] max-w-3xl flex-col p-0 pt-6"
         onMouseDown={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
       >

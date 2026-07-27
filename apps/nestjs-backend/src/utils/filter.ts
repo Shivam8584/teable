@@ -9,8 +9,13 @@ import {
   CellValueType,
   exactFormatDate,
 } from '@teable/core';
-import { fromZonedTime } from 'date-fns-tz';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import type { IFieldInstance } from '../features/field/model/factory';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const SPECIAL_OPERATOR_FIELD_TYPE_SET = new Set([
   FieldType.SingleSelect,
@@ -64,7 +69,10 @@ export const generateFilterItem = (field: IFieldInstance, value: unknown) => {
     const timeZone =
       (options?.formatting as IDatetimeFormatting)?.timeZone ??
       Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const dateStr = fromZonedTime(value as string, timeZone).toISOString();
+    const dateStr = dayjs
+      .tz(value as string, timeZone)
+      .toDate()
+      .toISOString();
     value = {
       exactDate: dateStr,
       mode: exactFormatDate.value,

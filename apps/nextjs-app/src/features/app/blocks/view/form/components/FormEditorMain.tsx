@@ -242,8 +242,7 @@ export const FormEditorMain = (props: { fields: IFieldInstance[] }) => {
           </div>
         ) : (
           <div
-            className="mx-12 mb-6 mt-16 rounded-md px-2 py-1 text-center text-3xl hover:bg-surface sm:px-4"
-            style={{ overflowWrap: 'break-word' }}
+            className="mx-12 mb-6 mt-16 break-words rounded-md px-2 py-1 text-center text-3xl hover:bg-surface sm:px-4"
             tabIndex={0}
             role={'button'}
             onKeyDown={(e) => {

@@ -49,11 +49,19 @@ export const DragItem: FC<IDragItemProps> = (props) => {
   }).Icon;
   const content = (
     <div
+      role="button"
+      tabIndex={0}
       className={cn(
         'mb-2 flex items-center h-8 justify-between rounded-md bg-muted border p-2 ',
         disabled && 'cursor-not-allowed text-muted-foreground'
       )}
       onClick={() => !disabled && onClick?.()}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          !disabled && onClick?.();
+        }
+      }}
     >
       <div className="flex items-center overflow-hidden">
         <Icon className="ml-1 mr-2 size-4 shrink-0 text-muted-foreground" />

@@ -1,8 +1,8 @@
 import type { IFilter } from '@teable/core';
 import { mergeFilter, and, exactDate, isOnOrBefore, isOnOrAfter, or, is } from '@teable/core';
+import { fromZonedTime } from '@teable/sdk';
 import { RowCountProvider } from '@teable/sdk/context';
 import { format } from 'date-fns';
-import { fromZonedTime } from 'date-fns-tz';
 import { useMemo } from 'react';
 import { useCalendar } from '../hooks';
 import { EventList } from './EventList';

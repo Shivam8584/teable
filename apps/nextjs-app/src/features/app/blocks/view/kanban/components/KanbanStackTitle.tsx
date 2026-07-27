@@ -26,10 +26,17 @@ export const KanbanStackTitle = (props: IKanbanStackTitle) => {
           <span className="rounded-xl border px-2 text-xs">{stackCount}</span>
         </div>
       ) : (
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
           className="flex items-center space-x-2 overflow-hidden text-muted-foreground"
+          role="button"
+          tabIndex={0}
           onClick={onClick}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onClick?.();
+            }
+          }}
         >
           <div className="min-w-0 flex-1 overflow-hidden">
             <CellValue

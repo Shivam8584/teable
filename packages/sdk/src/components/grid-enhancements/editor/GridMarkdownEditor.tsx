@@ -240,10 +240,7 @@ const GridMarkdownEditorBase: ForwardRefRenderFunction<
   return (
     <>
       {!isScrolling && (!isReadonly || canExpandReadonly) && (
-        <div
-          className="pointer-events-auto absolute right-1 top-1 z-10"
-          style={{ marginRight: -2, marginTop: -2 }}
-        >
+        <div className="pointer-events-auto absolute right-1 top-1 z-10 -mr-0.5 -mt-0.5">
           <ExpandMarkdownEditor
             key={`${record.id}:${field.id}`}
             value={editorValue}

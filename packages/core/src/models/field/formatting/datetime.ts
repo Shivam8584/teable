@@ -1,4 +1,3 @@
-import { formatInTimeZone } from 'date-fns-tz';
 import dayjs from 'dayjs';
 import { z } from '../../../zod';
 import { timeZoneStringSchema } from './time-zone';
@@ -64,12 +63,8 @@ export const formatDateToString = (
   const { date, time, timeZone } = formatting ?? defaultDatetimeFormatting;
   const format = time === TimeFormatting.None ? date : `${date} ${time}`;
 
-  try {
-    return dayjs(cellValue).tz(timeZone).format(format);
-  } catch {
-    // in export service case, crash in dayjs, so use date-fns-tz
-    return formatInTimeZone(cellValue, timeZone, format.replace(/D/g, 'd').replace(/Y/g, 'y'));
-  }
+  const d = dayjs(cellValue);
+  return d.isValid() ? d.tz(timeZone).format(format) : '';
 };
 
 export const normalizeDateFormatting = (dateFormatting: string): string => {

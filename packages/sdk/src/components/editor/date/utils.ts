@@ -1,7 +1,7 @@
 import type { IDatetimeFormatting } from '@teable/core';
 import { formatDateToString, normalizeDateFormatting, TimeFormatting } from '@teable/core';
-import { fromZonedTime } from 'date-fns-tz';
 import dayjs from 'dayjs';
+import { fromZonedTime, toZonedTime } from '../../../utils';
 
 export const formatDisplayValue = (value: string, formatting: IDatetimeFormatting) => {
   const normalizedFormatting = {
@@ -24,7 +24,7 @@ export const convertZonedInputToUtc = (inputValue: string, formatting: IDatetime
   if (!isValid) return null;
 
   if (isTimeNone) {
-    const now = fromZonedTime(new Date(), timeZone);
+    const now = toZonedTime(new Date(), timeZone);
     curDate = curDate
       .set('hour', now.getHours())
       .set('minute', now.getMinutes())

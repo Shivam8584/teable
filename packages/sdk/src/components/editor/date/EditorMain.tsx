@@ -1,11 +1,11 @@
 import { type IDateFieldOptions, TimeFormatting } from '@teable/core';
 import { Button, Calendar, cn, NavView } from '@teable/ui-lib';
 import { enUS, zhCN, ja, ru, fr } from 'date-fns/locale';
-import { formatInTimeZone, toDate, toZonedTime, fromZonedTime } from 'date-fns-tz';
 import type { ForwardRefRenderFunction } from 'react';
 import { forwardRef, useContext, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { AppContext } from '../../../context';
 import { useTranslation } from '../../../context/app/i18n';
+import { formatInTimeZone, fromZonedTime, toDate, toZonedTime } from '../../../utils';
 import type { ICellEditor, IEditorRef } from '../type';
 import { TimePicker } from './TimePicker';
 
@@ -68,7 +68,7 @@ const DateEditorMainBase: ForwardRefRenderFunction<IEditorRef<string>, IDateEdit
       curDatetime.setMinutes(prevDatetime.getMinutes());
       curDatetime.setSeconds(prevDatetime.getSeconds());
     } else {
-      const tempDate = now();
+      const tempDate = toZonedTime(now(), timeZone);
 
       curDatetime.setHours(tempDate.getHours());
       curDatetime.setMinutes(tempDate.getMinutes());
@@ -94,7 +94,7 @@ const DateEditorMainBase: ForwardRefRenderFunction<IEditorRef<string>, IDateEdit
   }, [date, timeZone]);
 
   const onTimeChange = (timeStr: string) => {
-    const datetime = date ? toZonedTime(date, timeZone) : now();
+    const datetime = date ? toZonedTime(date, timeZone) : toZonedTime(now(), timeZone);
 
     const hours = Number.parseInt(timeStr.split(':')[0] || '00', 10);
     const minutes = Number.parseInt(timeStr.split(':')[1] || '00', 10);
@@ -115,7 +115,10 @@ const DateEditorMainBase: ForwardRefRenderFunction<IEditorRef<string>, IDateEdit
     onChange?.(val);
   };
 
-  const now = () => fromZonedTime(new Date(), timeZone);
+  // `now()` is intentionally a plain, unzoned instant: `formatInTimeZone`/`toZonedTime` calls below
+  // apply the timezone conversion themselves. Callers that need the wall-clock time-of-day in
+  // `timeZone` (e.g. to read via `.getHours()`) must wrap this in `toZonedTime(now(), timeZone)`.
+  const now = () => new Date();
 
   const defaultTimeValue = useMemo(
     () => formatInTimeZone(now().toISOString(), timeZone, 'HH:mm'),

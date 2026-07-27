@@ -1,4 +1,4 @@
-import { DotsHorizontalIcon } from '@radix-ui/react-icons';
+import { MoreHorizontal } from '@teable/icons';
 import { useTableId, useFieldOperations } from '@teable/sdk/hooks';
 import {
   DropdownMenu,
@@ -21,7 +21,7 @@ export const Actions = ({ fieldId }: { fieldId: string }) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon-sm">
-          <DotsHorizontalIcon className="size-5" />
+          <MoreHorizontal className="size-5" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

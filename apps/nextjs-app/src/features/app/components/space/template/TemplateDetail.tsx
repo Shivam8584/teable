@@ -8,7 +8,8 @@ import { MarkdownPreview } from '@teable/sdk';
 import { ReactQueryKeys } from '@teable/sdk/config/react-query-keys';
 import { useIsMobile } from '@teable/sdk/hooks';
 import { Spin } from '@teable/ui-lib/base';
-import { Badge, Button, cn, useToast } from '@teable/ui-lib/shadcn';
+import { Badge, Button, cn } from '@teable/ui-lib/shadcn';
+import { toast } from '@teable/ui-lib/shadcn/ui/sonner';
 import { ArrowUpRight, ChevronLeft, Share2 } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -28,7 +29,6 @@ export const TemplateDetail = (props: ITemplateDetailProps) => {
   const { t } = useTranslation(['common']);
   const detailRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
-  const { toast } = useToast();
   const { data: _templateDetail } = useQuery({
     queryKey: ReactQueryKeys.templateDetail(templateId),
     queryFn: () => getTemplateDetail(templateId).then((res) => res.data),
@@ -85,9 +85,7 @@ export const TemplateDetail = (props: ITemplateDetailProps) => {
   const handleCopyPermalink = () => {
     const permalink = `${window.location.origin}/t/${templateId}`;
     navigator.clipboard.writeText(permalink);
-    toast({
-      title: t('common:template.non.copy'),
-    });
+    toast(t('common:template.non.copy'));
   };
 
   useEffect(() => {

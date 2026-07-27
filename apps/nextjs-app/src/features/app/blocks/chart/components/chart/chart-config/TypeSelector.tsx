@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { ChevronsUpDown, Table2 } from '@teable/icons';
 import { Button, cn, Popover, PopoverContent, PopoverTrigger } from '@teable/ui-lib';
 import { BarChart, LineChart, PieChart, AreaChart } from 'lucide-react';
@@ -65,9 +63,18 @@ export const TypeSelector = (props: {
           {options.map(({ label, Icon, value }) => (
             <div
               key={value}
+              role="button"
+              tabIndex={0}
               onClick={() => {
                 onChange(value);
                 setOpen(false);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onChange(value);
+                  setOpen(false);
+                }
               }}
             >
               <div

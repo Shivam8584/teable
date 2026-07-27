@@ -25,10 +25,7 @@ const BaseErdialog = ({ baseId }: { baseId: string }) => {
       <DialogTrigger asChild>
         <Button variant="outline">ERD</Button>
       </DialogTrigger>
-      <DialogContent
-        className="flex max-w-7xl p-0"
-        style={{ width: 'calc(100% - 40px)', height: 'calc(100% - 100px)' }}
-      >
+      <DialogContent className="flex h-[calc(100%_-_100px)] w-[calc(100%_-_40px)] max-w-7xl p-0">
         <DynamicBaseErd baseId={baseId} />
       </DialogContent>
     </Dialog>

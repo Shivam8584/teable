@@ -16,10 +16,17 @@ export const CollaboratorButton = forwardRef<
 >(({ className, collaborators, total, onClick }, ref) => {
   const { t } = useTranslation('common');
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       ref={ref}
+      role="button"
+      tabIndex={0}
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick();
+        }
+      }}
       className={cn(
         'inline-flex h-12 w-full cursor-pointer items-center justify-between gap-2 whitespace-nowrap rounded-md p-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground',
         className

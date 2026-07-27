@@ -89,13 +89,7 @@ export const OverflowTooltip = (props: IOverflowTooltipProps) => {
           }}
           className="w-full text-left"
         >
-          <div
-            className={cn(className, 'overflow-hidden')}
-            style={{
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
-          >
+          <div className={cn(className, 'overflow-hidden text-ellipsis whitespace-nowrap')}>
             {text}
           </div>
         </TooltipTrigger>

@@ -69,7 +69,16 @@ export const TableListItem: React.FC<IProps> = ({
         onClick={navigateHandler}
         onContextMenu={() => setOpen(true)}
       >
-        <div>
+        <div
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              navigateHandler();
+            }
+          }}
+        >
           {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
           <div onClick={(e) => e.stopPropagation()}>
             <EmojiPicker

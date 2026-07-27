@@ -20,8 +20,10 @@ export const Modal: FC<
       <DialogContent
         closeable={false}
         container={container}
-        className={cn('h-full block rounded-lg p-0 max-w-4xl', className)}
-        style={{ width: 'calc(100% - 40px)', height: 'calc(100% - 100px)' }}
+        className={cn(
+          'block h-[calc(100%_-_100px)] w-[calc(100%_-_40px)] max-w-4xl rounded-lg p-0',
+          className
+        )}
         overlay={
           <DialogOverlay
             onClick={(e) => {

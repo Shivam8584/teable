@@ -156,8 +156,9 @@ const MediaPlaceholderElement = withHOC(
             onClick={() => !loading && openFilePicker()}
             contentEditable={false}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                openFilePicker();
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                if (!loading) openFilePicker();
               }
             }}
             role="button"

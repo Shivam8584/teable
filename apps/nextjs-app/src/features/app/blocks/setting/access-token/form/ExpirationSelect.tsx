@@ -1,4 +1,4 @@
-import { CalendarIcon } from '@radix-ui/react-icons';
+import { Calendar as CalendarIcon } from '@teable/icons';
 import {
   Select,
   SelectTrigger,
