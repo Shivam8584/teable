@@ -55,22 +55,6 @@ if (!NEXT_BUILD_ENV_SOURCEMAPS) {
   );
 }
 
-// Tell webpack to compile those packages
-// @link https://www.npmjs.com/package/next-transpile-modules
-const tmModules = [
-  // for legacy browsers support (only in prod and none electron)
-  ...(isProd && !process.versions['electron'] ? [] : []),
-  // ESM only packages are not yet supported by NextJs if you're not
-  // using experimental esmExternals
-  // @link {https://nextjs.org/blog/next-11-1#es-modules-support|Blog 11.1.0}
-  // @link {https://github.com/vercel/next.js/discussions/27876|Discussion}
-  // @link https://github.com/vercel/next.js/issues/23725
-  // @link https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
-  ...[
-    // ie: newer versions of https://github.com/sindresorhus packages
-  ],
-];
-
 // @link https://github.com/jagaapple/next-secure-headers
 const secureHeaders = createSecureHeaders({
   contentSecurityPolicy: {
@@ -339,16 +323,6 @@ if (NEXT_BUILD_ENV_SENTRY_ENABLED === true) {
   } catch {
     console.log(`- ${pc.red('error')} Could not enable sentry, import failed`);
   }
-}
-
-if (tmModules.length > 0) {
-  console.info(`${pc.green('notice')}- Will transpile [${tmModules.join(',')}]`);
-  const withNextTranspileModules = require('next-transpile-modules');
-
-  config = withNextTranspileModules(tmModules, {
-    resolveSymlinks: true,
-    debug: false,
-  })(config);
 }
 
 if (process.env.ANALYZE === 'true') {

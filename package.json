@@ -78,7 +78,7 @@
     "prettier": "3.2.5",
     "rimraf": "5.0.5",
     "shell-quote": "1.8.1",
-    "typescript": "5.4.3",
+    "typescript": "5.9.3",
     "zx": "8.8.5"
   },
   "engines": {
