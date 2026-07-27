@@ -246,6 +246,11 @@ class FakeTableRepository implements ITableRepository {
     this.tablesById.delete(table.id().toString());
     return ok(undefined);
   }
+
+  async restore(_: IExecutionContext, table: Table): Promise<Result<void, DomainError>> {
+    this.tablesById.set(table.id().toString(), table);
+    return ok(undefined);
+  }
 }
 
 class FakeTableSchemaRepository implements ITableSchemaRepository {

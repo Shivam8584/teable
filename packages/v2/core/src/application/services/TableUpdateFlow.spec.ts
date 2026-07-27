@@ -108,6 +108,10 @@ class FakeTableRepository implements ITableRepository {
     return ok(undefined);
   }
 
+  async restore(_: IExecutionContext, __: Table): Promise<Result<void, DomainError>> {
+    return ok(undefined);
+  }
+
   async setProvisionState(
     _: IExecutionContext,
     __: Table,

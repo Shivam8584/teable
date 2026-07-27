@@ -25,6 +25,7 @@ import {
 } from '../FieldFactory';
 import { FieldId } from '../FieldId';
 import { FieldName } from '../FieldName';
+import type { AutoNumberField } from '../types/AutoNumberField';
 import { ButtonLabel } from '../types/ButtonLabel';
 import { ButtonMaxCount } from '../types/ButtonMaxCount';
 import { ButtonResetCount } from '../types/ButtonResetCount';
@@ -34,10 +35,13 @@ import { CellValueType } from '../types/CellValueType';
 import { CheckboxDefaultValue } from '../types/CheckboxDefaultValue';
 import { ConditionalLookupOptions } from '../types/ConditionalLookupOptions';
 import { ConditionalRollupConfig } from '../types/ConditionalRollupConfig';
+import type { CreatedTimeField } from '../types/CreatedTimeField';
 import { DateDefaultValue } from '../types/DateDefaultValue';
 import { DateTimeFormatting } from '../types/DateTimeFormatting';
 import { FieldColor } from '../types/FieldColor';
 import { FormulaExpression } from '../types/FormulaExpression';
+import type { LastModifiedTimeField } from '../types/LastModifiedTimeField';
+import type { LinkField } from '../types/LinkField';
 import { LinkFieldConfig } from '../types/LinkFieldConfig';
 import { LinkRelationship } from '../types/LinkRelationship';
 import { LookupField } from '../types/LookupField';
@@ -381,11 +385,11 @@ describe('FieldOptionsDtoVisitor', () => {
       id: createFieldId('z'),
       name: createFieldName('Updated Time'),
       trackedFieldIds: [trackedFieldId],
-    })._unsafeUnwrap();
+    })._unsafeUnwrap() as LastModifiedTimeField;
     const minimalLastModifiedTimeField = createLastModifiedTimeField({
       id: createFieldId('A'),
       name: createFieldName('Any Update'),
-    })._unsafeUnwrap();
+    })._unsafeUnwrap() as LastModifiedTimeField;
     const userField = createUserField({
       id: createFieldId('B'),
       name: createFieldName('Assignee'),
@@ -479,11 +483,11 @@ describe('FieldOptionsDtoVisitor', () => {
     const createdTimeField = createCreatedTimeField({
       id: createFieldId('K'),
       name: createFieldName('Created Time'),
-    })._unsafeUnwrap();
+    })._unsafeUnwrap() as CreatedTimeField;
     const autoNumberField = createAutoNumberField({
       id: createFieldId('L'),
       name: createFieldName('No.'),
-    })._unsafeUnwrap();
+    })._unsafeUnwrap() as AutoNumberField;
     const ratingField = createRatingField({
       id: createFieldId('M'),
       name: createFieldName('Priority'),
@@ -515,7 +519,7 @@ describe('FieldOptionsDtoVisitor', () => {
         selfKeyName: '__id',
         foreignKeyName: '__fk_project',
       })._unsafeUnwrap(),
-    })._unsafeUnwrap();
+    })._unsafeUnwrap() as LinkField;
     const conditionalLookupField = createConditionalLookupField({
       id: createFieldId('P'),
       name: createFieldName('Conditional Lookup'),

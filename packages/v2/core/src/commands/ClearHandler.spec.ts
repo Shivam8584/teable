@@ -3,6 +3,7 @@ import type { Result } from 'neverthrow';
 import { describe, expect, it } from 'vitest';
 
 import { TableQueryService } from '../application/services/TableQueryService';
+import type { UndoRedoStackService } from '../application/services/UndoRedoStackService';
 import { BaseId } from '../domain/base/BaseId';
 import { ActorId } from '../domain/shared/ActorId';
 import type { DomainError } from '../domain/shared/DomainError';
@@ -190,6 +191,12 @@ class FakeTableRepository implements ITableRepository {
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   updatedRecords: TableRecord[] = [];
   updateManyStreamUpdatedRecordIds?: ReadonlySet<string>;
   updateManyStreamVersions = new Map<string, number>();
@@ -560,7 +567,7 @@ describe('ClearHandler', () => {
       recordRepository,
       recordQueryRepository,
       eventBus,
-      undoRedoService as unknown as UndoRedoService,
+      undoRedoService as unknown as UndoRedoStackService,
       new FakeUnitOfWork()
     );
 

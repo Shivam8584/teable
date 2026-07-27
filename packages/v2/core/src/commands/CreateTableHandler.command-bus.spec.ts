@@ -407,7 +407,7 @@ describe('CreateTableHandler', () => {
     class FailingTableSchemaRepository implements ITableSchemaRepository {
       private static readonly failureMessage = 'Forced schema failure';
 
-      private fail(): Result<void, DomainError> {
+      private fail(): Result<never, DomainError> {
         return err(
           domainError.unexpected({ message: FailingTableSchemaRepository.failureMessage })
         );

@@ -108,6 +108,10 @@ class FakeTableRepository implements ITableRepository {
   async delete(_: IExecutionContext, __: Table): Promise<Result<void, DomainError>> {
     return ok(undefined);
   }
+
+  async restore(_: IExecutionContext, __: Table): Promise<Result<void, DomainError>> {
+    return ok(undefined);
+  }
 }
 
 class FakeEventBus implements IEventBus {

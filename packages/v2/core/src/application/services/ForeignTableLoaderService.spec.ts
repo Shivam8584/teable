@@ -160,7 +160,7 @@ describe('ForeignTableLoaderService', () => {
     const fieldId = FieldId.create(`fld${'l'.repeat(16)}`)._unsafeUnwrap();
     const spec = new SetLinkValueSpec(
       fieldId,
-      CellValue.fromValidated({ id: `rec${'m'.repeat(16)}` }),
+      CellValue.fromValidated([{ id: `rec${'m'.repeat(16)}` }]),
       table.id()
     );
 

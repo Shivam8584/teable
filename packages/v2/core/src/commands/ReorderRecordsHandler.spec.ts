@@ -29,6 +29,7 @@ import type {
   BatchRecordMutationResult,
   ITableRecordRepository,
   RecordMutationResult,
+  UpdateManyResult,
   UpdateManyStreamResult,
 } from '../ports/TableRecordRepository';
 import type { ITableRepository } from '../ports/TableRepository';
@@ -115,9 +116,19 @@ class FakeTableRepository implements ITableRepository {
   async delete(): Promise<Result<void, DomainError>> {
     return ok(undefined);
   }
+
+  async restore(): Promise<Result<void, DomainError>> {
+    return ok(undefined);
+  }
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   updateBatches: ReadonlyArray<ReadonlyArray<RecordUpdateResult>> = [];
 
   async insert(): Promise<Result<RecordMutationResult, DomainError>> {
@@ -136,8 +147,8 @@ class FakeTableRecordRepository implements ITableRecordRepository {
     return ok({});
   }
 
-  async updateMany(): Promise<Result<BatchRecordMutationResult, DomainError>> {
-    return ok({});
+  async updateMany(): Promise<Result<UpdateManyResult, DomainError>> {
+    return ok({ totalUpdated: 0, updatedRecordIds: [], updatedRecords: [] });
   }
 
   async updateManyStream(
@@ -158,6 +169,10 @@ class FakeTableRecordRepository implements ITableRecordRepository {
 
   async deleteMany() {
     return ok({});
+  }
+
+  async deleteManyStream(): Promise<Result<{ totalDeleted: number }, DomainError>> {
+    return ok({ totalDeleted: 0 });
   }
 }
 
@@ -237,7 +252,7 @@ describe('ReorderRecordsHandler', () => {
       } as IRecordOrderCalculator,
       eventBus,
       {
-        appendEntry: async (_context, _tableId, entry) => {
+        appendEntry: async (_context: unknown, _tableId: unknown, entry: unknown) => {
           undoRedoEntries.push(entry);
           return ok(undefined);
         },
@@ -301,7 +316,7 @@ describe('ReorderRecordsHandler', () => {
       } as IRecordOrderCalculator,
       new FakeEventBus(),
       {
-        appendEntry: async (_context, _tableId, entry) => {
+        appendEntry: async (_context: unknown, _tableId: unknown, entry: unknown) => {
           undoRedoEntries.push(entry);
           return ok(undefined);
         },

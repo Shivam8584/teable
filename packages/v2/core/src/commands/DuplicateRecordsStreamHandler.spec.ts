@@ -43,6 +43,10 @@ import type {
   RecordMutationResult,
   RecordStoredSnapshot,
 } from '../ports/TableRecordRepository';
+import type {
+  IRecordWritePlugin,
+  RecordWriteDuplicateStreamPayload,
+} from '../ports/RecordWritePlugin';
 import type { ITableRepository } from '../ports/TableRepository';
 import type { ISpan, ITracer, SpanAttributes } from '../ports/Tracer';
 import type { IUnitOfWork, UnitOfWorkOperation } from '../ports/UnitOfWork';
@@ -216,6 +220,12 @@ class FakeTableRecordQueryRepository implements ITableRecordQueryRepository {
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   failInsertByBatchIndex = new Map<number, DomainError>();
   omitRecordSnapshotsByBatchIndex = new Set<number>();
   insertContexts: Array<IExecutionContext> = [];
@@ -594,8 +604,14 @@ describe('DuplicateRecordsStreamHandler', () => {
     expect(calls.guard).toHaveLength(3);
     expect(calls.beforePersist).toHaveLength(2);
     expect(calls.afterCommit).toHaveLength(2);
-    expect(calls.prepare.map((call) => call.payload.recordCount)).toEqual([3, 2, 1]);
-    expect(calls.prepare.map((call) => call.payload.sourceRecordIds.length)).toEqual([0, 2, 1]);
+    expect(
+      calls.prepare.map((call) => (call.payload as RecordWriteDuplicateStreamPayload).recordCount)
+    ).toEqual([3, 2, 1]);
+    expect(
+      calls.prepare.map(
+        (call) => (call.payload as RecordWriteDuplicateStreamPayload).sourceRecordIds.length
+      )
+    ).toEqual([0, 2, 1]);
     expect(calls.prepareStates).toEqual([undefined, undefined, undefined]);
     expect(calls.prepare.map((call) => call.orchestration)).toEqual([
       {
@@ -622,8 +638,12 @@ describe('DuplicateRecordsStreamHandler', () => {
         chunkIndex: 1,
       },
     ]);
-    expect(calls.prepare[1]?.payload.order).toBeInstanceOf(RecordInsertOrder);
-    expect(calls.prepare[2]?.payload.order).toBeInstanceOf(RecordInsertOrder);
+    expect(
+      (calls.prepare[1]?.payload as RecordWriteDuplicateStreamPayload | undefined)?.order
+    ).toBeInstanceOf(RecordInsertOrder);
+    expect(
+      (calls.prepare[2]?.payload as RecordWriteDuplicateStreamPayload | undefined)?.order
+    ).toBeInstanceOf(RecordInsertOrder);
   });
 
   it('yields to the event loop after each duplicate chunk', async () => {
@@ -652,7 +672,7 @@ describe('DuplicateRecordsStreamHandler', () => {
     })._unsafeUnwrap();
 
     let yieldCount = 0;
-    const immediateHolder = globalThis as typeof globalThis & {
+    const immediateHolder = globalThis as unknown as {
       setImmediate?: (callback: () => void) => void;
     };
     const previousImmediate = immediateHolder.setImmediate;
@@ -734,7 +754,7 @@ describe('DuplicateRecordsStreamHandler', () => {
     const heavyPrepareScopes: string[] = [];
     const seenPreviousStates: unknown[] = [];
     const guardStates: unknown[] = [];
-    const plugin = {
+    const plugin: IRecordWritePlugin<{ cached: string } | undefined> = {
       name: 'operation-only-duplicate-plugin',
       supports: () => true,
       prepare(context, previousPreparedState) {

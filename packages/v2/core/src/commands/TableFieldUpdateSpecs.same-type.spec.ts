@@ -103,7 +103,7 @@ type SameTypeCase = {
     currentField: Field;
     input: Record<string, unknown>;
     expectedSpecNames: string[];
-    assertSpecs?: (specs: unknown[]) => void;
+    assertSpecs?: (specs: readonly unknown[]) => void;
   };
 };
 

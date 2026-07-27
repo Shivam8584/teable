@@ -142,6 +142,10 @@ class FakeTableRepository implements ITableRepository {
     return ok(undefined);
   }
 
+  async restore(_context: IExecutionContext, _table: Table): Promise<Result<void, DomainError>> {
+    return ok(undefined);
+  }
+
   async setProvisionStateMany(
     _context: IExecutionContext,
     tables: ReadonlyArray<Table>,
@@ -181,6 +185,12 @@ class FakeTableSchemaRepository implements ITableSchemaRepository {
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   insertedCount = 0;
   insertedTableIds: string[] = [];
   insertedRecordsByTable = new Map<string, TableRecord[]>();

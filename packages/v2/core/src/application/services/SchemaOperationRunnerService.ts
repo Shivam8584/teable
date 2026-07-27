@@ -67,8 +67,12 @@ const nonRetryableTags = new Set<DomainErrorTag>([
 ]);
 const nonRetryableCodes = new Set(['schema_operation.repair_not_supported']);
 
+const isSchemaOperationTypeArray = (
+  value: SchemaOperationType | ReadonlyArray<SchemaOperationType>
+): value is ReadonlyArray<SchemaOperationType> => Array.isArray(value);
+
 const handlerTypes = (handler: ISchemaOperationHandler): ReadonlyArray<SchemaOperationType> =>
-  Array.isArray(handler.type) ? handler.type : [handler.type];
+  isSchemaOperationTypeArray(handler.type) ? handler.type : [handler.type];
 
 const describeError = (error: unknown): string => {
   if (isDomainError(error)) return error.message;

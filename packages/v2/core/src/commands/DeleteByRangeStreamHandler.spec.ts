@@ -39,6 +39,7 @@ import type {
   RecordMutationResult,
   RecordStoredSnapshot,
 } from '../ports/TableRecordRepository';
+import type { IRecordWritePlugin, RecordWriteDeleteManyPayload } from '../ports/RecordWritePlugin';
 import type { ITableRepository } from '../ports/TableRepository';
 import type { ISpan, ITracer, SpanAttributes } from '../ports/Tracer';
 import type { IUnitOfWork, UnitOfWorkOperation } from '../ports/UnitOfWork';
@@ -157,9 +158,19 @@ class FakeTableRepository implements ITableRepository {
   async delete(_: IExecutionContext, __: Table): Promise<Result<void, DomainError>> {
     return ok(undefined);
   }
+
+  async restore(_: IExecutionContext, __: Table): Promise<Result<void, DomainError>> {
+    return ok(undefined);
+  }
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   failDeleteByBatchIndex = new Map<number, DomainError>();
   deleteContexts: Array<IExecutionContext> = [];
   deleteRecordIdsByBatch: string[][] = [];
@@ -512,7 +523,9 @@ describe('DeleteByRangeStreamHandler', () => {
     expect(calls.guard).toHaveLength(3);
     expect(calls.beforePersist).toHaveLength(2);
     expect(calls.afterCommit).toHaveLength(2);
-    expect(calls.prepare.map((call) => call.payload.recordCount)).toEqual([3, 2, 1]);
+    expect(
+      calls.prepare.map((call) => (call.payload as RecordWriteDeleteManyPayload).recordCount)
+    ).toEqual([3, 2, 1]);
     expect(calls.prepareStates).toEqual([undefined, undefined, undefined]);
     expect(calls.prepare.map((call) => call.orchestration)).toEqual([
       {
@@ -555,7 +568,7 @@ describe('DeleteByRangeStreamHandler', () => {
     const heavyPrepareScopes: string[] = [];
     const seenPreviousStates: unknown[] = [];
     const guardStates: unknown[] = [];
-    const plugin = {
+    const plugin: IRecordWritePlugin<{ cached: string } | undefined> = {
       name: 'operation-only-delete-plugin',
       supports: () => true,
       prepare(context, previousPreparedState) {
@@ -728,10 +741,9 @@ describe('DeleteByRangeStreamHandler', () => {
         Array.from({ length: expectedChunkCount }, () => 5_000)
       );
       expect(calls.prepare).toHaveLength(expectedChunkCount + 1);
-      expect(calls.prepare.map((call) => call.payload.recordCount)).toEqual([
-        totalCount,
-        ...Array.from({ length: expectedChunkCount }, () => 5_000),
-      ]);
+      expect(
+        calls.prepare.map((call) => (call.payload as RecordWriteDeleteManyPayload).recordCount)
+      ).toEqual([totalCount, ...Array.from({ length: expectedChunkCount }, () => 5_000)]);
       expect(calls.guard).toHaveLength(expectedChunkCount + 1);
       expect(calls.beforePersist).toHaveLength(expectedChunkCount);
       expect(calls.afterCommit).toHaveLength(expectedChunkCount);

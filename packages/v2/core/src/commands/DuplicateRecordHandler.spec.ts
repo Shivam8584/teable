@@ -26,6 +26,7 @@ import type { TableSortKey } from '../domain/table/TableSortKey';
 import type { IEventBus } from '../ports/EventBus';
 import type { IExecutionContext, IUnitOfWorkTransaction } from '../ports/ExecutionContext';
 import { RecordWriteOperationKind } from '../ports/RecordWritePlugin';
+import type { IRecordWritePlugin, RecordWriteDuplicatePayload } from '../ports/RecordWritePlugin';
 import type { IFindOptions } from '../ports/RepositoryQuery';
 import type {
   ITableRecordQueryOptions,
@@ -119,6 +120,10 @@ class FakeTableRepository implements ITableRepository {
   async delete(_context: IExecutionContext, _table: Table): Promise<Result<void, DomainError>> {
     return ok(undefined);
   }
+
+  async restore(_context: IExecutionContext, _table: Table): Promise<Result<void, DomainError>> {
+    return ok(undefined);
+  }
 }
 
 class FakeTableSchemaRepository implements ITableSchemaRepository {
@@ -147,6 +152,12 @@ class FakeTableSchemaRepository implements ITableSchemaRepository {
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   records: TableRecord[] = [];
   lastContext: IExecutionContext | undefined;
   lastTable: Table | undefined;
@@ -175,12 +186,7 @@ class FakeTableRecordRepository implements ITableRecordRepository {
     context: IExecutionContext,
     table: Table,
     records: ReadonlyArray<TableRecord>
-  ): Promise<
-    Result<
-      { computedChangesByRecord?: ReadonlyMap<string, ReadonlyMap<string, unknown>> },
-      DomainError
-    >
-  > {
+  ): Promise<Result<{ recordSnapshots?: ReadonlyArray<RecordStoredSnapshot> }, DomainError>> {
     this.lastContext = context;
     this.lastTable = table;
     if (this.failInsert) return err(this.failInsert);
@@ -568,7 +574,7 @@ describe('DuplicateRecordHandler', () => {
       version: 1,
     });
 
-    const plugin = {
+    const plugin: IRecordWritePlugin = {
       name: 'duplicate-create-scope',
       supports(operation: RecordWriteOperationKind) {
         return operation === RecordWriteOperationKind.duplicate;
@@ -582,7 +588,8 @@ describe('DuplicateRecordHandler', () => {
         });
       },
       async guard(context) {
-        expect([...context.payload.fieldValues.keys()]).toEqual([textFieldId]);
+        const payload = context.payload as RecordWriteDuplicatePayload;
+        expect([...payload.fieldValues.keys()]).toEqual([textFieldId]);
         return ok(undefined);
       },
     };

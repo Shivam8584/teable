@@ -59,7 +59,7 @@ import { ViewColumnMeta } from '../../../domain/table/views/ViewColumnMeta';
 import { ViewId } from '../../../domain/table/views/ViewId';
 import { ViewName } from '../../../domain/table/views/ViewName';
 import { ViewQueryDefaults } from '../../../domain/table/views/ViewQueryDefaults';
-import type { ITableFieldPersistenceDTO } from '../TableMapper';
+import type { ITableFieldPersistenceDTO, ITablePersistenceDTO } from '../TableMapper';
 import { DefaultTableMapper } from './DefaultTableMapper';
 
 const createFieldId = (seed: string) => FieldId.create(`fld${seed.repeat(16)}`);
@@ -1002,7 +1002,7 @@ describe('DefaultTableMapper', () => {
             }
           : field
       ),
-    });
+    } as unknown as ITablePersistenceDTO);
 
     expect(result.isErr()).toBe(true);
     expect(result._unsafeUnwrapErr().message).toContain('Invalid FormulaFormatting');
@@ -1053,7 +1053,7 @@ describe('DefaultTableMapper', () => {
       ],
     };
 
-    const result = mapper.toDomain(withInvalidTrackedFieldIds);
+    const result = mapper.toDomain(withInvalidTrackedFieldIds as unknown as ITablePersistenceDTO);
 
     expect(result.isErr()).toBe(true);
     expect(result._unsafeUnwrapErr().message).toContain('Invalid trackedFieldIds');
@@ -1076,7 +1076,7 @@ describe('DefaultTableMapper', () => {
           options: {
             expression: 'countall({values})',
             formatting: {
-              type: 'currency',
+              type: 'currency' as const,
               precision: 2,
               symbol: '$',
             },
@@ -1087,7 +1087,9 @@ describe('DefaultTableMapper', () => {
             condition: {
               filter: {
                 conjunction: 'and' as const,
-                filterSet: [{ fieldId: `fld${'u'.repeat(16)}`, operator: 'is', value: 'open' }],
+                filterSet: [
+                  { fieldId: `fld${'u'.repeat(16)}`, operator: 'is' as const, value: 'open' },
+                ],
               },
             },
           },

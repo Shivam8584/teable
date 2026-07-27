@@ -270,6 +270,12 @@ class FakeTableSchemaRepository implements ITableSchemaRepository {
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   updateManyCalls = 0;
   updateManyStreamCalls = 0;
   lastSpec: ISpecification<TableRecord, ITableRecordConditionSpecVisitor> | undefined;

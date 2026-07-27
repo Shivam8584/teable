@@ -1803,7 +1803,7 @@ describe('TableFieldUpdateSpecs', () => {
 
     const currentField = hostTable
       .getField((field) => field.id().equals(linkFieldId))
-      ._unsafeUnwrap();
+      ._unsafeUnwrap() as LinkField;
     const specsResult = buildUpdateFieldSpecs(
       currentField,
       {

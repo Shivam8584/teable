@@ -254,6 +254,10 @@ class FakeTableRepository implements ITableRepository {
   async delete(_: IExecutionContext, __: Table): Promise<Result<void, DomainError>> {
     return ok(undefined);
   }
+
+  async restore(_: IExecutionContext, __: Table): Promise<Result<void, DomainError>> {
+    return ok(undefined);
+  }
 }
 
 class FakeTableSchemaRepository implements ITableSchemaRepository {
@@ -282,6 +286,12 @@ class FakeTableSchemaRepository implements ITableSchemaRepository {
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   lastContext: IExecutionContext | undefined;
   lastRecordId: RecordId | undefined;
   lastMutateSpec: ICellValueSpec | undefined;
@@ -505,7 +515,7 @@ describe('UpdateRecordHandler', () => {
     const { table, tableId, textFieldId, numberFieldId } = buildTable();
     const recordResult = table
       .createRecord(
-        new Map([
+        new Map<string, unknown>([
           [textFieldId.toString(), 'Old Title'],
           [numberFieldId.toString(), 1],
         ])
@@ -632,7 +642,7 @@ describe('UpdateRecordHandler', () => {
     const persistedLinkValue = [{ id: targetRecordId, title: 'Target Title' }];
     const recordResult = table
       .createRecord(
-        new Map([
+        new Map<string, unknown>([
           [textFieldId.toString(), 'Old Title'],
           [linkFieldId.toString(), persistedLinkValue],
         ])

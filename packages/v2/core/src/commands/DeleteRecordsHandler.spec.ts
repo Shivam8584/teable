@@ -143,9 +143,19 @@ class FakeTableRepository implements ITableRepository {
   async delete(_: IExecutionContext, __: Table): Promise<Result<void, DomainError>> {
     return ok(undefined);
   }
+
+  async restore(_: IExecutionContext, __: Table): Promise<Result<void, DomainError>> {
+    return ok(undefined);
+  }
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   lastContext: IExecutionContext | undefined;
   lastTable: Table | undefined;
   lastSpec: ISpecification<TableRecord, ITableRecordConditionSpecVisitor> | undefined;

@@ -119,6 +119,11 @@ class FakeTableRepository implements ITableRepository {
     return ok(undefined);
   }
 
+  async restore(_: IExecutionContext, table: Table): Promise<Result<void, DomainError>> {
+    this.deletedTableIds.delete(table.id().toString());
+    return ok(undefined);
+  }
+
   async setProvisionState(
     _: IExecutionContext,
     table: Table,

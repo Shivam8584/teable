@@ -396,6 +396,12 @@ class FakeTableSchemaRepository implements ITableSchemaRepository {
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   inserted: TableRecord[] = [];
   updated: RecordUpdateResult[] = [];
   insertCalls = 0;

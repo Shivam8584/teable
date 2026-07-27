@@ -1,14 +1,16 @@
 import { err, ok } from 'neverthrow';
+import type { Result } from 'neverthrow';
 import { describe, expect, it } from 'vitest';
 
 import type { BaseId } from '../domain/base/BaseId';
 import { BaseId as ConcreteBaseId } from '../domain/base/BaseId';
-import { domainError } from '../domain/shared/DomainError';
+import { domainError, type DomainError } from '../domain/shared/DomainError';
 import { FieldId } from '../domain/table/fields/FieldId';
 import { FieldName } from '../domain/table/fields/FieldName';
 import type { Field } from '../domain/table/fields/Field';
 import { createNumberField, createSingleLineTextField } from '../domain/table/fields/FieldFactory';
 import type { LinkForeignTableReference } from '../domain/table/fields/visitors/LinkForeignTableReferenceVisitor';
+import type { TableBuilder } from '../domain/table/TableBuilder';
 import type { TableId } from '../domain/table/TableId';
 import { TypeConversionUpdateSpec } from './TypeConversionUpdateSpec';
 import type { ICreateTableFieldSpec } from './TableFieldSpecs';
@@ -27,9 +29,11 @@ const createNumberFieldInstance = (seed: string) =>
 
 class FakeCreateTableFieldSpec implements ICreateTableFieldSpec {
   constructor(
-    private readonly fieldResult: ReturnType<typeof ok<Field>> | ReturnType<typeof err>,
+    private readonly fieldResult: Result<Field, DomainError>,
     private readonly refs: ReadonlyArray<LinkForeignTableReference> = []
   ) {}
+
+  applyTo(_builder: TableBuilder): void {}
 
   createField(_params?: { baseId?: BaseId; tableId?: TableId }) {
     return this.fieldResult;

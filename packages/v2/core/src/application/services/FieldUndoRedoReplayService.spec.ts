@@ -39,6 +39,7 @@ import type {
 import type { TableRecordReadModel } from '../../ports/TableRecordReadModel';
 import {
   isUpdateManyStreamBatch,
+  type DeleteManyResult,
   type ITableRecordRepository,
   type UpdateManyStreamBatchInput,
   type UpdateManyStreamResult,
@@ -201,6 +202,12 @@ class FakeTableRecordQueryRepository implements ITableRecordQueryRepository {
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   updatedBatches: UpdateManyStreamBatchInput[] = [];
   updateManyStreamUpdatedRecordIds?: ReadonlySet<string>;
   updateManyStreamVersions = new Map<string, number>();
@@ -304,7 +311,7 @@ class FakeTableRecordRepository implements ITableRecordRepository {
     });
   }
 
-  async deleteMany() {
+  async deleteMany(): Promise<Result<DeleteManyResult, DomainError>> {
     throw new Error('Not used in test');
   }
 

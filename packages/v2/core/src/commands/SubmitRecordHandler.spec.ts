@@ -12,6 +12,7 @@ import { BaseId } from '../domain/base/BaseId';
 import { ActorId } from '../domain/shared/ActorId';
 import { domainError, type DomainError } from '../domain/shared/DomainError';
 import { isRecordCreatedEvent } from '../domain/table/events/RecordCreated';
+import type { RecordCreateSource } from '../domain/table/events/RecordFieldValuesDTO';
 import { FieldId } from '../domain/table/fields/FieldId';
 import { FieldName } from '../domain/table/fields/FieldName';
 import { Table } from '../domain/table/Table';
@@ -20,7 +21,11 @@ import { TableName } from '../domain/table/TableName';
 import { ViewColumnMeta } from '../domain/table/views/ViewColumnMeta';
 import { CloneViewVisitor } from '../domain/table/views/visitors/CloneViewVisitor';
 import type { IExecutionContext } from '../ports/ExecutionContext';
-import { RecordWriteOperationKind, type IRecordWritePlugin } from '../ports/RecordWritePlugin';
+import {
+  RecordWriteOperationKind,
+  type IRecordWritePlugin,
+  type RecordWritePluginContext,
+} from '../ports/RecordWritePlugin';
 import {
   createRecordWritePluginRunner,
   createTrackedRecordWritePlugin,
@@ -129,7 +134,7 @@ const createRunnerBackedRecordCreationService = (
           recordCount: 1 as const,
         },
         isTransactionBound: false,
-      });
+      } as RecordWritePluginContext);
       if (executionResult.isErr()) return err(executionResult.error);
 
       const execution = executionResult.value;
@@ -174,15 +179,7 @@ describe('SubmitRecordHandler', () => {
   it('creates record from form with visible fields and propagates form source', async () => {
     const { table, textFieldId, formViewId } = createTestTable();
 
-    let receivedCreateSource:
-      | {
-          type: 'user';
-        }
-      | {
-          type: 'form';
-          formId: string;
-        }
-      | undefined;
+    let receivedCreateSource: RecordCreateSource | undefined;
 
     const tableQueryService = {
       getById: async () => ok(table),

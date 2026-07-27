@@ -26,6 +26,7 @@ import type { TableSortKey } from '../domain/table/TableSortKey';
 import type { IEventBus } from '../ports/EventBus';
 import type { IExecutionContext, IUnitOfWorkTransaction } from '../ports/ExecutionContext';
 import { RecordWriteOperationKind } from '../ports/RecordWritePlugin';
+import type { RecordWriteDeleteManyPayload } from '../ports/RecordWritePlugin';
 import type { IFindOptions } from '../ports/RepositoryQuery';
 import type {
   ITableRecordQueryRepository,
@@ -163,9 +164,19 @@ class FakeTableRepository implements ITableRepository {
   async delete(_: IExecutionContext, __: Table): Promise<Result<void, DomainError>> {
     return ok(undefined);
   }
+
+  async restore(_: IExecutionContext, __: Table): Promise<Result<void, DomainError>> {
+    return ok(undefined);
+  }
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   lastContext: IExecutionContext | undefined;
   lastTable: Table | undefined;
   lastSpec: ISpecification<TableRecord, ITableRecordConditionSpecVisitor> | undefined;
@@ -511,7 +522,7 @@ describe('DeleteByRangeHandler', () => {
     expect(calls.guard).toHaveLength(1);
     expect(calls.beforePersist).toHaveLength(1);
     expect(calls.afterCommit).toHaveLength(1);
-    expect(calls.prepare[0].payload.recordCount).toBe(2);
+    expect((calls.prepare[0].payload as RecordWriteDeleteManyPayload).recordCount).toBe(2);
     expect(calls.prepare[0].orchestration).toEqual({
       mode: 'direct',
       scope: 'operation',

@@ -9,6 +9,8 @@ import { BaseId } from '../domain/base/BaseId';
 import { ActorId } from '../domain/shared/ActorId';
 import { domainError, type DomainError } from '../domain/shared/DomainError';
 import type { IDomainEvent } from '../domain/shared/DomainEvent';
+import { DomainEventName } from '../domain/shared/DomainEventName';
+import { OccurredAt } from '../domain/shared/OccurredAt';
 import { isRecordsBatchCreatedEvent } from '../domain/table/events/RecordsBatchCreated';
 import type { ISpecification } from '../domain/shared/specification/ISpecification';
 import { FieldId } from '../domain/table/fields/FieldId';
@@ -33,12 +35,14 @@ import type {
 import type { IImportSourceAdapter } from '../ports/import/IImportSourceAdapter';
 import type { IImportSourceRegistry } from '../ports/import/IImportSourceRegistry';
 import { RecordWriteOperationKind } from '../ports/RecordWritePlugin';
+import type { RecordWriteImportAppendPayload } from '../ports/RecordWritePlugin';
 import type { IFindOptions } from '../ports/RepositoryQuery';
 import type {
   BatchRecordMutationResult,
   InsertManyStreamOptions,
   ITableRecordRepository,
   RecordMutationResult,
+  UpdateManyResult,
   UpdateManyStreamResult,
 } from '../ports/TableRecordRepository';
 import type { ITableRepository } from '../ports/TableRepository';
@@ -171,9 +175,19 @@ class FakeTableRepository implements ITableRepository {
   async delete(_: IExecutionContext, __: Table): Promise<Result<void, DomainError>> {
     return ok(undefined);
   }
+
+  async restore(_: IExecutionContext, __: Table): Promise<Result<void, DomainError>> {
+    return ok(undefined);
+  }
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   inserted: TableRecord[] = [];
   insertedBatches: TableRecord[][] = [];
   insertManyStreamOptions: InsertManyStreamOptions | undefined;
@@ -239,7 +253,7 @@ class FakeTableRecordRepository implements ITableRecordRepository {
     __: Table,
     ___: ISpecification<TableRecord, ITableRecordConditionSpecVisitor>,
     ____: ICellValueSpec
-  ): Promise<Result<BatchRecordMutationResult, DomainError>> {
+  ): Promise<Result<UpdateManyResult, DomainError>> {
     return ok({ totalUpdated: 0, updatedRecordIds: [], updatedRecords: [] });
   }
 
@@ -528,14 +542,15 @@ describe('ImportRecordsHandler', () => {
           name: 'chunk-record-limit',
           supports: (operation) => operation === RecordWriteOperationKind.importAppend,
           async guard(context) {
+            const payload = context.payload as RecordWriteImportAppendPayload;
             seenScopes.push({
               scope: context.orchestration?.scope,
-              recordCount: context.payload.recordCount,
-              recordsLength: context.payload.recordsFieldValues.length,
+              recordCount: payload.recordCount,
+              recordsLength: payload.recordsFieldValues.length,
               chunkIndex: context.orchestration?.chunkIndex,
             });
 
-            if (context.orchestration?.scope === 'chunk' && context.payload.recordCount > 1) {
+            if (context.orchestration?.scope === 'chunk' && payload.recordCount > 1) {
               return err(
                 domainError.validation({
                   code: 'validation.limit.records_per_mutation_max',
@@ -637,7 +652,10 @@ describe('ImportRecordsHandler', () => {
     );
     const tableRecordRepository = new FakeTableRecordRepository();
     const eventBus = new FakeEventBus();
-    const event = { type: 'import.side_effect.persisted' } as IDomainEvent;
+    const event: IDomainEvent = {
+      name: DomainEventName.create('import.side_effect.persisted')._unsafeUnwrap(),
+      occurredAt: OccurredAt.now(),
+    };
     let sideEffectCalls = 0;
     let updateFlowCalls = 0;
 
@@ -723,6 +741,7 @@ describe('ImportRecordsHandler', () => {
     ).createRecords = () =>
       ok({
         records: [originalRecord],
+        fieldKeyMapping: new Map(),
         mutateSpecs: [mutateSpec],
       });
 

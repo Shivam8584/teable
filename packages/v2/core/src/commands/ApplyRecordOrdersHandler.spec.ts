@@ -26,6 +26,7 @@ import type {
   BatchRecordMutationResult,
   ITableRecordRepository,
   RecordMutationResult,
+  UpdateManyResult,
   UpdateManyStreamResult,
 } from '../ports/TableRecordRepository';
 import type {
@@ -116,9 +117,19 @@ class FakeTableRepository implements ITableRepository {
   async delete(): Promise<Result<void, DomainError>> {
     return ok(undefined);
   }
+
+  async restore(): Promise<Result<void, DomainError>> {
+    return ok(undefined);
+  }
 }
 
 class FakeTableRecordRepository implements ITableRecordRepository {
+  async duplicatePhysicalRows(
+    _context: any,
+    _plan: any
+  ): Promise<Result<{ rowCount: number; recordIds: string[] }, DomainError>> {
+    return ok({ rowCount: 0, recordIds: [] });
+  }
   updateBatches: ReadonlyArray<ReadonlyArray<RecordUpdateResult>> = [];
 
   async insert(): Promise<Result<RecordMutationResult, DomainError>> {
@@ -137,8 +148,8 @@ class FakeTableRecordRepository implements ITableRecordRepository {
     return ok({});
   }
 
-  async updateMany(): Promise<Result<BatchRecordMutationResult, DomainError>> {
-    return ok({});
+  async updateMany(): Promise<Result<UpdateManyResult, DomainError>> {
+    return ok({ totalUpdated: 0, updatedRecordIds: [], updatedRecords: [] });
   }
 
   async updateManyStream(
@@ -159,6 +170,10 @@ class FakeTableRecordRepository implements ITableRecordRepository {
 
   async deleteMany() {
     return ok({});
+  }
+
+  async deleteManyStream(): Promise<Result<{ totalDeleted: number }, DomainError>> {
+    return ok({ totalDeleted: 0 });
   }
 }
 

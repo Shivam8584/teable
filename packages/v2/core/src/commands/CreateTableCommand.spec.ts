@@ -11,6 +11,7 @@ import type { SingleSelectField } from '../domain/table/fields/types/SingleSelec
 import { TableId } from '../domain/table/TableId';
 import type { IExecutionContext } from '../ports/ExecutionContext';
 import { buildTable, CreateTableCommand } from './CreateTableCommand';
+import type { CreateTableCommandOptions } from './CreateTableCommand';
 
 const createBaseId = (seed: string) => BaseId.create(`bse${seed.repeat(16)}`);
 const createTableId = (seed: string) => TableId.create(`tbl${seed.repeat(16)}`);
@@ -52,7 +53,7 @@ describe('CreateTableCommand', () => {
 
   it('creates command with translated default field when $t is provided', () => {
     const baseId = createBaseId('t')._unsafeUnwrap();
-    const t: NonNullable<IExecutionContext['$t']> = (key) => key;
+    const t: NonNullable<CreateTableCommandOptions['t']> = (key) => key;
     const command = CreateTableCommand.create(
       {
         baseId: baseId.toString(),

@@ -190,6 +190,10 @@ class FakeTableRepository implements ITableRepository {
   async delete() {
     return ok(undefined);
   }
+
+  async restore() {
+    return ok(undefined);
+  }
 }
 
 class FakeTableMapper implements ITableMapper {
@@ -1902,7 +1906,7 @@ describe('Realtime projections', () => {
     const lookupOptionsChange = changes.find(
       (change) => JSON.stringify(change.path) === JSON.stringify(['lookupOptions'])
     );
-    expect(lookupOptionsChange?.value).toEqual(
+    expect((lookupOptionsChange as { value?: unknown } | undefined)?.value).toEqual(
       expect.objectContaining({
         linkFieldId: linkFieldId.toString(),
         lookupFieldId: foreignTargetFieldId.toString(),
