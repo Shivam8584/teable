@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 import { readFileSync, writeFileSync, readdirSync, lstatSync } from 'fs';
 import { join } from 'path';
-import data from '../components.json' assert { type: 'json' };
+import data from '../components.json' with { type: 'json' };
 
 const { aliases } = data;
 
@@ -43,7 +43,7 @@ function fixAliases(componentName) {
 
 const args = process.argv.slice(2).join(' ');
 
-execSync(`pnpm dlx shadcn@latest add ${args}`, { stdio: 'inherit', cwd: process.cwd() });
+execSync(`pnpm dlx shadcn@latest ${args}`, { stdio: 'inherit', cwd: process.cwd() });
 
 if (process.argv[2] === 'add') {
   fixAliases(process.argv[3]);

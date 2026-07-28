@@ -1,3 +1,5 @@
+'use client';
+
 import * as ToastPrimitives from '@radix-ui/react-toast';
 import { X } from '@teable/icons';
 import { cva, type VariantProps } from 'class-variance-authority';

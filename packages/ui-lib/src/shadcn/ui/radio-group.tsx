@@ -1,7 +1,7 @@
 'use client';
 
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
-import { Check } from '@teable/icons';
+import { Circle } from '@teable/icons';
 import * as React from 'react';
 
 import { cn } from '../utils';
@@ -28,7 +28,7 @@ const RadioGroupItem = React.forwardRef<
       {...props}
     >
       <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-        <Check className="h-3.5 w-3.5 text-primary" />
+        <Circle className="h-3.5 w-3.5 fill-primary" />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   );

@@ -9,7 +9,7 @@ const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav
     role="navigation"
     aria-label="pagination"
-    className={cn('flex w-full justify-center', className)}
+    className={cn('mx-auto flex w-full justify-center', className)}
     {...props}
   />
 );
@@ -60,7 +60,12 @@ const PaginationPrevious = ({
   children,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink size="sm" className={cn('gap-1 px-2.5', className)} {...props}>
+  <PaginationLink
+    aria-label="Go to previous page"
+    size="sm"
+    className={cn('gap-1 px-2.5', className)}
+    {...props}
+  >
     <ChevronLeft className="size-4 shrink-0" />
     {children}
   </PaginationLink>
@@ -72,7 +77,12 @@ const PaginationNext = ({
   children,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink size="sm" className={cn('gap-1 px-2.5', className)} {...props}>
+  <PaginationLink
+    aria-label="Go to next page"
+    size="sm"
+    className={cn('gap-1 px-2.5', className)}
+    {...props}
+  >
     {children}
     <ChevronRight className="size-4 shrink-0" />
   </PaginationLink>
@@ -86,6 +96,7 @@ const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<'span'
     {...props}
   >
     <MoreHorizontal className="size-4" />
+    <span className="sr-only">More pages</span>
   </span>
 );
 PaginationEllipsis.displayName = 'PaginationEllipsis';
