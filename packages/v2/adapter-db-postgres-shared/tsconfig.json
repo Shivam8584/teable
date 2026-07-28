@@ -31,7 +31,9 @@
     "./dist",
     "./coverage",
     "../core/src/**/*.spec.ts",
-    "../../formula/src/**/*.spec.ts"
+    "../../formula/src/**/*.spec.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts"
   ],
   "include": ["src", "../core/src", "../di/src", "../../formula/src"]
 }

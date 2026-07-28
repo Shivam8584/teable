@@ -43,7 +43,7 @@ import {
   FieldOperationTargetKind,
   type IFieldOperationDeleteContext,
 } from '../ports/FieldOperationPlugin';
-import { ITableRepository } from '../ports/TableRepository';
+import type { ITableRepository } from '../ports/TableRepository';
 import { v2CoreTokens } from '../ports/tokens';
 import { TraceSpan } from '../ports/TraceSpan';
 import {

@@ -38,7 +38,15 @@
     "./dist",
     "./coverage",
     "../core/src/**/*.spec.ts",
-    "../adapter-record-repository-postgres/src/**/*.spec.ts"
+    "../adapter-record-repository-postgres/src/**/*.spec.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts",
+    "../adapter-table-repository-postgres/src/**/*.spec.ts",
+    "../adapter-table-repository-postgres/src/**/*.test.ts",
+    "../postgres-schema/src/**/*.spec.ts",
+    "../postgres-schema/src/**/*.test.ts",
+    "../formula-sql-pg/src/**/*.spec.ts",
+    "../formula-sql-pg/src/**/*.test.ts"
   ],
   "include": [
     "src",

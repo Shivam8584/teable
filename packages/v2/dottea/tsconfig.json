@@ -31,7 +31,9 @@
     "./dist",
     "./coverage",
     "../core/src/**/*.spec.ts",
-    "../core/src/**/*.test.ts"
+    "../core/src/**/*.test.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts"
   ],
   "include": ["src", "scripts", "../core/src", "../di/src"]
 }

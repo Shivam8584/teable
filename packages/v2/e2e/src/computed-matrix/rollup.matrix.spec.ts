@@ -16,6 +16,7 @@ import {
   printComputedSteps,
   type ComputedPlanLogEntry,
 } from '@teable/v2-container-node-test';
+import type { ICreateTableCommandInput } from '@teable/v2-core';
 import { beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import {
   createTestContext,
@@ -103,7 +104,9 @@ describe('rollup field matrix (e2e)', () => {
           name: `RollupA_${source}_${rel}_${dir}`,
           fields: [
             { type: 'singleLineText', id: aNameFieldId, name: 'Name', isPrimary: true },
-            { type: source, id: aSourceFieldId, name: 'Value' },
+            { type: source, id: aSourceFieldId, name: 'Value' } as NonNullable<
+              ICreateTableCommandInput['fields']
+            >[number],
           ],
           views: [{ type: 'grid' }],
         });

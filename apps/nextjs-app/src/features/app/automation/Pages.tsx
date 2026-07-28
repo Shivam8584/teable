@@ -1,3 +1,4 @@
+import { BadgeStar } from '@teable/icons';
 import { useIsReadOnlyPreview } from '@teable/sdk/hooks';
 import { Alert, AlertTitle, AlertDescription } from '@teable/ui-lib/shadcn/ui/alert';
 import { Button } from '@teable/ui-lib/shadcn/ui/button';
@@ -42,9 +43,8 @@ export function AutomationPage() {
       </div>
       <div className="flex h-full items-center justify-center p-4">
         <Alert className="w-[400px]">
-          <AlertTitle>
-            <span className="text-lg">✨</span> {t('billing.enterpriseFeature')}
-          </AlertTitle>
+          <BadgeStar />
+          <AlertTitle>{t('billing.enterpriseFeature')}</AlertTitle>
           <AlertDescription className="flex flex-col gap-3 text-xs">
             <p>{t('billing.automationRequiresUpgrade')}</p>
             <Button className="w-fit" variant="default" asChild size="xs">

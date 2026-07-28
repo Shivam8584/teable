@@ -3860,7 +3860,7 @@ describe('OpenAPI Freely perform column transformations (e2e)', () => {
       const updated = await convertField(table2.id, lookupField.id, {
         type: FieldType.SingleSelect,
         isLookup: true,
-        options: null,
+        options: undefined,
         lookupOptions: {
           foreignTableId: table1.id,
           lookupFieldId: selectField.id,

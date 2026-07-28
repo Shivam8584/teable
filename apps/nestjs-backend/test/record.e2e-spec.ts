@@ -1371,7 +1371,7 @@ describe('OpenAPI RecordController (e2e)', () => {
         table = await createTable(baseId, {
           name: 'v1 sparse update single select',
           fields: [
-            { name: 'Title', type: FieldType.SingleLineText, isPrimary: true },
+            { name: 'Title', type: FieldType.SingleLineText, isPrimary: true } as IFieldRo,
             {
               name: 'Status',
               type: FieldType.SingleSelect,

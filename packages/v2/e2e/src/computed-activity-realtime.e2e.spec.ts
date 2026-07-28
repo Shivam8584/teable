@@ -24,9 +24,11 @@ import {
   RecordId,
   TableId,
   v2CoreTokens,
+  type DomainError,
   type IHasher,
   type ILogger,
 } from '@teable/v2-core';
+import type { Result } from 'neverthrow';
 import type { DependencyContainer } from '@teable/v2-di';
 import express from 'express';
 import ShareDb from 'sharedb';
@@ -144,8 +146,8 @@ const observeDoc = <T>(params: { url: string; collection: string; docId: string 
   return { subscribed, waitFor, close };
 };
 
-const unwrap = <T>(result: { isErr(): boolean; error?: { message: string }; value: T }): T => {
-  if (result.isErr()) throw new Error(result.error?.message ?? 'unwrap failed');
+const unwrap = <T>(result: Result<T, DomainError>): T => {
+  if (result.isErr()) throw new Error(result.error.message ?? 'unwrap failed');
   return result.value;
 };
 

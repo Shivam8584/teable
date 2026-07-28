@@ -960,7 +960,10 @@ describe('update-field: lookup property updates', () => {
         },
       },
     });
-    const lookupField = sourceWithLookup.fields.find((f) => f.name === 'Lookup Long Text');
+    const lookupField = sourceWithLookup.fields.find(
+      (f): f is Extract<typeof f, { options?: { showAs?: unknown } }> =>
+        f.name === 'Lookup Long Text'
+    );
     if (!lookupField) throw new Error('Lookup field not found');
     expect(lookupField.options?.showAs).toBeFalsy();
 
@@ -974,7 +977,11 @@ describe('update-field: lookup property updates', () => {
 
     const clearedField = await ctx
       .getTableById(sourceTableId)
-      .then((table) => table.fields.find((f) => f.id === lookupField.id));
+      .then((table) =>
+        table.fields.find(
+          (f): f is Extract<typeof f, { options?: { showAs?: unknown } }> => f.id === lookupField.id
+        )
+      );
     expect(clearedField?.options?.showAs).toBeFalsy();
 
     await ctx.updateField({
@@ -987,7 +994,11 @@ describe('update-field: lookup property updates', () => {
 
     const persistedField = await ctx
       .getTableById(sourceTableId)
-      .then((table) => table.fields.find((f) => f.id === lookupField.id));
+      .then((table) =>
+        table.fields.find(
+          (f): f is Extract<typeof f, { options?: { showAs?: unknown } }> => f.id === lookupField.id
+        )
+      );
     expect(persistedField?.options?.showAs).toBeFalsy();
 
     await ctx.deleteField({ tableId: sourceTableId, fieldId: lookupField.id });

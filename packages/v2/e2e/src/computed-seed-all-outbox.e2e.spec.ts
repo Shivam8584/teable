@@ -1,5 +1,14 @@
-import { BaseId, FieldId, RecordId, TableId, v2CoreTokens, type IHasher } from '@teable/v2-core';
+import {
+  BaseId,
+  FieldId,
+  RecordId,
+  TableId,
+  v2CoreTokens,
+  type DomainError,
+  type IHasher,
+} from '@teable/v2-core';
 import { sql } from 'kysely';
+import type { Result } from 'neverthrow';
 import { beforeAll, describe, expect, it } from 'vitest';
 import {
   buildOutboxTaskInput,
@@ -9,13 +18,9 @@ import {
 } from '../../adapter-table-repository-postgres/src';
 import { getSharedTestContext, type SharedTestContext } from './shared/globalTestContext';
 
-const unwrapDomainId = <T>(result: {
-  isErr(): boolean;
-  error?: { message: string };
-  value: T;
-}): T => {
+const unwrapDomainId = <T>(result: Result<T, DomainError>): T => {
   if (result.isErr()) {
-    throw new Error(result.error?.message ?? 'Invalid domain id');
+    throw new Error(result.error.message ?? 'Invalid domain id');
   }
   return result.value;
 };

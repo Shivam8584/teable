@@ -16,6 +16,7 @@ import {
   v2CoreTokens,
   CreateFieldsCommand,
   type ICommandBus,
+  type IPublicCommand,
   type Table,
   CreateRecordsCommand,
   type CreateRecordsResult,
@@ -312,7 +313,7 @@ const generateFieldId = (label: string): string =>
 
 const executeCommand = async <TResult>(
   container: IV2NodeTestContainer,
-  command: unknown
+  command: IPublicCommand
 ): Promise<TResult> => {
   const commandBus = container.container.resolve<ICommandBus>(v2CoreTokens.commandBus);
   const context = { actorId: unwrapOrThrow(ActorId.create('system'), 'ActorId.create(system)') };

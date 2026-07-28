@@ -81,7 +81,6 @@ describe('update-field: singleSelect property updates', () => {
     // Action: Update options to ["Red", "Green", "Blue"]
     const blueOption = { id: 'choBlue', name: 'Blue', color: 'blueBright' };
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { choices: [redOption, greenOption, blueOption] } },
@@ -122,7 +121,6 @@ describe('update-field: singleSelect property updates', () => {
     const r1 = await ctx.createRecord(tableId, { [fieldId]: 'Red' });
 
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: {
@@ -172,7 +170,6 @@ describe('update-field: singleSelect property updates', () => {
     // Action: Update options, change "Red" to "Crimson" (same id)
     const crimsonOption = { ...redOption, name: 'Crimson' };
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { choices: [crimsonOption, greenOption] } },
@@ -218,7 +215,6 @@ describe('update-field: singleSelect property updates', () => {
 
     // Action: Update options to ["Red"]
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { choices: [redOption] } },
@@ -262,7 +258,6 @@ describe('update-field: singleSelect property updates', () => {
 
     // Action: Update options to ["Red"] (remove "Green")
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { choices: [redOption] } },
@@ -306,7 +301,6 @@ describe('update-field: singleSelect property updates', () => {
 
     // Action: Update option color to "blueBright"
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: {
@@ -351,7 +345,6 @@ describe('update-field: singleSelect property updates', () => {
 
     // Action: Update options order to ["C", "A", "B"]
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { choices: [optionC, optionA, optionB] } },
@@ -390,7 +383,6 @@ describe('update-field: singleSelect property updates', () => {
 
     // Action: Update autoNewOptions to true (preventAutoNewOptions: false)
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { preventAutoNewOptions: false } },
@@ -456,7 +448,6 @@ describe('update-field: singleSelect property updates', () => {
 
     // Action: Update defaultValue to "A"
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { defaultValue: 'A' } },
@@ -487,7 +478,6 @@ describe('update-field: singleSelect property updates', () => {
     });
 
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { defaultValue: null } },
@@ -523,7 +513,6 @@ describe('update-field: singleSelect property updates', () => {
     // Action: Update defaultValue to "C"
     await expect(
       ctx.updateField({
-        baseId: ctx.baseId,
         tableId,
         fieldId,
         field: { options: { defaultValue: 'C' } },
@@ -553,7 +542,6 @@ describe('update-field: singleSelect property updates', () => {
     // Action: Update options to ["A"]
     await expect(
       ctx.updateField({
-        baseId: ctx.baseId,
         tableId,
         fieldId,
         field: { options: { choices: [optionA] } },
@@ -613,7 +601,6 @@ describe('update-field: multipleSelect property updates', () => {
     // Action: Update options to ["A", "B", "C"]
     const optionC = { id: 'choC', name: 'C', color: 'yellowBright' };
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { choices: [optionA, optionB, optionC] } },
@@ -657,7 +644,6 @@ describe('update-field: multipleSelect property updates', () => {
     // Action: Add option "D"
     const optionD = { id: 'choD', name: 'D', color: 'redBright' };
     await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { choices: [optionA, optionB, optionC, optionD] } },
@@ -699,7 +685,6 @@ describe('update-field: multipleSelect property updates', () => {
 
     // Action: Remove option "B"
     await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { choices: [optionA, optionC] } },
@@ -739,7 +724,6 @@ describe('update-field: multipleSelect property updates', () => {
     // Action: Rename "B" to "Beta"
     const optionBeta = { ...optionB, name: 'Beta' };
     await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { choices: [optionA, optionBeta] } },
@@ -774,7 +758,6 @@ describe('update-field: multipleSelect property updates', () => {
 
     // Action: Update defaultValue to ["A", "B"]
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { defaultValue: ['A', 'B'] } },

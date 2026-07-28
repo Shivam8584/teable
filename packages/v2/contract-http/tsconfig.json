@@ -23,7 +23,7 @@
       "@teable/v2-core": ["../core/src"],
       "@teable/v2-di": ["../di/src"]
     },
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "node"]
   },
   "exclude": ["**/node_modules", "**/.*/", "./dist", "./coverage", "../core/src/**/*.spec.ts"],
   "include": ["src", "../core/src", "../di/src"]

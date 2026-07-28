@@ -88,7 +88,10 @@ describe('undo-redo/duplicateRecordsStream (e2e)', () => {
       }))
     );
 
-    const streamResult = await getCommandBus(ctx).execute(
+    const streamResult = await getCommandBus(ctx).execute<
+      DuplicateRecordsStreamCommand,
+      DuplicateRecordsStreamResult
+    >(
       buildUndoRedoContext(),
       DuplicateRecordsStreamCommand.create({
         tableId: table.id,
@@ -154,7 +157,10 @@ describe('undo-redo/duplicateRecordsStream (e2e)', () => {
     const eventCountBefore = ctx.testContainer.eventBus.events().length;
 
     try {
-      const streamResult = await getCommandBus(ctx).execute(
+      const streamResult = await getCommandBus(ctx).execute<
+        DuplicateRecordsStreamCommand,
+        DuplicateRecordsStreamResult
+      >(
         buildUndoRedoContext(),
         DuplicateRecordsStreamCommand.create({
           tableId: table.id,

@@ -57,11 +57,11 @@ const parseOptionalJson = <T>(
   return parseJson<T>(raw, field);
 };
 
-const parseContent = (value: string): Effect.Effect<unknown, ValidationError> =>
+const parseContent = (value: string): Effect.Effect<string | unknown[][], ValidationError> =>
   Effect.try({
     try: () => {
       try {
-        return JSON.parse(value) as unknown;
+        return JSON.parse(value) as unknown[][];
       } catch {
         return value;
       }
@@ -88,22 +88,16 @@ const handler = (args: {
     const commandExplain = yield* CommandExplain;
     const output = yield* Output;
 
-    const ranges = yield* parseJson<ReadonlyArray<readonly [number, number]>>(
-      args.ranges,
-      'ranges'
-    );
+    const ranges = yield* parseJson<Array<[number, number]>>(args.ranges, 'ranges');
     const content = yield* parseContent(args.content);
     const filter = yield* parseOptionalJson<RecordFilter>(args.filter, 'filter');
     const updateFilter = yield* parseOptionalJson<RecordFilter>(args.updateFilter, 'update-filter');
-    const sourceFields = yield* parseOptionalJson<ReadonlyArray<SourceFieldMeta>>(
+    const sourceFields = yield* parseOptionalJson<SourceFieldMeta[]>(
       args.sourceFields,
       'source-fields'
     );
-    const projection = yield* parseOptionalJson<ReadonlyArray<string>>(
-      args.projection,
-      'projection'
-    );
-    const sort = yield* parseOptionalJson<ReadonlyArray<PasteSort>>(args.sort, 'sort');
+    const projection = yield* parseOptionalJson<string[]>(args.projection, 'projection');
+    const sort = yield* parseOptionalJson<PasteSort[]>(args.sort, 'sort');
     const type = Option.getOrUndefined(args.type);
 
     const input = {

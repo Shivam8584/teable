@@ -32,7 +32,26 @@
     },
     "types": ["vitest/globals"]
   },
-  "exclude": ["**/node_modules", "**/.*/", "./dist", "./coverage"],
+  "exclude": [
+    "**/node_modules",
+    "**/.*/",
+    "./dist",
+    "./coverage",
+    "../adapter-db-postgres-pg/src/**/*.spec.ts",
+    "../adapter-db-postgres-pg/src/**/*.test.ts",
+    "../adapter-db-postgres-pglite/src/**/*.spec.ts",
+    "../adapter-db-postgres-pglite/src/**/*.test.ts",
+    "../adapter-record-repository-postgres/src/**/*.spec.ts",
+    "../adapter-record-repository-postgres/src/**/*.test.ts",
+    "../adapter-repository-postgres/src/**/*.spec.ts",
+    "../adapter-repository-postgres/src/**/*.test.ts",
+    "../adapter-table-repository-postgres/src/**/*.spec.ts",
+    "../adapter-table-repository-postgres/src/**/*.test.ts",
+    "../core/src/**/*.spec.ts",
+    "../core/src/**/*.test.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts"
+  ],
   "include": [
     "src",
     "../adapter-db-postgres-pg/src",

@@ -195,7 +195,7 @@ describe('v2 isSymbol preservation (e2e)', () => {
       console.log('Output DTO:', JSON.stringify(outputDto, null, 2));
 
       const outputFilterSet = outputDto.filter?.filterSet;
-      if (outputFilterSet && outputFilterSet[0]) {
+      if (outputFilterSet && outputFilterSet[0] && 'operator' in outputFilterSet[0]) {
         const filterItem = outputFilterSet[0];
         console.log('Output filter item:', JSON.stringify(filterItem, null, 2));
         console.log('Has isSymbol:', 'isSymbol' in filterItem);

@@ -1,4 +1,4 @@
-import { CellValueType, DbFieldType, FieldType, TableDomain } from '@teable/core';
+import { CellValueType, DbFieldType, FieldType, NumberFieldCore, TableDomain } from '@teable/core';
 import knex from 'knex';
 import { describe, expect, it } from 'vitest';
 import { createFieldInstanceByVo } from '../features/field/model/factory';
@@ -49,6 +49,7 @@ describe('convertFormulaToGeneratedColumn blank numeric comparisons', () => {
       type: FieldType.Number,
       cellValueType: CellValueType.Number,
       dbFieldType: DbFieldType.Real,
+      options: NumberFieldCore.defaultOptions(),
     });
     const table = new TableDomain({
       id: 'tblFormulaUnit',
@@ -79,6 +80,7 @@ describe('convertFormulaToSelectQuery blank numeric comparisons', () => {
       type: FieldType.Number,
       cellValueType: CellValueType.Number,
       dbFieldType: DbFieldType.Real,
+      options: NumberFieldCore.defaultOptions(),
     });
     const table = new TableDomain({
       id: 'tblFormulaUnit',

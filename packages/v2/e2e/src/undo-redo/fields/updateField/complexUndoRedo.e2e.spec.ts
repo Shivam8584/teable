@@ -42,7 +42,6 @@ describe('undo-redo/updateField complex cases (e2e)', () => {
     });
 
     await ctx.updateField({
-      baseId: ctx.baseId,
       tableId: table.id,
       fieldId: statusFieldId,
       field: {
@@ -133,7 +132,6 @@ describe('undo-redo/updateField complex cases (e2e)', () => {
     ]);
 
     await ctx.updateField({
-      baseId: ctx.baseId,
       tableId: table.id,
       fieldId: scoreFieldId,
       field: { type: 'number' },

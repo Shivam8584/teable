@@ -43,6 +43,8 @@
     "./dist",
     "./coverage",
     "../core/src/**/*.spec.ts",
-    "../../formula/src/**/*.spec.ts"
+    "../../formula/src/**/*.spec.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts"
   ]
 }

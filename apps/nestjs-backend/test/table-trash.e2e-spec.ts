@@ -22,7 +22,8 @@ import {
   deleteView,
   getTrashItems,
   resetTrashItems,
-  ResourceType,
+  TableTrashType,
+  TrashType,
   restoreTrash,
   updateRecords,
   updateSetting,
@@ -135,14 +136,14 @@ const readRestoreTrashStream = async (response: Response) => {
 
 const waitForTableTrashItems = async (tableId: string, expectedCount = 1, maxRetries = 100) => {
   for (let i = 0; i < maxRetries; i++) {
-    const result = await getTrashItems({ resourceId: tableId, resourceType: ResourceType.Table });
+    const result = await getTrashItems({ resourceId: tableId, resourceType: TrashType.Table });
     if (result.data.trashItems.length >= expectedCount) {
       return result;
     }
     await sleep(100);
   }
 
-  return await getTrashItems({ resourceId: tableId, resourceType: ResourceType.Table });
+  return await getTrashItems({ resourceId: tableId, resourceType: TrashType.Table });
 };
 
 describe('Trash (e2e)', () => {
@@ -285,7 +286,7 @@ describe('Trash (e2e)', () => {
 
         const legacyTrashRes = await getTrashItems({
           resourceId: tableId,
-          resourceType: ResourceType.Table,
+          resourceType: TrashType.Table,
         });
         expect(legacyTrashRes.data.resourceMap[createdRecordId]).toMatchObject({
           id: createdRecordId,
@@ -335,11 +336,11 @@ describe('Trash (e2e)', () => {
 
         const trashRes = await getTrashItems({
           resourceId: tableId,
-          resourceType: ResourceType.Table,
+          resourceType: TrashType.Table,
         });
         expect(trashRes.data.trashItems.length).toBe(1);
         const recordTrash = trashRes.data.trashItems.find(
-          (item) => (item as ITableTrashItemVo).resourceType === ResourceType.Record
+          (item) => (item as ITableTrashItemVo).resourceType === TableTrashType.Record
         ) as ITableTrashItemVo | undefined;
 
         expect(recordTrash).toBeTruthy();
@@ -392,12 +393,12 @@ describe('Trash (e2e)', () => {
 
         const trashRes = await getTrashItems({
           resourceId: tableId,
-          resourceType: ResourceType.Table,
+          resourceType: TrashType.Table,
         });
         expect(trashRes.data.trashItems.length).toBe(1);
 
         const recordTrash = trashRes.data.trashItems.find(
-          (item) => (item as ITableTrashItemVo).resourceType === ResourceType.Record
+          (item) => (item as ITableTrashItemVo).resourceType === TableTrashType.Record
         ) as ITableTrashItemVo | undefined;
         expect(recordTrash).toBeTruthy();
         expect(recordTrash?.resourceIds).toEqual(createdRecordIds);
@@ -489,7 +490,7 @@ describe('Trash (e2e)', () => {
 
       const trashItemsRes = await waitForTableTrashItems(tableId, 1);
       const recordTrashItem = trashItemsRes.data.trashItems.find(
-        (item) => (item as ITableTrashItemVo).resourceType === ResourceType.Record
+        (item) => (item as ITableTrashItemVo).resourceType === TableTrashType.Record
       ) as ITableTrashItemVo | undefined;
 
       expect(recordTrashItem).toBeTruthy();
@@ -560,7 +561,7 @@ describe('Trash (e2e)', () => {
 
         const trashItemsRes = await waitForTableTrashItems(tableId, 1);
         const recordTrashItem = trashItemsRes.data.trashItems.find(
-          (item) => (item as ITableTrashItemVo).resourceType === ResourceType.Record
+          (item) => (item as ITableTrashItemVo).resourceType === TableTrashType.Record
         ) as ITableTrashItemVo | undefined;
         expect(recordTrashItem).toBeTruthy();
 
@@ -624,7 +625,7 @@ describe('Trash (e2e)', () => {
 
         const itemsRes = await waitForTableTrashItems(tableId, 1);
         const fieldTrashItem = itemsRes.data.trashItems.find(
-          (t) => (t as ITableTrashItemVo).resourceType === ResourceType.Field
+          (t) => (t as ITableTrashItemVo).resourceType === TableTrashType.Field
         ) as ITableTrashItemVo | undefined;
 
         expect(fieldTrashItem).toBeTruthy();
@@ -684,7 +685,7 @@ describe('Trash (e2e)', () => {
 
         const itemsRes = await waitForTableTrashItems(tableId, 1);
         const fieldTrashItem = itemsRes.data.trashItems.find(
-          (item) => (item as ITableTrashItemVo).resourceType === ResourceType.Field
+          (item) => (item as ITableTrashItemVo).resourceType === TableTrashType.Field
         ) as ITableTrashItemVo | undefined;
         expect(fieldTrashItem).toBeTruthy();
 
@@ -766,7 +767,7 @@ describe('Trash (e2e)', () => {
 
       const itemsRes = await waitForTableTrashItems(tableId, 2);
       const fieldTrashItem = itemsRes.data.trashItems.find(
-        (t) => (t as ITableTrashItemVo).resourceType === ResourceType.Field
+        (t) => (t as ITableTrashItemVo).resourceType === TableTrashType.Field
       ) as ITableTrashItemVo | undefined;
 
       expect(fieldTrashItem).toBeTruthy();
@@ -833,7 +834,7 @@ describe('Trash (e2e)', () => {
 
         const itemsRes = await waitForTableTrashItems(tableId, 1);
         const fieldTrashItem = itemsRes.data.trashItems.find(
-          (t) => (t as ITableTrashItemVo).resourceType === ResourceType.Field
+          (t) => (t as ITableTrashItemVo).resourceType === TableTrashType.Field
         ) as ITableTrashItemVo | undefined;
 
         expect(fieldTrashItem).toBeTruthy();
@@ -906,11 +907,11 @@ describe('Trash (e2e)', () => {
 
       expect(result.data.trashItems.length).toEqual(3);
 
-      await resetTrashItems({ resourceType: ResourceType.Table, resourceId: tableId });
+      await resetTrashItems({ resourceType: TrashType.Table, resourceId: tableId });
 
       const resetedResult = await getTrashItems({
         resourceId: tableId,
-        resourceType: ResourceType.Table,
+        resourceType: TrashType.Table,
       });
 
       expect(resetedResult.data.trashItems.length).toEqual(0);

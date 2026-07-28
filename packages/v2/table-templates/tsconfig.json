@@ -25,6 +25,15 @@
     },
     "types": ["vitest/globals", "node"]
   },
-  "exclude": ["**/node_modules", "**/.*/", "./dist", "./coverage"],
+  "exclude": [
+    "**/node_modules",
+    "**/.*/",
+    "./dist",
+    "./coverage",
+    "../core/src/**/*.spec.ts",
+    "../core/src/**/*.test.ts",
+    "../contract-http/src/**/*.spec.ts",
+    "../contract-http/src/**/*.test.ts"
+  ],
   "include": ["src", "../core/src", "../contract-http/src"]
 }

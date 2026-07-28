@@ -24,6 +24,7 @@ vi.mock('./v2-view-compat.service', () => ({
   V2ViewCompatService: class V2ViewCompatService {},
 }));
 
+import type { FieldDeleteSnapshotItem } from '@teable/v2-core';
 import { v2CoreTokens } from '@teable/v2-core';
 import {
   V2FieldDeleteCompatCompletion,
@@ -182,27 +183,28 @@ const createConditionalLookupTableMapper = () => ({
   ),
 });
 
-const createSnapshotItem = (fieldId: string, table: unknown = { kind: 'domainTable' }) => ({
-  table,
-  snapshot: {
-    field: {
-      id: fieldId,
-      name: fieldId === 'fldCompatA00000001' ? 'Text Field' : 'Number Field',
-      type: fieldId === 'fldCompatA00000001' ? 'singleLineText' : 'number',
-      isPrimary: fieldId === 'fldCompatA00000001',
-    },
-    views: [
-      {
-        viewId: 'viwCompat000000001',
-        columnMeta:
-          fieldId === 'fldCompatA00000001'
-            ? { order: 2, hidden: false }
-            : { order: 1, hidden: false },
+const createSnapshotItem = (fieldId: string, table: unknown = { kind: 'domainTable' }) =>
+  ({
+    table,
+    snapshot: {
+      field: {
+        id: fieldId,
+        name: fieldId === 'fldCompatA00000001' ? 'Text Field' : 'Number Field',
+        type: fieldId === 'fldCompatA00000001' ? 'singleLineText' : 'number',
+        isPrimary: fieldId === 'fldCompatA00000001',
       },
-    ],
-    records: [{ recordId: 'recCompat000000001', value: `${fieldId}:value` }],
-  },
-});
+      views: [
+        {
+          viewId: 'viwCompat000000001',
+          columnMeta:
+            fieldId === 'fldCompatA00000001'
+              ? { order: 2, hidden: false }
+              : { order: 1, hidden: false },
+        },
+      ],
+      records: [{ recordId: 'recCompat000000001', value: `${fieldId}:value` }],
+    },
+  }) as unknown as FieldDeleteSnapshotItem;
 
 describe('V2FieldDeleteSnapshotSink', () => {
   it('prepares an explicit completion with v2 delete snapshots, frozen view ops, and references', async () => {

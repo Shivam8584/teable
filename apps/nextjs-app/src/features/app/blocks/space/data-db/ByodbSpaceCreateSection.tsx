@@ -1,5 +1,15 @@
 import type { IDataDbPreflightVo } from '@teable/openapi';
-import { Button, Input, Switch, cn } from '@teable/ui-lib/shadcn';
+import {
+  Button,
+  Input,
+  Switch,
+  cn,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@teable/ui-lib/shadcn';
 import { CheckCircle2, TriangleAlert } from 'lucide-react';
 import { useTranslation } from 'next-i18next';
 
@@ -136,20 +146,21 @@ export const ByodbSpaceCreateSection = (props: IByodbSpaceCreateSectionProps) =>
           {availableDatabases.length > 0 && (
             <div className="space-y-1">
               <label className="text-xs font-medium">{t('dataDb.create.databaseLabel')}</label>
-              <select
-                className="h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              <Select
                 value={availableDatabases.includes(selectedDatabase) ? selectedDatabase : ''}
-                onChange={(e) => onUrlChange(setDatabaseNameInUrl(url, e.target.value))}
+                onValueChange={(value) => onUrlChange(setDatabaseNameInUrl(url, value))}
               >
-                <option value="" disabled>
-                  {t('dataDb.create.databasePlaceholder')}
-                </option>
-                {availableDatabases.map((database) => (
-                  <option key={database} value={database}>
-                    {database}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger className="h-9 w-full">
+                  <SelectValue placeholder={t('dataDb.create.databasePlaceholder')} />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableDatabases.map((database) => (
+                    <SelectItem key={database} value={database}>
+                      {database}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <p className="text-xs text-muted-foreground">{t('dataDb.create.databaseHint')}</p>
             </div>
           )}

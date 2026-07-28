@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { CheckCircle2, Loader2 } from '@teable/icons';
 import type { IJoinWaitlistRo } from '@teable/openapi';
 import { getPublicSetting, joinWaitlist, joinWaitlistSchemaRo } from '@teable/openapi';
 import { ReactQueryKeys } from '@teable/sdk/config';
@@ -57,25 +58,13 @@ const WaitlistPageInner = () => {
 
   if (isSubmitted) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4">
+      <div className="flex min-h-screen items-center justify-center bg-background p-4">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
-            <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-green-100">
-              <svg
-                className="size-8 text-green-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
+            <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900">
+              <CheckCircle2 className="size-8 text-green-600 dark:text-green-400" />
             </div>
-            <CardTitle className="text-2xl font-bold text-gray-900">
+            <CardTitle className="text-2xl font-bold text-foreground">
               {t('waitlist.youAreOnTheList')}
             </CardTitle>
             <CardDescription className="text-lg">{t('waitlist.thanksForJoining')}</CardDescription>
@@ -91,10 +80,10 @@ const WaitlistPageInner = () => {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <div className="mb-16 text-center">
-        <h1 className="mb-4 text-4xl font-bold text-gray-900">{t('waitlist.joinTitle')}</h1>
-        <h2 className="text-xl  text-gray-900">{t('waitlist.joinDesc')}</h2>
+        <h1 className="mb-4 text-4xl font-bold text-foreground">{t('waitlist.joinTitle')}</h1>
+        <h2 className="text-xl  text-foreground">{t('waitlist.joinDesc')}</h2>
       </div>
 
       <Card className="w-full max-w-md">
@@ -127,7 +116,7 @@ const WaitlistPageInner = () => {
               >
                 {isLoading ? (
                   <div className="flex items-center space-x-2">
-                    <div className="size-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                    <Loader2 className="size-4 animate-spin" />
                     <span>{t('waitlist.joining')}</span>
                   </div>
                 ) : (

@@ -317,7 +317,7 @@ describe('TableWhereVisitor', () => {
 
     for (const [methodName, message] of unsupportedMethods) {
       const result = (
-        visitor as Record<
+        visitor as unknown as Record<
           string,
           (spec: unknown) => {
             isErr(): boolean;

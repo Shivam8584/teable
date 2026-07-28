@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import type { INestApplication } from '@nestjs/common';
+import type { IFieldRo } from '@teable/core';
 import { FieldKeyType, FieldType } from '@teable/core';
 import { DataPrismaService } from '@teable/db-data-prisma';
 import { PrismaService, ProvisionState } from '@teable/db-main-prisma';
@@ -164,7 +165,7 @@ describeV2('V2 schema operation runner recovery (e2e)', () => {
   it('repairs a failed schema-only table create operation from the Nest background runner', async () => {
     const createRes = await apiCreateTable(baseId, {
       name: 'Schema operation recovery',
-      fields: [{ name: 'Name', type: FieldType.SingleLineText, isPrimary: true }],
+      fields: [{ name: 'Name', type: FieldType.SingleLineText, isPrimary: true } as IFieldRo],
       records: [],
     });
     expect(createRes.status).toBe(201);
@@ -220,7 +221,7 @@ describeV2('V2 schema operation runner recovery (e2e)', () => {
     const createRes = await apiCreateTable(baseId, {
       name: 'Record update data failure availability',
       fields: [
-        { name: 'Name', type: FieldType.SingleLineText, isPrimary: true },
+        { name: 'Name', type: FieldType.SingleLineText, isPrimary: true } as IFieldRo,
         {
           name: 'Status',
           type: FieldType.SingleSelect,
@@ -286,7 +287,7 @@ describeV2('V2 schema operation runner recovery (e2e)', () => {
     const createRes = await apiCreateTable(baseId, {
       name: 'Computed backfill data failure availability',
       fields: [
-        { name: 'Name', type: FieldType.SingleLineText, isPrimary: true },
+        { name: 'Name', type: FieldType.SingleLineText, isPrimary: true } as IFieldRo,
         { name: 'Amount', type: FieldType.Number },
       ],
       records: [],

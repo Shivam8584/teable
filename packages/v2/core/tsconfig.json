@@ -31,7 +31,9 @@
     "**/.*/",
     "./dist",
     "./coverage",
-    "../../formula/src/**/*.spec.ts"
+    "../../formula/src/**/*.spec.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts"
   ],
   "include": ["src", "../di/src", "../../formula/src", "../../i18n-keys/src"]
 }

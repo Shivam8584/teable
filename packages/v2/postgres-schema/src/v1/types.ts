@@ -249,6 +249,20 @@ export interface V1TaskRunTable {
   last_modified_time: ColumnType<Date | null, Date | null | undefined, Date | null | undefined>;
 }
 
+export interface V1AttachmentsTable {
+  id: string;
+  attachment_id: string;
+  name: string;
+  token: string;
+  table_id: string;
+  record_id: string;
+  field_id: string;
+  created_time: ColumnType<Date, Date | undefined, never>;
+  created_by: string;
+  last_modified_by: string | null;
+  last_modified_time: ColumnType<Date | null, Date | null | undefined, Date | null | undefined>;
+}
+
 export interface V1TaskReferenceTable {
   id: string;
   from_field_id: string;
@@ -336,4 +350,5 @@ export interface V1TeableDatabase {
   task: V1TaskTable;
   task_run: V1TaskRunTable;
   task_reference: V1TaskReferenceTable;
+  attachments_table: V1AttachmentsTable;
 }

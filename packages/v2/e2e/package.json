@@ -44,6 +44,7 @@
     "@teable/v2-table-templates": "workspace:*",
     "@teable/v2-utils": "workspace:*",
     "express": "4.21.1",
+    "neverthrow": "8.2.0",
     "sharedb": "5.2.2",
     "ws": "8.17.1"
   },

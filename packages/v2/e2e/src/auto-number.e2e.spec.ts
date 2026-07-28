@@ -45,6 +45,7 @@ describe('v2 auto-number continuity (e2e)', () => {
     const created = parsed.data.data.table.fields.find(
       (entry: { name: string; id: string }) => entry.name === field.name || entry.id === field.id
     );
+    if (!created) throw new Error('Created field not found in response');
     return created;
   };
 

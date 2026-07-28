@@ -1014,6 +1014,26 @@ export class TableRecordConditionWhereVisitor
     return this.applyIsNotEmpty(spec.field());
   }
 
+  visitIncomingLinkSelected(
+    _spec: core.IncomingLinkSelectedSpec
+  ): Result<RecordConditionWhere, DomainError> {
+    return err(
+      core.domainError.notImplemented({
+        message: 'Incoming link selected condition is not supported by the postgres query visitor',
+      })
+    );
+  }
+
+  visitIncomingLinkCandidate(
+    _spec: core.IncomingLinkCandidateSpec
+  ): Result<RecordConditionWhere, DomainError> {
+    return err(
+      core.domainError.notImplemented({
+        message: 'Incoming link candidate condition is not supported by the postgres query visitor',
+      })
+    );
+  }
+
   visitFormulaIs(spec: core.FormulaConditionSpec): Result<RecordConditionWhere, DomainError> {
     return this.applyIs(spec.field(), spec.value());
   }

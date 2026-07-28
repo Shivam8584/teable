@@ -53,7 +53,6 @@ describe('update-field: singleLineText → longText conversion', () => {
 
     // Action: Convert to longText
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { type: 'longText' },
@@ -88,7 +87,6 @@ describe('update-field: singleLineText → longText conversion', () => {
 
     // Action: Convert to longText
     await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { type: 'longText' },
@@ -119,7 +117,6 @@ describe('update-field: singleLineText → longText conversion', () => {
 
     // Action: Convert to longText
     await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { type: 'longText' },

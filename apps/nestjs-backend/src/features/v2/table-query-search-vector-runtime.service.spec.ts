@@ -38,7 +38,10 @@ describe('TableQuerySearchVectorRuntimeService', () => {
       languageConfig: 'simple',
       searchScope: 'all_fields',
     });
-    expect(accessPath?.coveredFieldIds.map((id) => id.toString())).toEqual([fieldId]);
+    if (accessPath?.kind !== 'generated_tsvector') {
+      throw new Error('Expected a generated_tsvector access path');
+    }
+    expect(accessPath.coveredFieldIds.map((id) => id.toString())).toEqual([fieldId]);
   });
 
   it('does not create an access path when covered fields are missing or invalid', () => {

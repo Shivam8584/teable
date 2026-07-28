@@ -288,12 +288,12 @@ const ModelRow = ({
     // Show friendly toast notification
     if (checked) {
       toast({
-        title: `🎨 ${model}`,
+        title: model,
         description: t('admin.setting.ai.markedAsImageModel'),
       });
     } else {
       toast({
-        title: `💬 ${model}`,
+        title: model,
         description: t('admin.setting.ai.markedAsTextModel'),
       });
     }

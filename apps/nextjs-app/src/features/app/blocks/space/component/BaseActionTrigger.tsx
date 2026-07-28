@@ -11,7 +11,6 @@ import {
   Trash2,
   ArrowRight,
 } from '@teable/icons';
-import { useTheme } from '@teable/next-themes';
 import {
   cancelBaseDataDbMoveJob,
   exportBaseStream,
@@ -50,9 +49,9 @@ import {
   Switch,
 } from '@teable/ui-lib/shadcn';
 import { toast } from '@teable/ui-lib/shadcn/ui/sonner';
-import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
+import { EmptyStateIcon } from '@/features/app/components/EmptyStateIcon';
 import { downloadUrlWithFileName } from '@/features/app/utils/download-url';
 import { BaseShareDialog } from '../../base/base-side-bar/BaseShareDialog';
 import { useDuplicateBaseStore } from '../../base/duplicate/useDuplicateBaseStore';
@@ -103,8 +102,6 @@ export const BaseActionTrigger: React.FC<React.PropsWithChildren<IBaseActionTrig
     align = 'end',
   } = props;
   const { t } = useTranslation(['common', 'space']);
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === 'dark';
   const [deleteConfirm, setDeleteConfirm] = React.useState(false);
   const [shareOpen, setShareOpen] = React.useState(false);
   const [exportConfirm, setExportConfirm] = React.useState(false);
@@ -463,12 +460,7 @@ export const BaseActionTrigger: React.FC<React.PropsWithChildren<IBaseActionTrig
 
           {exportState === 'done' ? (
             <div className="flex flex-col items-center py-4">
-              <Image
-                src={isDark ? '/images/savefile-dark.png' : '/images/savefile-light.png'}
-                alt=""
-                width={200}
-                height={200}
-              />
+              <EmptyStateIcon icon={Download} className="mb-2" />
               <p className="mt-4 text-center text-base font-medium">
                 {t('common:notification.exportBase.successText')}
               </p>

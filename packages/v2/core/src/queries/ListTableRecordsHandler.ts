@@ -28,7 +28,7 @@ import type { ViewQueryGroupItem } from '../domain/table/views/ViewQueryDefaults
 import { NoopTableQueryObservability } from '../ports/defaults/NoopTableQueryObservability';
 import type { IExecutionContext } from '../ports/ExecutionContext';
 import * as LoggerPort from '../ports/Logger';
-import { ITableQueryObservability } from '../ports/TableQueryObservability';
+import type { ITableQueryObservability } from '../ports/TableQueryObservability';
 import type { TableQueryObservabilityEvent } from '../ports/TableQueryObservability';
 import {
   createSearchTraceAttributes,

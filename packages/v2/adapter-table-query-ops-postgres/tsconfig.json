@@ -51,6 +51,10 @@
     "../adapter-db-postgres-pg/src/**/*.spec.ts",
     "../core/src/**/*.spec.ts",
     "../table-query-ops/src/**/*.spec.ts",
-    "../../formula/src/**/*.spec.ts"
+    "../../formula/src/**/*.spec.ts",
+    "../adapter-db-postgres-shared/src/**/*.spec.ts",
+    "../adapter-db-postgres-shared/src/**/*.test.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts"
   ]
 }

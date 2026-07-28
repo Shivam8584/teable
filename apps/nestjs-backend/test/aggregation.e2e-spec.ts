@@ -1491,7 +1491,7 @@ describe('OpenAPI AggregationController (e2e)', () => {
 
     it('should exclude search hits on fields outside the projection', async () => {
       const viewId = table.views[0].id;
-      const search: [string, string?, boolean?] = ['banana', '', true];
+      const search: [string, string, boolean] = ['banana', '', true];
 
       const { rowCount: withoutProjection } = (await getRowCount(table.id, { viewId, search }))
         .data;

@@ -1,10 +1,12 @@
 import type { SchemaRepairResult } from '@teable/v2-adapter-table-repository-postgres';
 import type { Effect } from 'effect';
 import { Context } from 'effect';
+import type { ManualRepairValues } from '../commands/shared';
 import type { CliError } from '../errors';
 
 export interface SchemaRepairOptions {
   readonly dryRun?: boolean;
+  readonly manualRepairValues?: ManualRepairValues;
 }
 
 export interface SchemaRepairSummary {

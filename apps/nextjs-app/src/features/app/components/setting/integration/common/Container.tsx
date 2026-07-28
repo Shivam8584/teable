@@ -1,6 +1,6 @@
-import { useTheme } from '@teable/next-themes';
+import { Puzzle } from '@teable/icons';
 import { cn, Skeleton } from '@teable/ui-lib/shadcn';
-import Image from 'next/image';
+import { EmptyStateIcon } from '../../../EmptyStateIcon';
 export const IntegrationContainer = (props: {
   children: React.ReactNode;
   count?: number;
@@ -8,8 +8,6 @@ export const IntegrationContainer = (props: {
   description?: string | React.ReactNode;
 }) => {
   const { children, count, isLoading, description } = props;
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === 'dark';
   const isEmpty = typeof count === 'number' && count === 0;
   return (
     <div className="h-full overflow-auto py-4">
@@ -21,18 +19,7 @@ export const IntegrationContainer = (props: {
           }
         )}
       >
-        {isEmpty && (
-          <Image
-            src={
-              isDark
-                ? '/images/layout/empty-integration-dark.png'
-                : '/images/layout/empty-integration-light.png'
-            }
-            width={160}
-            height={160}
-            alt="No integrations available"
-          />
-        )}
+        {isEmpty && <EmptyStateIcon icon={Puzzle} />}
         {description}
       </div>
       <div className="flex-1 overflow-auto px-3">

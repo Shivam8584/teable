@@ -165,7 +165,6 @@ export const SelectFieldType = (props: {
         name: title,
         description,
         icon: <Icon className="size-4" />,
-        tag: type === FieldType.Attachment ? '🍌' : undefined,
       };
     });
   }, [getFieldStatic, isPrimary]);
@@ -240,7 +239,6 @@ export const SelectFieldType = (props: {
         name: title,
         description,
         icon: <Icon className="size-4" />,
-        tag: type === FieldType.Attachment ? '🍌' : undefined,
       };
     });
 

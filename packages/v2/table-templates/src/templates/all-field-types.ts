@@ -10,7 +10,7 @@ import {
   createTemplate,
 } from '../utils';
 
-export const createAllFieldTypesFields = (): ICreateTableRequestDto['fields'] => {
+export const createAllFieldTypesFields = (): NonNullable<ICreateTableRequestDto['fields']> => {
   const amountFieldId = createFieldId();
   const scoreFieldId = createFieldId();
   const scoreLabelFieldId = createFieldId();

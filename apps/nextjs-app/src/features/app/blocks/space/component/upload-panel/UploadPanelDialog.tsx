@@ -166,8 +166,8 @@ export const UploadPanelDialog = (props: IUploadPanelDialogProps) => {
   const showImportSuccessToast = React.useCallback(
     (baseId: string, baseName?: string) => {
       const label = baseName
-        ? `🎉 ${baseName} ${tAny('space:import.phase.done')}`
-        : `🎉 ${tAny('space:import.phase.done')}`;
+        ? `${baseName} ${tAny('space:import.phase.done')}`
+        : tAny('space:import.phase.done');
 
       toast.info(
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events

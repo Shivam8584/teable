@@ -1,16 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
 import { getUniqName, hasPermission } from '@teable/core';
-import { useTheme } from '@teable/next-themes';
+import { Database } from '@teable/icons';
 import { createBase } from '@teable/openapi';
 import type { IGetSpaceVo } from '@teable/openapi';
 import { useSession } from '@teable/sdk/hooks';
 import { Spin } from '@teable/ui-lib/base';
 import { Button } from '@teable/ui-lib/shadcn';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import type { FC } from 'react';
 import { spaceConfig } from '@/features/i18n/space.config';
+import { EmptyStateIcon } from '../../components/EmptyStateIcon';
 import { useBaseList } from './useBaseList';
 
 interface INoBasesPlaceholderProps {
@@ -19,9 +19,6 @@ interface INoBasesPlaceholderProps {
 
 export const NoBasesPlaceholder: FC<INoBasesPlaceholderProps> = ({ space }) => {
   const { t } = useTranslation(spaceConfig.i18nNamespaces);
-
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === 'dark';
 
   const { user } = useSession();
   const router = useRouter();
@@ -47,12 +44,7 @@ export const NoBasesPlaceholder: FC<INoBasesPlaceholderProps> = ({ space }) => {
 
   return (
     <div className="flex h-full min-h-[60vh] flex-col items-center justify-center px-8">
-      <Image
-        src={isDark ? '/images/layout/welcome-dark.png' : '/images/layout/welcome-light.png'}
-        alt="no bases"
-        width={240}
-        height={240}
-      />
+      <EmptyStateIcon icon={Database} className="mb-2" />
 
       <div className="flex max-w-md flex-col items-center text-center">
         <h3 className="mb-2 mt-6 text-2xl font-semibold">

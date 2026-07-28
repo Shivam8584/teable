@@ -639,8 +639,16 @@ describeWithPostgres('SpaceDataDbCopyService integration', () => {
           ]),
         },
       });
-      expectProcessTiming(baseCopyStats.baseSchemas.dump);
-      expectProcessTiming(baseCopyStats.baseSchemas.restore);
+      if (
+        baseCopyStats.baseSchemas.strategy !== 'pg_dump_stream_restore' ||
+        !baseCopyStats.baseSchemas.stream
+      ) {
+        throw new Error(
+          `Expected pg_dump_stream_restore strategy, got ${baseCopyStats.baseSchemas.strategy}`
+        );
+      }
+      expectProcessTiming(baseCopyStats.baseSchemas.stream.source);
+      expectProcessTiming(baseCopyStats.baseSchemas.stream.target);
 
       const sharedResults = await service.copySharedTables(
         buildMigrationSharedTablePsqlCopyPlans({

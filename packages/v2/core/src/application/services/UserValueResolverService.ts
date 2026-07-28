@@ -13,8 +13,7 @@ import { CellValue } from '../../domain/table/records/values/CellValue';
 import type { IExecutionContext } from '../../ports/ExecutionContext';
 import { v2CoreTokens } from '../../ports/tokens';
 import { buildUserAvatarUrl } from '../../ports/UserAvatarUrl';
-import { IUserLookupService } from '../../ports/UserLookupService';
-import type { UserLookupRecord } from '../../ports/UserLookupService';
+import type { IUserLookupService, UserLookupRecord } from '../../ports/UserLookupService';
 import type { ICellValueSpecResolver } from './SpecResolver';
 
 const normalizeUserValue = (value: unknown): { items: UserItem[]; isArray: boolean } => {

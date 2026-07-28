@@ -4,7 +4,7 @@ import { spawnSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import type { INestApplication } from '@nestjs/common';
-import type { ILinkFieldOptions } from '@teable/core';
+import type { IFieldRo, ILinkFieldOptions } from '@teable/core';
 import { FieldKeyType, FieldType, Relationship, SortFunc, StatisticsFunc } from '@teable/core';
 import {
   analyzeFile as apiAnalyzeFile,
@@ -33,7 +33,9 @@ import {
   SettingKey,
   SUPPORTEDTYPE,
   TableIndex,
+  TableTrashType,
   toggleTableIndex,
+  TrashType,
   undo,
   updateSetting,
   updateDbTableName,
@@ -1338,7 +1340,7 @@ describeByodbStorage('BYODB space storage placement (e2e)', () => {
       restoreBaseId = restoreBase.id;
       const restoreTable = await createTable(restoreBase.id, {
         name: 'BYODB V2 record trash restore table',
-        fields: [{ name: 'Name', type: FieldType.SingleLineText, isPrimary: true }],
+        fields: [{ name: 'Name', type: FieldType.SingleLineText, isPrimary: true } as IFieldRo],
         records: [{ fields: { Name: 'Restore row' } }],
       });
       restoreTableId = restoreTable.id;
@@ -1383,11 +1385,11 @@ describeByodbStorage('BYODB space storage placement (e2e)', () => {
 
       const trash = await getTrashItems({
         resourceId: restoreTable.id,
-        resourceType: ResourceType.Table,
+        resourceType: TrashType.Table,
       });
       const recordTrashItem = trash.data.trashItems.find(
         (item) =>
-          item.resourceType === ResourceType.Record &&
+          item.resourceType === TableTrashType.Record &&
           'resourceIds' in item &&
           item.resourceIds.includes(recordId)
       );

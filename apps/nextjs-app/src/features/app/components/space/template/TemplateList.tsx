@@ -1,12 +1,12 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useTheme } from '@teable/next-themes';
+import { LayoutTemplate } from '@teable/icons';
 import { getPublishedTemplateList } from '@teable/openapi';
 import { ReactQueryKeys } from '@teable/sdk/config';
 import { Spin } from '@teable/ui-lib/base';
 import { Button, cn, Skeleton } from '@teable/ui-lib/shadcn';
-import Image from 'next/image';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { EmptyStateIcon } from '../../EmptyStateIcon';
 import { TemplateCard } from './TemplateCard';
 import type { ITemplateBaseProps } from './TemplateMain';
 
@@ -35,8 +35,6 @@ const PAGE_SIZE = 2 * 3 * 2;
 export const TemplateList = (props: ITemplateListProps) => {
   const { currentCategoryId, search, onClickTemplateCardHandler, className, isFeatured } = props;
   const { t } = useTranslation(['common', 'space']);
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === 'dark';
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
     queryKey: ReactQueryKeys.publishedTemplateList(currentCategoryId, search, isFeatured),
     queryFn: ({ pageParam }) =>
@@ -80,14 +78,7 @@ export const TemplateList = (props: ITemplateListProps) => {
   if (currentTemplateList?.length === 0) {
     return (
       <div className="flex size-full flex-1 flex-col items-center justify-center gap-4">
-        <Image
-          src={
-            isDark ? '/images/layout/empty-list-dark.png' : '/images/layout/empty-list-light.png'
-          }
-          alt="No templates available"
-          width={240}
-          height={240}
-        />
+        <EmptyStateIcon icon={LayoutTemplate} />
         <div className="flex flex-col items-center justify-center gap-2">
           <p className="text-base font-semibold text-foreground">
             {t('space:template.noTemplatesAvailable')}

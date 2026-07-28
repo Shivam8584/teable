@@ -160,15 +160,18 @@ export const FieldAiConfig: React.FC<FieldAiConfigProps> = ({ field, onChange })
     <div
       className={cn(
         'group flex cursor-pointer select-none items-center justify-between px-3 py-2 rounded-sm gap-x-2',
-        `transition-all duration-500 ease-in-out 
-      bg-gradient-to-r from-teal-100 via-blue-50 to-rose-50 
-    hover:from-teal-100/70 hover:via-blue-50/70 hover:to-rose-50/70
-      dark:bg-[linear-gradient(90deg,rgba(120,182,240,0.30)_0%,rgba(149,122,208,0.30)_50%,rgba(223,86,109,0.30)_100%)]
-      dark:hover:bg-[linear-gradient(90deg,rgba(120,182,240,0.35)_0%,rgba(149,122,208,0.35)_50%,rgba(223,86,109,0.35)_100%)]
-      `,
+        'transition-colors bg-primary/5 hover:bg-primary/10',
         isExpanded && 'rounded-b-none'
       )}
+      role="button"
+      tabIndex={0}
       onClick={() => setIsExpanded(!isExpanded)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          setIsExpanded(!isExpanded);
+        }
+      }}
     >
       <div className="flex shrink-0 items-center gap-x-1">
         <MagicAi className="size-4 text-amber-500" />
@@ -178,7 +181,17 @@ export const FieldAiConfig: React.FC<FieldAiConfigProps> = ({ field, onChange })
         {Boolean(aiConfig?.type) && (
           <span
             className="cursor-pointer truncate border-b border-muted-foreground/80 text-xs text-muted-foreground"
-            onClick={() => onChange?.({ aiConfig: null })}
+            onClick={(e) => {
+              e.stopPropagation();
+              onChange?.({ aiConfig: null });
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                e.stopPropagation();
+                onChange?.({ aiConfig: null });
+              }
+            }}
             tabIndex={0}
             role="button"
           >

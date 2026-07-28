@@ -14,7 +14,16 @@ import {
 } from '@teable/sdk/components';
 import { useIsHydrated, useTableId } from '@teable/sdk/hooks';
 import { Table } from '@teable/sdk/model/table';
-import { ToggleGroup, ToggleGroupItem, Button } from '@teable/ui-lib/shadcn';
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+  Button,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@teable/ui-lib/shadcn';
 import { useTranslation } from 'next-i18next';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { developerConfig } from '@/features/i18n/developer.config';
@@ -179,18 +188,22 @@ export const PreviewTable = ({ query: queryRaw }: { query: IGetRecordsRo }) => {
             <div className="flex items-center gap-2">
               <span>skip: {(page - 1) * pageSize}</span>
               <span>take:</span>
-              <select
-                value={pageSize}
-                onChange={(e) => setPageSize(Number(e.target.value))}
-                className="rounded border p-1 text-sm"
+              <Select
+                value={String(pageSize)}
+                onValueChange={(value) => setPageSize(Number(value))}
                 disabled={isLoading}
               >
-                {[10, 20, 50, 100].map((size) => (
-                  <option key={size} value={size}>
-                    {size}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger className="h-7 w-16 text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {[10, 20, 50, 100].map((size) => (
+                    <SelectItem key={size} value={String(size)}>
+                      {size}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             {isLoading && <span className="text-sm text-muted-foreground">Loading...</span>}
           </div>

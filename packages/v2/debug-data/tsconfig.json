@@ -36,7 +36,13 @@
     "../core/src/**/*.spec.ts",
     "../core/src/**/*.test.ts",
     "../adapter-db-postgres-pg/src/**/*.spec.ts",
-    "../adapter-db-postgres-pg/src/**/*.test.ts"
+    "../adapter-db-postgres-pg/src/**/*.test.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts",
+    "../postgres-schema/src/**/*.spec.ts",
+    "../postgres-schema/src/**/*.test.ts",
+    "../field-dependency-core/src/**/*.spec.ts",
+    "../field-dependency-core/src/**/*.test.ts"
   ],
   "include": [
     "src",

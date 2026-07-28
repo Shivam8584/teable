@@ -608,7 +608,8 @@ describe('duplicateTable (e2e)', () => {
       const duplicatedSelfLinkFieldId = duplicated.fieldIdMap[selfLinkFieldId];
       const duplicatedSymmetricFieldId = duplicated.fieldIdMap[symmetricSelfLinkField.id];
       const duplicatedSelfLinkFields = duplicated.table.fields.filter(
-        (field) => field.type === 'link' && field.options.foreignTableId === duplicated.table.id
+        (field): field is Extract<typeof field, { type: 'link' }> =>
+          field.type === 'link' && field.options.foreignTableId === duplicated.table.id
       );
 
       expect(duplicatedSelfLinkFields).toHaveLength(2);
@@ -1948,7 +1949,7 @@ describe('duplicateTable (e2e)', () => {
       if (!duplicatedButtonField || duplicatedButtonField.type !== 'button') {
         throw new Error('Missing duplicated button field');
       }
-      expect(duplicatedButtonField.options.workflow).toBeUndefined();
+      expect(duplicatedButtonField.options?.workflow).toBeUndefined();
 
       const duplicatedRecords = await ctx.listRecords(duplicated.table.id, { limit: 100 });
       const duplicatedByName = new Map(

@@ -26,6 +26,8 @@
     "clean": "rimraf ./dist ./coverage ./tsconfig.tsbuildinfo ./tsconfig.build.tsbuildinfo ./.eslintcache",
     "lint": "eslint . --ext .ts,.js,.mjs,.cjs,.mts,.cts --cache --cache-location ../../../.cache/eslint/v2-dottea.eslintcache",
     "typecheck": "tsc --project ./tsconfig.json --noEmit",
+    "test-unit": "vitest run --silent",
+    "test-unit-cover": "pnpm test-unit --coverage",
     "fix-all-files": "eslint . --ext .ts,.js,.mjs,.cjs,.mts,.cts --fix"
   },
   "dependencies": {
@@ -40,11 +42,13 @@
     "@teable/eslint-config-bases": "workspace:^",
     "@types/node": "22.18.0",
     "@types/unzipper": "0.10.11",
+    "@vitest/coverage-v8": "4.0.17",
     "eslint": "8.57.0",
     "prettier": "3.2.5",
     "rimraf": "5.0.5",
     "tsdown": "0.18.1",
     "tsx": "4.19.4",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "4.0.17"
   }
 }

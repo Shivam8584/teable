@@ -803,7 +803,7 @@ const initSharedContext = async (
     type?: 'columns' | 'rows';
     filter?: RecordFilter;
     sort?: Array<{ fieldId: string; order: 'asc' | 'desc' }>;
-    search?: [string, string, boolean?];
+    search?: RecordSearchInput;
     groupBy?: Array<{ fieldId: string; order: 'asc' | 'desc' }>;
     projection?: string[];
     ignoreViewQuery?: boolean;
@@ -827,7 +827,7 @@ const initSharedContext = async (
     type?: 'columns' | 'rows';
     filter?: RecordFilter;
     sort?: Array<{ fieldId: string; order: 'asc' | 'desc' }>;
-    search?: [string, string, boolean?];
+    search?: RecordSearchInput;
     groupBy?: Array<{ fieldId: string; order: 'asc' | 'desc' }>;
     ignoreViewQuery?: boolean;
   }) => {

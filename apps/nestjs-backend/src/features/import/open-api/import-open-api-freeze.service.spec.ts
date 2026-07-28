@@ -40,6 +40,7 @@ describe('Import open API write freeze', () => {
         attachmentUrl: importCsvUrl,
         fileType: SUPPORTEDTYPE.CSV,
         worksheets: {},
+        tz: 'UTC',
       })
     ).rejects.toBe(freezeError);
 
@@ -102,6 +103,7 @@ describe('Import open API write freeze', () => {
         attachmentUrl: importCsvUrl,
         fileType: SUPPORTEDTYPE.CSV,
         worksheets: {},
+        tz: 'UTC',
       })
     ).rejects.toBe(freezeError);
 

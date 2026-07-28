@@ -98,7 +98,7 @@ describe('TableDuplicateService.duplicateTableData', () => {
       {},
       {},
       [],
-      dataPrisma
+      dataPrisma as unknown as Parameters<typeof service.duplicateTableData>[5]
     );
 
     expect(executedSql).toHaveLength(1);

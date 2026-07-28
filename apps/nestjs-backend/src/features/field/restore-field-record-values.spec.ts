@@ -29,7 +29,9 @@ describe('restoreFieldRecordValues', () => {
     expect(updater.updateRecords.mock.calls[0][1].fieldKeyType).toBe(FieldKeyType.Id);
     expect(
       updater.updateRecords.mock.calls.flatMap(([, ro]) =>
-        (ro.records ?? []).flatMap((record) => Object.values(record.fields ?? {}))
+        (ro.records ?? []).flatMap((record: { id: string; fields?: Record<string, unknown> }) =>
+          Object.values(record.fields ?? {})
+        )
       )
     ).toEqual(nonEmptyRecords.map((record) => record.fields.fldText));
   });

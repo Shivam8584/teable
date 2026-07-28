@@ -1,5 +1,6 @@
 import { domainError } from '@teable/v2-core';
 import { err, ok } from 'neverthrow';
+import type { Ok } from 'neverthrow';
 import { describe, expect, it } from 'vitest';
 
 import type {
@@ -34,7 +35,7 @@ type SupportedVisitMethod =
 
 type FakeField = {
   id(): string;
-  dbFieldName(): ReturnType<typeof ok<{ value: () => ReturnType<typeof ok<string>> }>>;
+  dbFieldName(): Ok<{ value: () => Ok<string, never> }, never>;
   accept(
     visitor: TableRecordSelectColumnsVisitor
   ): ReturnType<TableRecordSelectColumnsVisitor['visitSingleLineTextField']>;
@@ -48,7 +49,7 @@ const createField = (id: string, column: string, method: SupportedVisitMethod): 
         value: () => ok(column),
       }),
     accept(visitor) {
-      return (visitor[method] as (field: FakeField) => ReturnType<typeof ok<FieldColumn>>)(field);
+      return (visitor[method] as unknown as (field: FakeField) => Ok<FieldColumn, never>)(field);
     },
   };
 
@@ -85,7 +86,7 @@ describe('TableRecordSelectColumnsVisitor', () => {
     const visitor = new TableRecordSelectColumnsVisitorImpl();
     const field = createField(`fld_${index}`, `col_${index}`, method);
 
-    const result = (visitor[method] as (field: FakeField) => ReturnType<typeof ok<FieldColumn>>)(
+    const result = (visitor[method] as unknown as (field: FakeField) => Ok<FieldColumn, never>)(
       field
     );
 

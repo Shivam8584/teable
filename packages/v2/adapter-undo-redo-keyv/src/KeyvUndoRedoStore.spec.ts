@@ -12,13 +12,15 @@ class MemoryKeyv {
   readonly values = new Map<string, unknown>();
   readonly getCalls: string[] = [];
 
-  async get(key: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async get(key: any): Promise<any> {
     this.getCalls.push(key);
     return this.values.get(key);
   }
 
-  async set(key: string, value: unknown) {
+  async set(key: string, value: unknown): Promise<true> {
     this.values.set(key, value);
+    return true;
   }
 
   async delete(key: string) {
@@ -140,7 +142,7 @@ describe('KeyvUndoRedoStore', () => {
 
     const compressedStoredValue = [...keyv.values.values()].find(
       (value): value is { format?: string } =>
-        Boolean(value) && typeof value === 'object' && 'format' in value
+        !!value && typeof value === 'object' && 'format' in value
     );
     expect(compressedStoredValue).toMatchObject({ format: 'gz64-json' });
 

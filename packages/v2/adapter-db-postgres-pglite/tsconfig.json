@@ -25,6 +25,17 @@
       "@teable/v2-di": ["../di/src"]
     }
   },
-  "exclude": ["**/node_modules", "**/.*/", "./dist", "./coverage"],
+  "exclude": [
+    "**/node_modules",
+    "**/.*/",
+    "./dist",
+    "./coverage",
+    "../adapter-db-postgres-shared/src/**/*.spec.ts",
+    "../adapter-db-postgres-shared/src/**/*.test.ts",
+    "../core/src/**/*.spec.ts",
+    "../core/src/**/*.test.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts"
+  ],
   "include": ["src", "../adapter-db-postgres-shared/src", "../core/src", "../di/src"]
 }

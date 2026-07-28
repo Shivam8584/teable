@@ -5,12 +5,14 @@ import type { Result } from 'neverthrow';
 import { TableOperationPluginRunner } from '../application/services/TableOperationPluginRunner';
 import { domainError, isNotFoundError, type DomainError } from '../domain/shared/DomainError';
 import { Table } from '../domain/table/Table';
-import { IComputedActivityReader } from '../ports/ComputedActivityReader';
-import type { TableComputeActivitySnapshot } from '../ports/ComputedActivityReader';
+import type {
+  IComputedActivityReader,
+  TableComputeActivitySnapshot,
+} from '../ports/ComputedActivityReader';
 import type { IExecutionContext } from '../ports/ExecutionContext';
-import { ILogger } from '../ports/Logger';
+import type { ILogger } from '../ports/Logger';
 import { TableOperationKind } from '../ports/TableOperationPlugin';
-import { ITableRepository } from '../ports/TableRepository';
+import type { ITableRepository } from '../ports/TableRepository';
 import { v2CoreTokens } from '../ports/tokens';
 import { GetComputeActivityQuery } from './GetComputeActivityQuery';
 import { QueryHandler, type IQueryHandler } from './QueryHandler';

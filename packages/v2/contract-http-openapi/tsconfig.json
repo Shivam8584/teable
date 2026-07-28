@@ -26,6 +26,17 @@
     },
     "types": ["vitest/globals", "node"]
   },
-  "exclude": ["**/node_modules", "**/.*/", "./dist", "./coverage"],
+  "exclude": [
+    "**/node_modules",
+    "**/.*/",
+    "./dist",
+    "./coverage",
+    "../contract-http/src/**/*.spec.ts",
+    "../contract-http/src/**/*.test.ts",
+    "../core/src/**/*.spec.ts",
+    "../core/src/**/*.test.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts"
+  ],
   "include": ["src", "../contract-http/src", "../core/src", "../di/src"]
 }

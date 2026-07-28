@@ -37,7 +37,6 @@ describe('e2e API: clear field defaultValue T6107', () => {
     updateFieldPayload: Record<string, unknown>
   ) => {
     await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: updateFieldPayload,

@@ -2,6 +2,7 @@
  * E2E tests for updating Date field properties.
  */
 /* eslint-disable @typescript-eslint/naming-convention */
+import type { TimeZoneValue } from '@teable/v2-core';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { getSharedTestContext, type SharedTestContext } from '../../shared/globalTestContext';
 
@@ -19,8 +20,8 @@ describe('update-field: date property updates', () => {
 
   const createDateField = async (
     name: string,
-    formatting?: { date: string; time: 'None' | 'HH:mm' | 'hh:mm A'; timeZone: string },
-    defaultValue?: string
+    formatting?: { date: string; time: 'None' | 'HH:mm' | 'hh:mm A'; timeZone: TimeZoneValue },
+    defaultValue?: 'now'
   ) => {
     const fieldId = createGlobalFieldId();
     await ctx.createField({

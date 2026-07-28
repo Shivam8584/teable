@@ -1,4 +1,5 @@
 import type { INestApplication } from '@nestjs/common';
+import type { IFieldRo } from '@teable/core';
 import { FieldKeyType, FieldType, NotificationTypeEnum, Role as baseRole } from '@teable/core';
 import { PrismaService } from '@teable/db-main-prisma';
 import type { IUserMeVo } from '@teable/openapi';
@@ -44,7 +45,7 @@ describe('V2Controller updateRecords (e2e)', () => {
     const table = await createTable(baseId, {
       name,
       fields: [
-        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true },
+        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true } as IFieldRo,
         { name: 'Amount', type: FieldType.Number },
         { name: 'Status', type: FieldType.SingleLineText },
       ],
@@ -144,7 +145,7 @@ describe('V2Controller updateRecords (e2e)', () => {
     const table = await createTable(baseId, {
       name: 'v2 update records',
       fields: [
-        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true },
+        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true } as IFieldRo,
         { name: 'Amount', type: FieldType.Number },
         { name: 'Status', type: FieldType.SingleLineText },
       ],
@@ -246,7 +247,7 @@ describe('V2Controller updateRecords (e2e)', () => {
     const table = await createTable(baseId, {
       name: 'v2 collaborator notification',
       fields: [
-        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true },
+        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true } as IFieldRo,
         {
           name: 'Assignee',
           type: FieldType.User,
@@ -468,7 +469,7 @@ describe('V2Controller updateRecords (e2e)', () => {
     const table = await createTable(baseId, {
       name: 'v2 update records by ids',
       fields: [
-        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true },
+        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true } as IFieldRo,
         { name: 'Status', type: FieldType.SingleLineText },
       ],
     });
@@ -550,7 +551,7 @@ describe('V2Controller updateRecords (e2e)', () => {
     const table = await createTable(baseId, {
       name: 'v2 sparse update preserves omitted single select',
       fields: [
-        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true },
+        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true } as IFieldRo,
         {
           name: 'Status',
           type: FieldType.SingleSelect,
@@ -642,7 +643,7 @@ describe('V2Controller updateRecords (e2e)', () => {
     const table = await createTable(baseId, {
       name: 'v2 sparse update required single select',
       fields: [
-        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true },
+        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true } as IFieldRo,
         {
           name: 'Status',
           type: FieldType.SingleSelect,
@@ -769,7 +770,7 @@ describe('V2Controller updateRecords (e2e)', () => {
     const table = await createTable(baseId, {
       name: 'v2 update records empty filter',
       fields: [
-        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true },
+        { name: 'Title', type: FieldType.SingleLineText, isPrimary: true } as IFieldRo,
         { name: 'Status', type: FieldType.SingleLineText },
       ],
     });

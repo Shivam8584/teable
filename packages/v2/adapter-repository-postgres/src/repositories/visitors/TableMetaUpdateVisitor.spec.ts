@@ -170,10 +170,8 @@ const createVisitor = (table = createTableFixture().table) => {
   return { db, visitor };
 };
 
-const compileStatements = (
-  db: Kysely<V1TeableDatabase>,
-  statements: ReadonlyArray<TableUpdateBuilder>
-): CompiledQuery[] => statements.map((statement) => statement.compile(db));
+const compileStatements = (statements: ReadonlyArray<TableUpdateBuilder>): CompiledQuery[] =>
+  statements.map((statement) => statement.compile());
 
 describe('TableMetaUpdateVisitor', () => {
   it('builds table metadata updates and merges collected statements', () => {
@@ -191,7 +189,7 @@ describe('TableMetaUpdateVisitor', () => {
     expect(renameResult.isOk()).toBe(true);
     expect(byNameResult.isOk()).toBe(true);
 
-    const sqls = compileStatements(db, visitor.where()._unsafeUnwrap()).map((query) => query.sql);
+    const sqls = compileStatements(visitor.where()._unsafeUnwrap()).map((query) => query.sql);
     expect(sqls).toHaveLength(2);
     expect(sqls[0]).toContain('update "table_meta"');
     expect(sqls[0]).toContain('"name" = $1');
@@ -239,13 +237,11 @@ describe('TableMetaUpdateVisitor', () => {
     expect(duplicateResult.isOk()).toBe(true);
     expect(removeResult.isOk()).toBe(true);
 
-    const addSql = compileStatements(db, addResult._unsafeUnwrap())[0]!;
+    const addSql = compileStatements(addResult._unsafeUnwrap())[0]!;
     expect(addSql.sql).toContain('insert into "field"');
     expect(addSql.sql).toContain('on conflict ("id") do update');
 
-    const removeSqls = compileStatements(db, removeResult._unsafeUnwrap()).map(
-      (query) => query.sql
-    );
+    const removeSqls = compileStatements(removeResult._unsafeUnwrap()).map((query) => query.sql);
     expect(removeSqls[0]).toContain('update "field"');
     expect(removeSqls[0]).toContain('"deleted_time" = $1');
     expect(removeSqls[1]).toContain('delete from "reference"');
@@ -327,7 +323,7 @@ describe('TableMetaUpdateVisitor', () => {
     const addResult = visitor.visitTableAddField({ field: () => lookupField } as never);
     expect(addResult.isOk()).toBe(true);
 
-    const compiled = compileStatements(db, addResult._unsafeUnwrap())[0]!;
+    const compiled = compileStatements(addResult._unsafeUnwrap())[0]!;
     const jsonParameters = compiled.parameters.flatMap((parameter) => {
       if (typeof parameter !== 'string' || !parameter.startsWith('{')) {
         return [];
@@ -380,19 +376,15 @@ describe('TableMetaUpdateVisitor', () => {
     const clearErrorSpec = TableUpdateFieldHasErrorSpec.clearError(fieldId, FieldHasError.error());
 
     const nameSql = compileStatements(
-      db,
       visitor.visitTableUpdateFieldName(nameSpec)._unsafeUnwrap()
     )[0]!;
     const dbNameSql = compileStatements(
-      db,
       visitor.visitTableUpdateFieldDbFieldName(dbFieldNameSpec)._unsafeUnwrap()
     )[0]!;
     const errorSql = compileStatements(
-      db,
       visitor.visitTableUpdateFieldHasError(hasErrorSpec)._unsafeUnwrap()
     )[0]!;
     const clearErrorSql = compileStatements(
-      db,
       visitor.visitTableUpdateFieldHasError(clearErrorSpec)._unsafeUnwrap()
     )[0]!;
 
@@ -453,8 +445,8 @@ describe('TableMetaUpdateVisitor', () => {
     expect(viewMetaResult.isOk()).toBe(true);
     expect(queryDefaultsResult.isOk()).toBe(true);
 
-    const viewMetaSql = compileStatements(db, viewMetaResult._unsafeUnwrap())[0]!;
-    const queryDefaultsSql = compileStatements(db, queryDefaultsResult._unsafeUnwrap())[0]!;
+    const viewMetaSql = compileStatements(viewMetaResult._unsafeUnwrap())[0]!;
+    const queryDefaultsSql = compileStatements(queryDefaultsResult._unsafeUnwrap())[0]!;
 
     expect(viewMetaSql.parameters).toContain(JSON.stringify(columnMeta.toDto()));
     expect(queryDefaultsSql.parameters).toContain(
@@ -538,24 +530,24 @@ describe('TableMetaUpdateVisitor', () => {
 
     for (const method of optionMethods) {
       const result = (
-        visitor as Record<
+        visitor as unknown as Record<
           string,
           (spec: unknown) => ReturnType<typeof visitor.visitUpdateButtonLabel>
         >
       )[method](optionSpec);
       expect(result.isOk()).toBe(true);
-      expect(compileStatements(db, result._unsafeUnwrap())[0]?.sql).toContain('update "field"');
+      expect(compileStatements(result._unsafeUnwrap())[0]?.sql).toContain('update "field"');
     }
 
     for (const method of storageMethods) {
       const result = (
-        visitor as Record<
+        visitor as unknown as Record<
           string,
           (spec: unknown) => ReturnType<typeof visitor.visitUpdateFormulaExpression>
         >
       )[method](storageSpec);
       expect(result.isOk()).toBe(true);
-      const compiled = compileStatements(db, result._unsafeUnwrap())[0]!;
+      const compiled = compileStatements(result._unsafeUnwrap())[0]!;
       expect(compiled.sql).toContain('update "field"');
       expect(compiled.parameters).toContain(linkField.id().toString());
     }
@@ -579,8 +571,8 @@ describe('TableMetaUpdateVisitor', () => {
 
     expect(optionOnly.isOk()).toBe(true);
     expect(storageUpdate.isOk()).toBe(true);
-    expect(compileStatements(db, optionOnly._unsafeUnwrap())[0]?.sql).toContain('"options" = $1');
-    expect(compileStatements(db, storageUpdate._unsafeUnwrap())[0]?.sql).toContain('"meta" = $2');
+    expect(compileStatements(optionOnly._unsafeUnwrap())[0]?.sql).toContain('"options" = $1');
+    expect(compileStatements(storageUpdate._unsafeUnwrap())[0]?.sql).toContain('"meta" = $2');
   });
 
   it('persists derived user multiplicity metadata when user options change', () => {
@@ -596,7 +588,7 @@ describe('TableMetaUpdateVisitor', () => {
     const result = visitor.visitUpdateUserMultiplicity(spec);
 
     expect(result.isOk()).toBe(true);
-    const compiled = compileStatements(db, result._unsafeUnwrap())[0]!;
+    const compiled = compileStatements(result._unsafeUnwrap())[0]!;
     expect(compiled.sql).toContain('"options" = $1');
     expect(compiled.sql).toContain('"is_multiple_cell_value" =');
     expect(compiled.parameters).toContain(true);
@@ -610,7 +602,7 @@ describe('TableMetaUpdateVisitor', () => {
     const result = visitor.visitUpdateRollupConfig({ fieldId: () => rollupField.id() } as never);
 
     expect(result.isOk()).toBe(true);
-    const compiled = compileStatements(db, result._unsafeUnwrap())[0]!;
+    const compiled = compileStatements(result._unsafeUnwrap())[0]!;
     expect(compiled.sql).toContain('"lookup_linked_field_id" =');
     expect(compiled.sql).toContain('"lookup_options" =');
     expect(compiled.parameters).toContain(linkField.id().toString());
@@ -637,7 +629,7 @@ describe('TableMetaUpdateVisitor', () => {
 
     for (const [method, message] of unsupported) {
       const result = (
-        visitor as Record<
+        visitor as unknown as Record<
           string,
           (spec: unknown) => {
             isErr(): boolean;

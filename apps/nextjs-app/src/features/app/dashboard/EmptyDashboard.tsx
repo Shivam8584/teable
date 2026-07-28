@@ -1,10 +1,9 @@
-import { Plus } from '@teable/icons';
-import { useTheme } from '@teable/next-themes';
+import { LayoutGrid, Plus } from '@teable/icons';
 import { useBasePermission } from '@teable/sdk/hooks';
 import { Button } from '@teable/ui-lib/shadcn';
-import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { dashboardConfig } from '@/features/i18n/dashboard.config';
+import { EmptyStateIcon } from '../components/EmptyStateIcon';
 import { CreateDashboardDialog } from './components/CreateDashboardDialog';
 
 export const EmptyDashboard = () => {
@@ -12,22 +11,10 @@ export const EmptyDashboard = () => {
 
   const basePermissions = useBasePermission();
   const canManage = basePermissions?.['base|update'];
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === 'dark';
 
   return (
     <div className="flex h-full flex-col items-center justify-center gap-5 px-20">
-      <Image
-        src={
-          isDark
-            ? '/images/layout/empty-dashboard-dark.png'
-            : '/images/layout/empty-dashboard-light.png'
-        }
-        alt="Empty dashboard"
-        width={240}
-        height={240}
-        className="mb-6"
-      />
+      <EmptyStateIcon icon={LayoutGrid} />
       <div className="text-center">
         <h3 className="mb-3 text-xl font-semibold text-foreground">{t('dashboard:empty.title')}</h3>
         <p className="mb-6 max-w-md text-sm text-muted-foreground">

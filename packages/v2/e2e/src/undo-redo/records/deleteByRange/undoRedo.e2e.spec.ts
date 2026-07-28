@@ -257,7 +257,10 @@ describe('undo-redo/deleteByRange (e2e)', () => {
     const eventCountBefore = ctx.testContainer.eventBus.events().length;
 
     try {
-      const streamResult = await getCommandBus(ctx).execute(
+      const streamResult = await getCommandBus(ctx).execute<
+        DeleteByRangeStreamCommand,
+        DeleteByRangeStreamResult
+      >(
         buildUndoRedoContext(),
         DeleteByRangeStreamCommand.create({
           tableId: table.id,

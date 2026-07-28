@@ -78,7 +78,6 @@ describe('update-field: singleLineText property updates', () => {
 
     // Action: Update field name to "Renamed"
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { name: 'Renamed' },
@@ -119,7 +118,6 @@ describe('update-field: singleLineText property updates', () => {
     const record2 = await ctx.createRecord(tableId, { [fieldId]: 'value2' });
 
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { description: 'new description' },
@@ -156,7 +154,6 @@ describe('update-field: singleLineText property updates', () => {
 
     // Action: Update showAs to url
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { showAs: { type: 'url' } } },
@@ -192,7 +189,6 @@ describe('update-field: singleLineText property updates', () => {
 
     // Action: Update showAs to email
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { showAs: { type: 'email' } } },
@@ -222,7 +218,6 @@ describe('update-field: singleLineText property updates', () => {
 
     // Action: Update showAs to null (clear it)
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { showAs: null } },
@@ -256,7 +251,6 @@ describe('update-field: singleLineText property updates', () => {
 
     // Action: Update defaultValue
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { defaultValue: 'Default Text' } },
@@ -297,7 +291,6 @@ describe('update-field: singleLineText property updates', () => {
 
     // Action: Update defaultValue to "New"
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { defaultValue: 'New' } },
@@ -331,7 +324,6 @@ describe('update-field: singleLineText property updates', () => {
 
     // Action: Update defaultValue to null (clear it)
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { defaultValue: null } },
@@ -362,7 +354,6 @@ describe('update-field: singleLineText property updates', () => {
 
     // Action: Update both name and showAs in single request
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: {
@@ -395,7 +386,6 @@ describe('update-field: singleLineText property updates', () => {
 
     // Action: Update name, showAs, and defaultValue in single request
     const updatedTable = await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: {
@@ -439,7 +429,6 @@ describe('update-field: singleLineText property updates', () => {
 
     // Action: Update showAs from undefined to url
     await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { showAs: { type: 'url' } } },
@@ -474,7 +463,6 @@ describe('update-field: singleLineText property updates', () => {
 
     // Action: Update showAs
     await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { showAs: { type: 'email' } } },
@@ -508,7 +496,6 @@ describe('update-field: singleLineText property updates', () => {
 
     // Action: Update showAs
     await ctx.updateField({
-      baseId: ctx.baseId,
       tableId,
       fieldId,
       field: { options: { showAs: { type: 'url' } } },

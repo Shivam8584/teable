@@ -36,6 +36,9 @@ describe('Link field multi-config toggle regression (e2e)', () => {
         fields: [{ name: 'Name', type: FieldType.SingleLineText, isPrimary: true } as IFieldRo],
         records: [{ fields: { Name: 'Response A' } }, { fields: { Name: 'Response B' } }],
       });
+      if (!sourceTable) {
+        throw new Error('Missing source table');
+      }
 
       foreignTable = await createTable(baseId, {
         name: 'Campuses',
@@ -122,10 +125,10 @@ describe('Link field multi-config toggle regression (e2e)', () => {
         fieldKeyType: FieldKeyType.Id,
       });
       const firstRecord = sourceRecords.records.find(
-        (record) => record.id === sourceTable.records[0].id
+        (record) => record.id === sourceTable!.records[0].id
       );
       const secondRecord = sourceRecords.records.find(
-        (record) => record.id === sourceTable.records[1].id
+        (record) => record.id === sourceTable!.records[1].id
       );
 
       expect(firstRecord?.fields[linkField.id]).toEqual([

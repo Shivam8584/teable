@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUniqName, hasPermission, Role } from '@teable/core';
-import { Plus } from '@teable/icons';
-import { useTheme } from '@teable/next-themes';
+import { Database, Plus } from '@teable/icons';
 import {
   createBase,
   PinType,
@@ -15,7 +14,6 @@ import { ReactQueryKeys } from '@teable/sdk/config';
 import { useIsMobile } from '@teable/sdk/hooks';
 import { cn, ScrollArea } from '@teable/ui-lib/shadcn';
 import { Button } from '@teable/ui-lib/shadcn/ui/button';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -23,6 +21,7 @@ import { spaceConfig } from '@/features/i18n/space.config';
 import { SpaceSettingTab, SpaceInnerSettingModal } from '@overridable/SpaceInnerSettingModal';
 import { LevelWithUpgrade } from '../../components/billing/LevelWithUpgrade';
 import { Collaborators } from '../../components/collaborator-manage/space-inner/Collaborators';
+import { EmptyStateIcon } from '../../components/EmptyStateIcon';
 import { PersonalSettingTab } from '../../components/setting/useSettingStore';
 import { SpaceActionBar } from '../../components/space/SpaceActionBar';
 import { SpaceRenaming } from '../../components/space/SpaceRenaming';
@@ -43,8 +42,6 @@ export const SpaceInnerPage: React.FC = () => {
   const spaceId = router.query.spaceId as string;
   const { t } = useTranslation(spaceConfig.i18nNamespaces);
   const isMobile = useIsMobile();
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === 'dark';
 
   const [renaming, setRenaming] = useState<boolean>(false);
   const [spaceName, setSpaceName] = useState<string>();
@@ -161,7 +158,7 @@ export const SpaceInnerPage: React.FC = () => {
 
   const renderOrganization = () => {
     if (!isCloud && space && space.organization) {
-      return <div className="text-sm text-gray-500">{space.organization.name}</div>;
+      return <div className="text-sm text-muted-foreground">{space.organization.name}</div>;
     }
     return null;
   };
@@ -256,16 +253,7 @@ export const SpaceInnerPage: React.FC = () => {
               />
             ) : (
               <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-4">
-                <Image
-                  src={
-                    isDark
-                      ? '/images/layout/empty-base-dark.png'
-                      : '/images/layout/empty-base-light.png'
-                  }
-                  alt="No bases available"
-                  width={240}
-                  height={240}
-                />
+                <EmptyStateIcon icon={Database} />
                 <div className="flex flex-col items-center justify-center gap-2">
                   <p className="text-base font-semibold text-foreground">
                     {t('space:emptySpaceTitle')}

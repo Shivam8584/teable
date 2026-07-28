@@ -1,4 +1,5 @@
 import { FieldType } from '@teable/core';
+import type { ICreateTableWithDefault } from '@teable/openapi';
 import { describe, expect, it } from 'vitest';
 
 import { mapLegacyCreateTableToV2Input } from './table-open-api-v2.mapper';
@@ -31,7 +32,7 @@ describe('mapLegacyCreateTableToV2Input', () => {
       ],
       views: [{ type: 'grid', name: 'Grid' }],
       records: [],
-    });
+    } as unknown as ICreateTableWithDefault);
 
     expect(input.fields).toEqual([
       {
@@ -95,7 +96,7 @@ describe('mapLegacyCreateTableToV2Input', () => {
       ],
       views: [{ type: 'grid', name: 'Grid' }],
       records: [],
-    });
+    } as unknown as ICreateTableWithDefault);
 
     expect(input.fields).toEqual([
       {
@@ -154,7 +155,7 @@ describe('mapLegacyCreateTableToV2Input', () => {
       ],
       views: [{ type: 'grid', name: 'Grid' }],
       records: [],
-    });
+    } as unknown as ICreateTableWithDefault);
 
     expect(input.dbTableName).toBe('bseTest.custom_table');
     expect(input.fields).toEqual([
@@ -186,7 +187,7 @@ describe('mapLegacyCreateTableToV2Input', () => {
       ],
       views: [{ type: 'grid', name: 'Grid' }],
       records: [],
-    });
+    } as unknown as ICreateTableWithDefault);
 
     expect(input.fields).toEqual([
       {

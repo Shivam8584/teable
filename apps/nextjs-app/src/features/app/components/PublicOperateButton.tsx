@@ -1,12 +1,12 @@
-import { useTheme } from '@teable/next-themes';
+import { Copy, Lock } from '@teable/icons';
 import { useIsAnonymous, useIsHydrated, useShareId, useTemplate } from '@teable/sdk/hooks';
 import { Button } from '@teable/ui-lib/shadcn';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import React, { useRef } from 'react';
 import { useShareAllowEdit, useShareAllowSave } from '../context/ShareContext';
 import { useIsInIframe } from '../hooks/useIsInIframe';
+import { EmptyStateIcon } from './EmptyStateIcon';
 import type { IShareSelectSpaceDialogRef } from './ShareSelectSpaceDialog';
 import { ShareSelectSpaceDialog } from './ShareSelectSpaceDialog';
 import type { ITemplateSelectSpaceDialogRef } from './TemplateSelectSpaceDialog';
@@ -27,9 +27,6 @@ export const PublicOperateButton = () => {
   const shareRef = useRef<IShareSelectSpaceDialogRef>(null);
   const isHydrated = useIsHydrated();
 
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === 'dark';
-
   if (isInIframe || !isHydrated) {
     return <></>;
   }
@@ -42,12 +39,7 @@ export const PublicOperateButton = () => {
 
     return (
       <div className="flex w-full flex-col items-center">
-        <Image
-          src={isDark ? '/images/layout/welcome-dark.png' : '/images/layout/welcome-light.png'}
-          alt=""
-          width={120}
-          height={120}
-        />
+        <EmptyStateIcon icon={Lock} className="mb-2 size-16" iconClassName="size-7" />
         <p className="mb-3 text-xs text-muted-foreground">
           {t('table:baseShare.editRequiresLogin')}
         </p>
@@ -78,20 +70,7 @@ export const PublicOperateButton = () => {
 
     return (
       <div className="flex w-full flex-col items-center">
-        <Image
-          src="/images/savefile-light.png"
-          alt=""
-          width={120}
-          height={120}
-          className="block dark:hidden"
-        />
-        <Image
-          src="/images/savefile-dark.png"
-          alt=""
-          width={120}
-          height={120}
-          className="hidden dark:block"
-        />
+        <EmptyStateIcon icon={Copy} className="mb-2 size-16" iconClassName="size-7" />
         <p className="mb-3 text-xs text-muted-foreground">{t('common:actions.supportSaveCopy')}</p>
         <Button size={'sm'} className="w-full text-[13px] font-normal" onClick={handleClick}>
           {t('common:actions.saveToMySpace')}

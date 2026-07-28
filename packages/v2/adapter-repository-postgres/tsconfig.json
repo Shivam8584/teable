@@ -33,7 +33,11 @@
     "./dist",
     "./coverage",
     "../core/src/**/*.spec.ts",
-    "../../formula/src/**/*.spec.ts"
+    "../../formula/src/**/*.spec.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts",
+    "../postgres-schema/src/**/*.spec.ts",
+    "../postgres-schema/src/**/*.test.ts"
   ],
   "include": ["src", "../core/src", "../di/src", "../postgres-schema/src", "../../formula/src"]
 }

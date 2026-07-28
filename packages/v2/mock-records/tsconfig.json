@@ -32,7 +32,11 @@
     "./dist",
     "./coverage",
     "../core/src/**/*.spec.ts",
-    "../core/src/**/*.test.ts"
+    "../core/src/**/*.test.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts",
+    "../container-node/src/**/*.spec.ts",
+    "../container-node/src/**/*.test.ts"
   ],
   "include": ["src", "scripts", "../core/src", "../di/src", "../container-node/src"]
 }

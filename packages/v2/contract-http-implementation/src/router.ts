@@ -106,7 +106,7 @@ export const createV2OrpcRouter = (options: IV2OrpcRouterOptions = {}) => {
    * Maps HTTP error response body to ORPCError with domain error info preserved.
    * Domain error code and tags are passed in the data property for extraction by the OpenAPI handler.
    */
-  const throwDomainError = (
+  function throwDomainError(
     orpcCode: 'BAD_REQUEST' | 'FORBIDDEN' | 'NOT_FOUND' | 'INTERNAL_SERVER_ERROR',
     errorBody: {
       message: string;
@@ -114,7 +114,7 @@ export const createV2OrpcRouter = (options: IV2OrpcRouterOptions = {}) => {
       tags: readonly string[];
       details?: Record<string, unknown>;
     }
-  ): never => {
+  ): never {
     throw new ORPCError(orpcCode, {
       message: errorBody.message,
       data: {
@@ -123,7 +123,7 @@ export const createV2OrpcRouter = (options: IV2OrpcRouterOptions = {}) => {
         details: errorBody.details,
       },
     });
-  };
+  }
 
   const os = implement(v2Contract);
 

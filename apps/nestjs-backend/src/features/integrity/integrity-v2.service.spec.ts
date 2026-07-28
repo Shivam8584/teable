@@ -18,6 +18,8 @@ import {
   v2CoreTokens,
   type ITracer,
 } from '@teable/v2-core';
+import type { V1TeableDatabase } from '@teable/v2-postgres-schema';
+import type { Kysely } from 'kysely';
 import { ok } from 'neverthrow';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 
@@ -529,7 +531,7 @@ describe('IntegrityV2Service repair telemetry', () => {
     );
 
     const preflight = await service['inspectBaseTablesBeforeHydration'](
-      metaDb,
+      metaDb as unknown as Kysely<V1TeableDatabase>,
       BaseId.create(baseId)._unsafeUnwrap()
     );
     const target = await service['resolveBaseTarget'](baseId);

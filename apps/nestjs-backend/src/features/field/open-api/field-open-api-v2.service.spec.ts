@@ -1762,22 +1762,19 @@ describe('FieldOpenApiV2Service createField', () => {
       {} as never
     ) as unknown as ITestFieldOpenApiV2Service;
 
-    vi.spyOn(service as object, 'hasDuplicatedDbFieldName' as never).mockReturnValue(false);
-    vi.spyOn(service as object, 'completeLegacyLinkDbConfigForCreate' as never).mockImplementation(
+    vi.spyOn(service as any, 'hasDuplicatedDbFieldName').mockReturnValue(false);
+    vi.spyOn(service as any, 'completeLegacyLinkDbConfigForCreate').mockImplementation(
       async (field) => field as Record<string, unknown>
     );
 
     const extractFieldVoFromDomainTable = vi
-      .spyOn(service as object, 'extractFieldVoFromDomainTable' as never)
+      .spyOn(service as any, 'extractFieldVoFromDomainTable')
       .mockResolvedValue({
         id: 'fldCreated000000001',
         name: 'Created Field',
         type: 'singleLineText',
       } as IFieldVo);
-    const extractFieldVoFromTableDto = vi.spyOn(
-      service as object,
-      'extractFieldVoFromTableDto' as never
-    );
+    const extractFieldVoFromTableDto = vi.spyOn(service as any, 'extractFieldVoFromTableDto');
 
     const createdField = await service.createField('tbl3sYKYH4tDz0IEg91', {
       type: 'singleLineText',
@@ -1827,8 +1824,8 @@ describe('FieldOpenApiV2Service createField', () => {
       {} as never
     ) as unknown as ITestFieldOpenApiV2Service;
 
-    vi.spyOn(service as object, 'hasDuplicatedDbFieldName' as never).mockReturnValue(false);
-    vi.spyOn(service as object, 'completeLegacyLinkDbConfigForCreate' as never).mockImplementation(
+    vi.spyOn(service as any, 'hasDuplicatedDbFieldName').mockReturnValue(false);
+    vi.spyOn(service as any, 'completeLegacyLinkDbConfigForCreate').mockImplementation(
       async () =>
         ({
           id: 'fldLookup000000001',
@@ -1841,21 +1838,19 @@ describe('FieldOpenApiV2Service createField', () => {
         }) as Record<string, unknown>
     );
 
-    vi.spyOn(service as object, 'extractFieldVoFromDomainTable' as never).mockResolvedValue({
+    vi.spyOn(service as any, 'extractFieldVoFromDomainTable').mockResolvedValue({
       id: 'fldLookup000000001',
       name: 'Lookup Field',
       type: 'singleLineText',
     } as IFieldVo);
-    const getFieldFromV2 = vi
-      .spyOn(service as object, 'getFieldFromV2' as never)
-      .mockResolvedValue({
-        id: 'fldLookup000000001',
-        name: 'Lookup Field',
-        type: 'singleLineText',
-        isLookup: true,
-        dbFieldType: DbFieldType.Json,
-        isMultipleCellValue: true,
-      } as IFieldVo);
+    const getFieldFromV2 = vi.spyOn(service as any, 'getFieldFromV2').mockResolvedValue({
+      id: 'fldLookup000000001',
+      name: 'Lookup Field',
+      type: 'singleLineText',
+      isLookup: true,
+      dbFieldType: DbFieldType.Json,
+      isMultipleCellValue: true,
+    } as IFieldVo);
 
     const createdField = await service.createField('tbl3sYKYH4tDz0IEg91', {
       type: 'singleLineText',
@@ -1909,12 +1904,12 @@ describe('FieldOpenApiV2Service createFields', () => {
       {} as never
     ) as unknown as ITestFieldOpenApiV2Service;
 
-    vi.spyOn(service as object, 'hasDuplicatedDbFieldName' as never).mockReturnValue(false);
-    vi.spyOn(service as object, 'completeLegacyLinkDbConfigForCreate' as never).mockImplementation(
+    vi.spyOn(service as any, 'hasDuplicatedDbFieldName').mockReturnValue(false);
+    vi.spyOn(service as any, 'completeLegacyLinkDbConfigForCreate').mockImplementation(
       async (field) => field as Record<string, unknown>
     );
 
-    vi.spyOn(service as object, 'extractFieldVoFromDomainTable' as never)
+    vi.spyOn(service as any, 'extractFieldVoFromDomainTable')
       .mockResolvedValueOnce({
         id: 'fldText000000000001',
         name: 'Text Field',
@@ -1925,16 +1920,14 @@ describe('FieldOpenApiV2Service createFields', () => {
         name: 'Lookup Field',
         type: 'singleLineText',
       } as IFieldVo);
-    const getFieldFromV2 = vi
-      .spyOn(service as object, 'getFieldFromV2' as never)
-      .mockResolvedValue({
-        id: 'fldLookup000000001',
-        name: 'Lookup Field',
-        type: 'singleLineText',
-        isLookup: true,
-        dbFieldType: DbFieldType.Json,
-        isMultipleCellValue: true,
-      } as IFieldVo);
+    const getFieldFromV2 = vi.spyOn(service as any, 'getFieldFromV2').mockResolvedValue({
+      id: 'fldLookup000000001',
+      name: 'Lookup Field',
+      type: 'singleLineText',
+      isLookup: true,
+      dbFieldType: DbFieldType.Json,
+      isMultipleCellValue: true,
+    } as IFieldVo);
 
     const createdFields = await service.createFields('tbl3sYKYH4tDz0IEg91', [
       {

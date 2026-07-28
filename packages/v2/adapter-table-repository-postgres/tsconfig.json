@@ -40,7 +40,13 @@
     "../formula-sql-pg/src/**/*.spec.ts",
     "../formula-sql-pg/src/**/__tests__/**",
     "../formula-sql-pg/src/testkit/**",
-    "../../formula/src/**/*.spec.ts"
+    "../../formula/src/**/*.spec.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts",
+    "../field-dependency-core/src/**/*.spec.ts",
+    "../field-dependency-core/src/**/*.test.ts",
+    "../postgres-schema/src/**/*.spec.ts",
+    "../postgres-schema/src/**/*.test.ts"
   ],
   "include": [
     "src",

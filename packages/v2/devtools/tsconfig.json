@@ -36,7 +36,19 @@
     "./dist",
     "./coverage",
     "../core/src/**/*.spec.ts",
-    "../core/src/**/*.test.ts"
+    "../core/src/**/*.test.ts",
+    "../di/src/**/*.spec.ts",
+    "../di/src/**/*.test.ts",
+    "../container-node/src/**/*.spec.ts",
+    "../container-node/src/**/*.test.ts",
+    "../debug-data/src/**/*.spec.ts",
+    "../debug-data/src/**/*.test.ts",
+    "../dottea/src/**/*.spec.ts",
+    "../dottea/src/**/*.test.ts",
+    "../mock-records/src/**/*.spec.ts",
+    "../mock-records/src/**/*.test.ts",
+    "../command-explain/src/**/*.spec.ts",
+    "../command-explain/src/**/*.test.ts"
   ],
   "include": [
     "src",

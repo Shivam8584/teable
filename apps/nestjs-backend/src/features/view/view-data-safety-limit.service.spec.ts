@@ -132,7 +132,11 @@ describe('ViewDataSafetyLimitService', () => {
     const { service } = createService(env);
 
     try {
-      service.ensureViewPayload(payloadFactory());
+      service.ensureViewPayload(
+        payloadFactory() as unknown as Parameters<
+          InstanceType<typeof ViewDataSafetyLimitService>['ensureViewPayload']
+        >[0]
+      );
       throw new Error('Expected limit error');
     } catch (error) {
       expectLimitError(error, expectedCode);

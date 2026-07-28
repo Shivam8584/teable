@@ -10,7 +10,15 @@ import {
   syncDataLoaderFeature,
   useTree,
 } from '@teable/ui-lib/base/headless-tree';
-import { Button, cn, Input, Popover, PopoverContent, PopoverTrigger } from '@teable/ui-lib/shadcn';
+import {
+  Button,
+  Checkbox,
+  cn,
+  Input,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@teable/ui-lib/shadcn';
 import { ChevronDown, Search, X } from 'lucide-react';
 import { useTranslation } from 'next-i18next';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -456,21 +464,28 @@ export const NodeTreeSelect = (props: INodeSelectProps) => {
 
                 return (
                   <div key={item.getId()} className="flex w-full min-w-0 items-center gap-0.5">
-                    {showCheckbox && (
-                      <input
-                        type="checkbox"
-                        {...(isEmptyFolder
-                          ? {
-                              checked: checkedItems.includes(item.getId()),
-                              onChange: handleEmptyFolderCheckboxChange,
-                            }
-                          : item.getCheckboxProps
-                            ? item.getCheckboxProps()
-                            : {})}
-                        className="size-4 shrink-0 cursor-pointer rounded border-gray-300 accent-black"
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    )}
+                    {showCheckbox &&
+                      (isEmptyFolder ? (
+                        <Checkbox
+                          checked={checkedItems.includes(item.getId())}
+                          onCheckedChange={handleEmptyFolderCheckboxChange}
+                          className="mx-1 shrink-0 cursor-pointer"
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      ) : (
+                        <Checkbox
+                          checked={
+                            item.getCheckedState
+                              ? item.getCheckedState() === 'indeterminate'
+                                ? 'indeterminate'
+                                : item.getCheckedState() === 'checked'
+                              : false
+                          }
+                          onCheckedChange={() => item.toggleCheckedState?.()}
+                          className="mx-1 shrink-0 cursor-pointer"
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      ))}
                     <button
                       {...item.getProps()}
                       type="button"
