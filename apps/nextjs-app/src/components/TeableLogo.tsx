@@ -6,7 +6,7 @@ export const TeableLogo = ({ className }: { className: string }) => {
   const { brandName, brandLogo } = useBrand();
 
   if (!brandLogo) {
-    return <TeableNew className={cn('text-black', className)} />;
+    return <TeableNew className={cn('text-foreground', className)} />;
   }
 
   return (

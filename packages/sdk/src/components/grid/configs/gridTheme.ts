@@ -86,12 +86,11 @@ export const gridTheme: IGridTheme = {
 
   // Cell
   cellBg: colors.white,
-  cellBgHovered: '#F7F7F7',
-  cellBgSelected: '#F0F0F0',
-  // cellBgSelected: colors.zinc[100],
+  cellBgHovered: colors.zinc[50],
+  cellBgSelected: colors.zinc[100],
   cellBgLoading: hexToRGBA(colors.black, 0.04),
   cellLineColor: colors.zinc[200],
-  cellLineColorActived: colors.black,
+  cellLineColorActived: colors.blue[500],
   cellTextColor: colors.zinc[900],
   cellTextColorHighlight: colors.violet[500],
   cellOptionBg: colors.gray[300],

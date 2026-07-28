@@ -63,5 +63,8 @@
   "deleteConfirm": {
     "title": "Delete OAuth App",
     "description": "Are you sure you want to delete the {{name}} OAuth App? This action cannot be undone."
+  },
+  "empty": {
+    "list": "No OAuth Apps found."
   }
 }

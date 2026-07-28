@@ -1,14 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUniqName } from '@teable/core';
+import { Component } from '@teable/icons';
 import { createSpace } from '@teable/openapi';
 import { ReactQueryKeys } from '@teable/sdk/config';
 import { useSession } from '@teable/sdk/hooks';
 import { ConfirmDialog, Spin } from '@teable/ui-lib/base';
 import { Button, Input } from '@teable/ui-lib/shadcn';
-import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
 import { spaceConfig } from '@/features/i18n/space.config';
+import { EmptyStateIcon } from '../../components/EmptyStateIcon';
 import { useSetting } from '../../hooks/useSetting';
 import { useSpaceListOrdered } from './useSpaceListOrdered';
 
@@ -46,8 +47,10 @@ export const NoSpacesPlaceholder = () => {
 
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center px-8">
+      <EmptyStateIcon icon={Component} className="mb-2" />
+
       <div className="flex max-w-md flex-col items-center text-center">
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 mt-6 text-2xl font-semibold">
           {t('space:noSpaces.title', { userName: user.name })}
         </h3>
 
@@ -65,16 +68,6 @@ export const NoSpacesPlaceholder = () => {
             {createSpaceLoading && <Spin />} {t('space:action.createSpace')}
           </Button>
         )}
-
-        <div className="relative">
-          <Image
-            src="/images/layout/pointer.png"
-            alt="no spaces"
-            width={120}
-            height={120}
-            className="opacity-80 dark:invert"
-          />
-        </div>
       </div>
       <ConfirmDialog
         open={showCreateDialog}

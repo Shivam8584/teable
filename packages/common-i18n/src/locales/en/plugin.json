@@ -68,5 +68,12 @@
   },
   "button": {
     "submitApproved": "Submit approved"
+  },
+  "empty": {
+    "list": "No plugins found."
+  },
+  "deleteConfirm": {
+    "title": "Delete plugin",
+    "description": "Are you sure you want to delete this plugin? This action cannot be undone."
   }
 }

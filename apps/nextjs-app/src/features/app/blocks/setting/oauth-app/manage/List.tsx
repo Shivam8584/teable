@@ -96,6 +96,11 @@ export const OAuthAppList = (props: IOAuthAppListProps) => {
           </Card>
         ))}
       </div>
+      {!oauthApps?.length && (
+        <div className="pt-6 text-center text-sm text-muted-foreground">
+          {t('oauth:empty.list')}
+        </div>
+      )}
       <ConfirmDialog
         open={showDeleteModal}
         onOpenChange={setShowDeleteModal}

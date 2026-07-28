@@ -312,7 +312,7 @@ export const BaseSidebarHeaderLeft = ({ creditUsage }: { creditUsage?: React.Rea
           {base.icon ? (
             <Emoji emoji={base.icon} size={'1.5rem'} />
           ) : (
-            <TeableLogo className="size-6 text-black" />
+            <TeableLogo className="size-6" />
           )}
         </div>
         <ChevronsLeft

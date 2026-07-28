@@ -10,6 +10,7 @@ import {
 import { noop } from 'lodash';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import type { ForwardRefRenderFunction } from 'react';
+import { useTranslation } from '../../../../context/app/i18n';
 import type { ISelectCell } from '../../renderers';
 import type { IEditorProps, IEditorRef } from './EditorContainer';
 
@@ -22,6 +23,7 @@ const SelectEditorBase: ForwardRefRenderFunction<
   const [values, setValues] = useState(data);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { cellOptionBg, cellOptionTextColor } = theme;
+  const { t } = useTranslation();
 
   useImperativeHandle(ref, () => ({
     focus: () => inputRef.current?.focus(),
@@ -51,9 +53,9 @@ const SelectEditorBase: ForwardRefRenderFunction<
 
   return (
     <Command className="rounded-sm border p-2 shadow-sm" style={style}>
-      <CommandInput ref={inputRef} placeholder="Search" />
+      <CommandInput ref={inputRef} placeholder={t('common.search.placeholder')} />
       <CommandList>
-        <CommandEmpty>No found.</CommandEmpty>
+        <CommandEmpty>{t('common.search.empty')}</CommandEmpty>
         <CommandGroup aria-valuetext="name">
           {isEditing &&
             choiceSorted.map(({ name, id }) => (

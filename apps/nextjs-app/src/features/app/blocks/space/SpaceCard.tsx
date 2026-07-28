@@ -119,7 +119,7 @@ export const SpaceCard: FC<ISpaceCard> = (props) => {
               </LevelWithUpgrade>
             )}
             {!isCloud && space?.organization && (
-              <div className="text-sm text-gray-500">{space.organization.name}</div>
+              <div className="text-sm text-muted-foreground">{space.organization.name}</div>
             )}
             {!isCloud && <DataDbBadge dataDb={space.dataDb} />}
           </div>

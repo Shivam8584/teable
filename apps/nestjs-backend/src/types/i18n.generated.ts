@@ -2037,6 +2037,9 @@ export type I18nTranslations = {
             "title": string;
             "description": string;
         };
+        "empty": {
+            "list": string;
+        };
     };
     "plugin": {
         "add": string;
@@ -2109,6 +2112,13 @@ export type I18nTranslations = {
         };
         "button": {
             "submitApproved": string;
+        };
+        "empty": {
+            "list": string;
+        };
+        "deleteConfirm": {
+            "title": string;
+            "description": string;
         };
     };
     "sdk": {

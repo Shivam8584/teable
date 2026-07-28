@@ -2,9 +2,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Plus, Settings, Trash2 } from '@teable/icons';
 import { deletePlugin, getPlugins } from '@teable/openapi';
 import type { PluginStatus } from '@teable/openapi';
+import { ConfirmDialog } from '@teable/ui-lib/base';
 import { Button, Card, CardContent } from '@teable/ui-lib/shadcn';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { useState } from 'react';
 import { settingPluginConfig } from '@/features/i18n/setting-plugin.config';
 import { StatusBadge } from './component/StatusBadge';
 import { StatusDot } from './component/StatusDot';
@@ -15,16 +17,18 @@ export const PluginList = () => {
   const { t } = useTranslation(settingPluginConfig.i18nNamespaces);
   const queryClient = useQueryClient();
   const statusStatic = useStatusStatic();
+  const [deleteId, setDeleteId] = useState<string>();
 
   const { data: pluginList } = useQuery({
     queryKey: ['plugin-list'],
     queryFn: () => getPlugins().then((res) => res.data),
   });
 
-  const { mutate: deletePluginMutate } = useMutation({
+  const { mutate: deletePluginMutate, isPending: deleteLoading } = useMutation({
     mutationFn: deletePlugin,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['plugin-list'] });
+      setDeleteId(undefined);
     },
   });
 
@@ -87,7 +91,7 @@ export const PluginList = () => {
                     className="h-5 p-0.5"
                     variant={'ghost'}
                     onClick={() => {
-                      deletePluginMutate(plugin.id);
+                      setDeleteId(plugin.id);
                     }}
                   >
                     <Trash2 className="text-destructive" />
@@ -98,6 +102,30 @@ export const PluginList = () => {
           </Card>
         ))}
       </div>
+      {!pluginList?.length && (
+        <div className="pt-6 text-center text-sm text-muted-foreground">
+          {t('plugin:empty.list')}
+        </div>
+      )}
+      <ConfirmDialog
+        open={Boolean(deleteId)}
+        onOpenChange={(val) => {
+          if (!val) {
+            setDeleteId(undefined);
+          }
+        }}
+        title={t('plugin:deleteConfirm.title')}
+        description={t('plugin:deleteConfirm.description')}
+        confirmText={t('common:actions.confirm')}
+        cancelText={t('common:actions.cancel')}
+        confirmLoading={deleteLoading}
+        onConfirm={() => {
+          if (deleteId) {
+            deletePluginMutate(deleteId);
+          }
+        }}
+        onCancel={() => setDeleteId(undefined)}
+      />
     </div>
   );
 };

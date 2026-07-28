@@ -70,6 +70,10 @@ const GROUP_ACTIVE_OPACITY_CLS =
   'group-hover:opacity-100 group-has-[[data-state=open]]:opacity-100 group-data-[context-menu]:opacity-100';
 const GROUP_ACTIVE_HIDDEN_CLS =
   'group-hover:hidden group-has-[[data-state=open]]:hidden group-data-[context-menu]:hidden';
+// Search-match highlight for a table found via global search. Kept visually distinct from the
+// tree's own `bg-accent` selected/active-route state, since a searched-for node and the
+// currently open node can be highlighted at the same time and must remain tellable apart.
+const SEARCH_HIGHLIGHT_CLS = 'bg-orange-300/40 hover:bg-orange-300/40';
 const SCROLL_EDGE_THRESHOLD = 60; // pixels from edge to trigger scroll
 const SCROLL_MAX_SPEED = 15; // max pixels per frame
 
@@ -753,7 +757,7 @@ export const BaseNodeTree = (props: IBaseNodeTreeProps) => {
                 >
                   <TreeItemLabel
                     className={cn('size-full min-w-0 py-0', {
-                      'bg-orange-300/40 hover:bg-orange-300/40': isHighlighted,
+                      [SEARCH_HIGHLIGHT_CLS]: isHighlighted,
                       'group-has-[[data-state=open]]:bg-accent': !isHighlighted,
                       'bg-accent': isContextMenuTarget && !isHighlighted,
                     })}

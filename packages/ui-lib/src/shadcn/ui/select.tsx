@@ -1,8 +1,8 @@
 'use client';
 
 import * as SelectPrimitive from '@radix-ui/react-select';
+import { ChevronDown, ChevronUp, Check } from '@teable/icons';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 import * as React from 'react';
 
 import { cn } from '../utils';
@@ -14,7 +14,7 @@ const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
 
 const selectTriggerVariants = cva(
-  'flex w-full items-center justify-between whitespace-nowrap rounded-md border border-border bg-transparent dark:bg-[color-mix(in_oklab,white_10%,hsl(var(--background)))] hover:border-primary/30 px-2 py-1 transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 [&[data-state=open]>svg]:rotate-180',
+  'flex w-full items-center justify-between whitespace-nowrap rounded-md border border-border bg-transparent dark:bg-[color-mix(in_oklab,white_5%,hsl(var(--background)))] hover:border-primary/30 px-2 py-1 transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 [&[data-state=open]>svg]:rotate-180',
   {
     variants: {
       size: {

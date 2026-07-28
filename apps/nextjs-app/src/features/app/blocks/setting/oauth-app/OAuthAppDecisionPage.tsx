@@ -100,7 +100,7 @@ export const OAuthAppDecisionPage = () => {
           </form>
           <div className="text-center">
             <p className="text-sm">{t('oauth:decision.redirectDescription')}</p>
-            <Button variant={'link'}>
+            <Button variant={'link'} asChild>
               <Link target="_blank" href={decisionInfo.homepage}>
                 {decisionInfo.homepage}
               </Link>

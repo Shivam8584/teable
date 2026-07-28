@@ -1,8 +1,8 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 'use client';
 
+import { ChevronLeft, ChevronRight, ChevronDown } from '@teable/icons';
 import { differenceInCalendarDays } from 'date-fns';
-import { ChevronLeftIcon, ChevronRightIcon, ChevronDownIcon } from 'lucide-react';
 import * as React from 'react';
 import {
   DayPicker,
@@ -316,14 +316,12 @@ function Calendar({
         },
         Chevron: ({ className: chevronClassName, orientation, ...chevronProps }) => {
           if (orientation === 'left') {
-            return <ChevronLeftIcon className={cn('size-4', chevronClassName)} {...chevronProps} />;
+            return <ChevronLeft className={cn('size-4', chevronClassName)} {...chevronProps} />;
           }
           if (orientation === 'right') {
-            return (
-              <ChevronRightIcon className={cn('size-4', chevronClassName)} {...chevronProps} />
-            );
+            return <ChevronRight className={cn('size-4', chevronClassName)} {...chevronProps} />;
           }
-          return <ChevronDownIcon className={cn('size-4', chevronClassName)} {...chevronProps} />;
+          return <ChevronDown className={cn('size-4', chevronClassName)} {...chevronProps} />;
         },
         ...(isDropdownLayout
           ? {
@@ -517,7 +515,7 @@ function Nav({
         }
         onClick={handlePreviousClick}
       >
-        <ChevronLeftIcon className="size-4" />
+        <ChevronLeft className="size-4" />
       </Button>
 
       <Button
@@ -533,7 +531,7 @@ function Nav({
         }
         onClick={handleNextClick}
       >
-        <ChevronRightIcon className="size-4" />
+        <ChevronRight className="size-4" />
       </Button>
     </nav>
   );
