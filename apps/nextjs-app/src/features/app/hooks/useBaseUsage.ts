@@ -1,39 +1,47 @@
-import { useQuery } from '@tanstack/react-query';
-import { getBaseUsage } from '@teable/openapi';
-import { useBaseId } from '@teable/sdk/hooks';
-import { useIsReadOnlyPreview } from '@teable/sdk/hooks/use-is-readonly-preview';
-import { useIsCloud } from './useIsCloud';
-import { useIsEE } from './useIsEE';
+import type { IUsageVo } from '@teable/openapi';
+import { BillingProductLevel } from '@teable/openapi';
 
-export const useBaseUsage = (props?: { disabled?: boolean }) => {
-  const isEE = useIsEE();
-  const isCloud = useIsCloud();
-  const baseId = useBaseId() as string;
-  const isReadOnlyPreview = useIsReadOnlyPreview();
-
-  const { data: baseUsage } = useQuery({
-    queryKey: ['base-usage', baseId],
-    queryFn: ({ queryKey }) => getBaseUsage(queryKey[1]).then(({ data }) => data),
-    enabled: !props?.disabled && Boolean(baseId) && (isCloud || isEE) && !isReadOnlyPreview,
-  });
-
-  return baseUsage;
+/**
+ * This fork runs without billing: every plan-gated capability is granted to
+ * every base, regardless of edition. The usage endpoints only exist in the
+ * hosted/enterprise backend, so instead of querying them we hand the UI a
+ * fully unlocked entitlement set.
+ */
+export const FULL_ACCESS_USAGE: IUsageVo = {
+  level: BillingProductLevel.Enterprise,
+  limit: {
+    maxRows: Infinity,
+    maxSizeAttachments: Infinity,
+    maxNumAutomationRuns: Infinity,
+    maxNumDatabaseConnections: Infinity,
+    maxRevisionHistoryDays: Infinity,
+    maxAutomationHistoryDays: Infinity,
+    maxNumSystemSendEmail: Infinity,
+    apiRateLimit: Infinity,
+    automationEnable: true,
+    auditLogEnable: true,
+    adminPanelEnable: true,
+    rowColoringEnable: true,
+    buttonFieldEnable: true,
+    fieldAIEnable: true,
+    userGroupEnable: true,
+    advancedExtensionsEnable: true,
+    advancedPermissionsEnable: true,
+    passwordRestrictedSharesEnable: true,
+    authenticationEnable: true,
+    domainVerificationEnable: true,
+    organizationEnable: true,
+    chatAIEnable: true,
+    appEnable: true,
+    appHideBadgeEnable: true,
+    customDomainEnable: true,
+  },
 };
 
-export const useBaseUsageWithLoading = (props?: { disabled?: boolean }) => {
-  const isEE = useIsEE();
-  const isCloud = useIsCloud();
-  const baseId = useBaseId() as string;
+export const useBaseUsage = (_props?: { disabled?: boolean }) => {
+  return FULL_ACCESS_USAGE;
+};
 
-  const {
-    data: baseUsage,
-    isLoading,
-    isFetched,
-  } = useQuery({
-    queryKey: ['base-usage', baseId],
-    queryFn: ({ queryKey }) => getBaseUsage(queryKey[1]).then(({ data }) => data),
-    enabled: !props?.disabled && Boolean(baseId) && (isCloud || isEE),
-  });
-
-  return { baseUsage, loading: isLoading, isFetched };
+export const useBaseUsageWithLoading = (_props?: { disabled?: boolean }) => {
+  return { baseUsage: FULL_ACCESS_USAGE, loading: false, isFetched: true };
 };
